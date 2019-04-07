@@ -40,7 +40,15 @@ wwv_flow_api.create_plugin(
 ,p_standard_attributes=>'VISIBLE:FORM_ELEMENT:SESSION_STATE:READONLY:ESCAPE_OUTPUT:SOURCE:ELEMENT:WIDTH:PLACEHOLDER:ICON:LOV:LOV_DISPLAY_NULL:CASCADING_LOV:FILTER:LINK'
 ,p_substitute_attributes=>true
 ,p_subscribe_plugin_settings=>true
+,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<p>',
+'APEX Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes. ',
+'</p>',
+'<p>',
+'  Author: Bartosz Ostrowski, Twitter: bostrowsk1, E-mail: ostrowski.bartosz@gmail.com',
+'</p>'))
 ,p_version_identifier=>'1.0'
+,p_about_url=>'https://github.com/bostrowski/APEX-Enhanced-Lov-Item'
 ,p_files_version=>98
 );
 wwv_flow_api.create_plugin_attribute(
@@ -930,6 +938,9 @@ wwv_flow_api.create_plugin_event(
 ,p_name=>'paeli_popup_shown'
 ,p_display_name=>'Popup report open'
 );
+end;
+/
+begin
 wwv_flow_api.create_plugin_event(
  p_id=>wwv_flow_api.id(34758661537485431)
 ,p_plugin_id=>wwv_flow_api.id(62068381924502085)
@@ -942,9 +953,6 @@ wwv_flow_api.create_plugin_event(
 ,p_name=>'paeli_prompt_data_rendered'
 ,p_display_name=>'Autocomplete data rendered'
 );
-end;
-/
-begin
 wwv_flow_api.create_plugin_event(
  p_id=>wwv_flow_api.id(34758227746485430)
 ,p_plugin_id=>wwv_flow_api.id(62068381924502085)
