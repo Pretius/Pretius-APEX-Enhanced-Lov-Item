@@ -1,0 +1,52 @@
+{
+  "name": "APEX Enhanced LOV item",
+  "version": "1.0.0",
+  "description": "APEX Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes.",
+  "keywords": [
+    "oracle",
+    "apex",
+    "plugin",
+    "item",
+    "combobox",
+    "search",
+    "select",
+    "report"
+  ],
+  "homepage": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item",
+  "bugs": {
+    "url": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues",
+    "email": "ostrowski.bartosz@gmail.com"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Bartosz Ostrowski",
+    "email": "ostrowski.bartosz@gmail.com",
+    "url": "ostrowskibartosz.pl",
+    "twitter": "bostrowsk1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item.git"
+  },
+  "oracle": {
+    "versions": [
+      "11.2.0.1",
+      "12.1.0.1",
+      "12.2.0.1"
+    ],
+    "apex": {
+      "versions": [
+        "5.1.0",
+        "18.1.0",
+        "18.2.0",
+        "19.1.0"
+      ],
+      "plugin": {
+        "internalName": "PL.OSTROWSKIBARTOSZ.APEX.ENHANCEDLOVITEM",
+        "type": "item",
+        "demo": "https://apex.oracle.com/pls/apex/f?p=111865:1:106207407722798:::::",
+        "previewImage": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item/blob/master/preview.gif"
+      }
+    }
+  }
+}
