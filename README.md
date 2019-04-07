@@ -26,6 +26,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 * Keyboard shortcuts
 * Highlighting search term in autocomplete
 * Columns order configurable in JSON
+* Interactive GRID support
 
 
 ## Install
@@ -34,7 +35,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 * `APEX_ENHANCED_LOV_ITEM.sql` - the plugin package body
 * `APEX_ENHANCED_LOV_ITEM.plb` - the plugin package specification
 * `item_type_plugin_pl_ostrowskibartosz_apex_enhancedlovitem.sql` - the plugin installation file for Oracle APEX 5.1 or higher
-* `example_app.sql` - the plugin example app exported from apex.oracle.com (Oracle APEX 19.1)
+* `example_app.sql` - the plugin example app exported from apex.oracle.com (Oracle APEX 19.1). Application uses `emp` table which is available at apex.oracle.com.
 
 ### Install procedure
 To successfully install the plugin follow those steps:
