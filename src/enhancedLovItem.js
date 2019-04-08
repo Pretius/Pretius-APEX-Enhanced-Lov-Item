@@ -3910,6 +3910,7 @@ $.widget('pretius.enhancedLovItem', {
     }
     else {
       this.element.val(null);
+      this._promptEmptyTags();
       this._promptPlaceHolderShow();
     }
 
