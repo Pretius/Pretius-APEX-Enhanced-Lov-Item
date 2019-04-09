@@ -805,7 +805,7 @@ $.widget('pretius.enhancedLovItem', {
     
           this._promptRenderTags();
 
-          this._promptApplyValues();
+          this._promptApplyValues( false );
           this._maskAjaxStateButtonHide();
 
           //when APEX item contains multiple values but
@@ -1298,7 +1298,7 @@ $.widget('pretius.enhancedLovItem', {
         );
     }
 
-    this._promptApplyValues();
+    this._promptApplyValues( true );
 
     this.popup.state.selecting = true;
 
@@ -3426,7 +3426,7 @@ $.widget('pretius.enhancedLovItem', {
     this._promptLiRemoveSelection();
     this._promptReposition();
     this._promptSelectFirstRow();
-    this._promptApplyValues();
+    this._promptApplyValues( true );
 
     this.prompt.input.focus();
   },
@@ -3745,7 +3745,7 @@ $.widget('pretius.enhancedLovItem', {
     apex.debug.log(this.logPrefix, '_maskStateSelectedRemove', 'removed object', removed);
 
     if ( pTriggerChangeEvent ) {
-      this._promptApplyValues();
+      this._promptApplyValues( pTriggerChangeEvent );
     }
 
   },
@@ -3763,7 +3763,7 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.selected.push( pObject );
 
     if ( pTriggerChangeEvent ) {
-      this._promptApplyValues();
+      this._promptApplyValues( pTriggerChangeEvent );
     }
     
   },
@@ -3882,7 +3882,7 @@ $.widget('pretius.enhancedLovItem', {
 
     if ( this.prompt.isVisible ) {
       this._promptReposition();
-      this.prompt.input.focus()
+      this.prompt.input.focus();
     }
 
     if ( this.pluginSettings.prompt.isRapidSelection ) {
@@ -3890,7 +3890,8 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
-  _promptApplyValues: function(){
+  _promptApplyValues: function( pTriggerChange ){
+    apex.debug.log(this.logPrefix, '_promptApplyValues', 'pTriggerChange', pTriggerChange);
     apex.debug.log(this.logPrefix, '_promptApplyValues', 'values', this.mask.state.selected.length);
 
     var arrayOfValues = [];
@@ -3914,7 +3915,10 @@ $.widget('pretius.enhancedLovItem', {
       this._promptPlaceHolderShow();
     }
 
-    apex.event.trigger( this.element.get(0), 'change', this );
+    if ( pTriggerChange ) {
+      apex.event.trigger( this.element.get(0), 'change', this );  
+    }
+    
   },
   _promptTagsGetObject: function( pReturn ){
     apex.debug.log(this.logPrefix, '_promptTagsGetObject', pReturn);
@@ -3983,7 +3987,7 @@ $.widget('pretius.enhancedLovItem', {
 
     pEvent.stopImmediatePropagation();
 
-    this._promptApplyValues();
+    this._promptApplyValues( true );
   },
   _maskTagRemove: function( pReturn ){
     apex.debug.log(this.logPrefix, '_maskTagRemove', pReturn);
