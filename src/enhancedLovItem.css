@@ -59,6 +59,15 @@
   height: 100%;
 }
 
+.itemContainer > .itemContainerBody input[type=text].fakeCursorHandler {
+  width: 100%;
+  margin-top: 0.2rem;
+  border: none;
+  background: none;
+  height: 1.8rem;
+}
+
+/*
 .itemContainer > .itemContainerBody input[type=text] {
   border: none;
   background: none;
@@ -68,6 +77,7 @@
   padding: 0px;
   height: 1.8rem;
 }
+*/
 
 .itemContainer > .itemContainerBody div.fakeInput {
   flex-grow: 1;
@@ -272,6 +282,21 @@
 .pretius--enhancedLovItem.prompt ul li.default[aria-selected="true"][aria-highlighted="true"],
 .pretius--enhancedLovItem.prompt ul li.default[aria-highlighted="true"] {
   background: #e5e5e5;
+}
+
+.pretius--enhancedLovItem.prompt ul li:last-child.custom:hover,
+.pretius--enhancedLovItem.prompt ul li:last-child.custom[aria-selected="true"]:hover,
+.pretius--enhancedLovItem.prompt ul li:last-child.custom[aria-selected="true"][aria-highlighted="true"]:hover,
+.pretius--enhancedLovItem.prompt ul li:last-child.custom[aria-selected="true"][aria-highlighted="true"],
+.pretius--enhancedLovItem.prompt ul li:last-child.custom[aria-highlighted="true"],
+.pretius--enhancedLovItem.prompt ul li:last-child.default:hover,
+.pretius--enhancedLovItem.prompt ul li:last-child.default[aria-selected="true"]:hover,
+.pretius--enhancedLovItem.prompt ul li:last-child.default[aria-selected="true"][aria-highlighted="true"]:hover,
+.pretius--enhancedLovItem.prompt ul li:last-child.default[aria-selected="true"][aria-highlighted="true"],
+.pretius--enhancedLovItem.prompt ul li:last-child.default[aria-highlighted="true"] {
+  -webkit-box-shadow: inset 0px -19px 15px -15px rgba(0,0,0,0.1);
+  -moz-box-shadow: inset 0px -19px 15px -15px rgba(0,0,0,0.1);
+  box-shadow: inset 0px -19px 15px -15px rgba(0,0,0,0.1);
 }
 
 .pretius--enhancedLovItem.prompt ul li.custom[aria-selected="true"],
@@ -703,6 +728,10 @@
 /* sizes */
 
 /* default */
+.itemContainerBody {
+  height: 100%;
+}
+
 .itemContainer > .itemContainerBody > div.tags > div.tag {
   padding: 0 0.5rem 0 0.5rem;
   margin-top: 0.2rem;
@@ -710,6 +739,7 @@
   line-height: 2rem;
   font-size: 1.1rem;
 }
+
 
 .itemContainer > .itemContainerBody > div.tags > div.tag.summary {
   cursor: pointer;
@@ -802,4 +832,22 @@
   background: rgba(0,0,0,0.08);;
   border-radius: 5px;
   overflow-x: auto;
+}
+
+
+.pretius--enhancedLovItem.prompt .loadMore {
+  padding: 2px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 70%;
+  letter-spacing: 1px;
+  border-top-width: 1px;
+  border-top-style: solid;
+  border-top-color: inherit;
+  background: rgba(0,0,0,0.04);  
+}
+
+.pretius--enhancedLovItem.prompt .loadMore a {
+  color: rgba(0,0,0,0.7);
+  text-shadow: -1px -1px 0px rgb(255, 255, 255, 0.5);
 }

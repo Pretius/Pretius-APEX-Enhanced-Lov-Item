@@ -570,8 +570,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   -- f_queryAutocomplete
   --
   function f_queryAutocomplete(
-    pi_rownum_start in varchar2,
-    pi_rownum_end   in varchar2
+    pi_rownum_start in varchar2 default 0,
+    pi_rownum_end   in varchar2 default 0
   ) return varchar2 is
     v_lov_query varchar2(32767);  
     v_query     varchar2(32767);
@@ -600,6 +600,10 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       v_query := v_query ||f_autocompleteGetDefaulsSearch();
     end if;
 
+    if pi_rownum_start = 0 and pi_rownum_end = 0 then
+      return v_query;
+    end if;
+
     return '
       select 
         *
@@ -612,7 +616,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
           '||v_query||'
           /**/
         ) a
-        where rownum <= '||pi_rownum_end||'
+        where rownum < '||pi_rownum_end||'
       )
       where pretius_rnum >= '||pi_rownum_start||'
     ';
@@ -696,7 +700,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   --
   procedure p_ajax_autocomplete 
   is
-    v_ref_cursor sys_refcursor;
+    v_ref_cursor     sys_refcursor;
+    v_ref_cursor_cnt sys_refcursor;
 
     v_rows_per_page number default to_number(v('APP_AJAX_X02'));
     v_page          number default to_number(v('APP_AJAX_X04'));
@@ -720,6 +725,9 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
 
     v_ref_cursor := getBindedRefCursor(v_query);
 
+    v_ref_cursor_cnt := getBindedRefCursor('select count(1) cnt from ('||f_queryAutocomplete||')');
+
+
     apex_json.open_object;
     
     if g_debug then
@@ -733,6 +741,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     apex_json.write( 'requestedPage', v_page , true );
     apex_json.write( 'rowsPerPage',   v_rows_per_page , true );
     apex_json.write( 'data',          v_ref_cursor );
+    apex_json.write( 'dataVolume',    v_ref_cursor_cnt );
+    
     
     apex_json.close_object;
 
@@ -901,6 +911,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_attr_popup_title_text        APEX_APPLICATION_PAGE_ITEMS.attribute_11%type := p_item.attribute_11;
     v_attr_popup_width             APEX_APPLICATION_PAGE_ITEMS.attribute_12%type := p_item.attribute_12;
     v_attr_popup_height            APEX_APPLICATION_PAGE_ITEMS.attribute_13%type := p_item.attribute_13;
+    v_attr_autocomplete_maxHeight  APEX_APPLICATION_PAGE_ITEMS.attribute_14%type := p_item.attribute_14;
+    v_attr_autocomplete_rows2show  APEX_APPLICATION_PAGE_ITEMS.attribute_15%type := p_item.attribute_15;
     v_item_icon_class              APEX_APPLICATION_PAGE_ITEMS.ITEM_ICON_CSS_CLASSES%TYPE ;
     v_apex_version                 APEX_RELEASE.VERSION_NO%TYPE;    
   begin
@@ -997,7 +1009,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       apex_json.write('autoCompleteSettingsTemplate',     v_attr_autocomplete_template,   true);
       apex_json.write('autoCompleteTagsNo',               v_attr_autocomplete_tags_no,    true);
       apex_json.write('autoCompleteMinInputLength',       v_attr_autocomplete_min_length, true);
-      
+      apex_json.write('autoCompleteMaxHeight',            v_attr_autocomplete_maxHeight,  true);
+      apex_json.write('autoCompleteRows2Show',            v_attr_autocomplete_rows2show,  true);
       
       apex_json.write('settings',                         NVL(v_attr_settings, ''), true);
       apex_json.write('popupSettings',                    v_attr_popup_settings, true);
