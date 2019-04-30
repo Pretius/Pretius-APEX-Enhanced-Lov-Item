@@ -258,11 +258,17 @@ wwv_flow_api.create_plugin_attribute(
 '<p>',
 'The example <strong>Custom template</strong> can be defined as:',
 '</p>',
-'<pre><code>return ''<span>(''+this.data.R+'') ''+this.data.D+''</span>'';</code></pre>'))
+'<pre><code>if (this.data.selected) {',
+'  return ''(''+this.data.R+'') ''+this.data.D+'' (selected)'';  ',
+'}',
+'else {',
+'  return ''(''+this.data.R+'') ''+this.data.D;',
+'}',
+'</code></pre>'))
 ,p_help_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<p>',
 '  This attribute allows to define custom HTML template for singular row of data rendered in autocomplete mode. Row columns can be referenced using <code>this.data.COLUMN_NAME</code>, where <code>COLUMN_NAME</code> is column name (or column alias if u'
-||'sed) defined in <strong>List of Values > SQL Query</strong> item attribute.',
+||'sed) defined in <strong>List of Values > SQL Query</strong> item attribute. Use <code>this.data.selected</code> <i>(Boolean)</i> to determine whether particular row is selected.',
 '</p>',
 '<p>',
 'All columns names / aliases must be in uppercase.',
