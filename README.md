@@ -78,7 +78,7 @@ Detailed information about how to use every attribute of the plugin is presented
     * (when checked) **Number Of Tags** - number of tags (values) to be presented before wrapping others tags in summary tag
   * **Minimal Input Length**
     * (when checked) **Minimal Input Length** - minimal number of characters to be provided by end-user before performing autocomplete search
-  * **Rapid Selection** - when checked then user is able to select value from list and write next phrase to search for
+  * **Rapid Selection** - when checked then user is able to select value from list and write next phrase to search for. When unchecked in singular selection mode it automatically close autocomplete.
 
 * **Popup Settings**
   * **Report Columns Configuration**
@@ -159,7 +159,23 @@ Each popup report event has access through this.data to following information:
 [https://apex.oracle.com/pls/apex/f?p=111865:1](https://apex.oracle.com/pls/apex/f?p=111865:1)
 
 ## Changelog
-1.0.0 - Initial Release
+
+### 1.0.3
+* `Rapid Selection` attribute is now dependent on the plugin selection mode (multiple / singular). In singular selection unchecked `Rapid Selection` attribute results in closing autocomplete after selecting value,
+* the plugin mask (apex item visualization) is focusable and support `keypress` and `keydown` events when focused. 
+  * pressing `Down Arrow Key` results in opening autocomplete
+  * pressing any letter key results in opening autocomplete and peforming search
+* `Custom Autocomplete Template` attribute help text has been updated with reference to `this.data.selected` which indicates that particular row is already selected by end-user,
+* new component attribute `Autocomplete Rows To Fetch` is available to define,
+* new component attribute `Autocomplete Results Max Height` is available to define,
+* autocomplete pagination (lazy loading) has been fixed to return given number of rows (previously it was duplicating last row from requested set of data)
+* in case of new component attributes new translatable text `PAELI_PROMPT_TEXT_LOAD_MORE` is now available.
+
+### 1.0.1, 1.0.2
+minor fixes for first release
+
+### 1.0.0 
+Initial Release
 
 ## License
 MIT
