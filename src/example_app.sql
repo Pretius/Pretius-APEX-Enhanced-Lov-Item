@@ -27,7 +27,7 @@ prompt APPLICATION 111865 - APEX Enhanced LOV Item
 -- Application Export:
 --   Application:     111865
 --   Name:            APEX Enhanced LOV Item
---   Date and Time:   12:27 Tuesday April 30, 2019
+--   Date and Time:   12:30 Tuesday April 30, 2019
 --   Exported By:     OSTROWSKI.BARTOSZ@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -116,7 +116,7 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_01=>'APP_NAME'
 ,p_substitution_value_01=>'APEX Competition 2019'
 ,p_last_updated_by=>'OSTROWSKI.BARTOSZ@GMAIL.COM'
-,p_last_upd_yyyymmddhh24miss=>'20190430122654'
+,p_last_upd_yyyymmddhh24miss=>'20190430122951'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>3
 ,p_ui_type_name => null
@@ -13213,7 +13213,7 @@ wwv_flow_api.create_page(
 '}'))
 ,p_page_template_options=>'#DEFAULT#'
 ,p_last_updated_by=>'OSTROWSKI.BARTOSZ@GMAIL.COM'
-,p_last_upd_yyyymmddhh24miss=>'20190430122619'
+,p_last_upd_yyyymmddhh24miss=>'20190430122951'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(4685201175905809289)
@@ -13530,6 +13530,11 @@ wwv_flow_api.create_page_plug(
 '        <td class="t-Report-cell">PAELI_PROMPT_TEXT_RAPID_SELECTION</td>',
 '        <td class="t-Report-cell">Start typing to select more...</td> ',
 '      </tr>',
+'      <tr>',
+'        <td class="t-Report-cell">C_PROMPT_TEXT_LOAD_MORE</td>',
+'        <td class="t-Report-cell">Load more...</td> ',
+'      </tr>      ',
+'      ',
 '      <tr>',
 '        <td class="t-Report-cell">PAELI_TAGS_LIMITED_OTHERS</td>',
 '        <td class="t-Report-cell">and %0 more...</td> ',
@@ -13931,6 +13936,9 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(4831069570912701615)
 ,p_plug_name=>'Readonly'
@@ -13944,9 +13952,6 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(4831070387329701623)
 ,p_plug_name=>'Custom icon'
