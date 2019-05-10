@@ -17,6 +17,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 
 ## Roadmap
 * RTL support
+* Floating label template
 * Mobile devices support
 * Show only selected in autocomplete mode
 * Support for pasting values (for example from Excell file)
