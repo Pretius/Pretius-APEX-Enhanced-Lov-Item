@@ -6,6 +6,10 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 
 ![Preview gif](preview.gif)
 
+## Demo Application
+[https://apex.oracle.com/pls/apex/f?p=111865:1](https://apex.oracle.com/pls/apex/f?p=111865:1)
+
+
 ## Features at Glance
 * The plugin is available under MIT License
 * First supported version is Oracle APEX is 5.1+
@@ -155,9 +159,6 @@ Each popup report event has access through this.data to following information:
   }
 };
 ```
-
-## Demo Application
-[https://apex.oracle.com/pls/apex/f?p=111865:1](https://apex.oracle.com/pls/apex/f?p=111865:1)
 
 ## Changelog
 
