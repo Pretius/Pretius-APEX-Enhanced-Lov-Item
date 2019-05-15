@@ -7,7 +7,7 @@ $.widget('pretius.enhancedLovItem', {
   C_POPUP_SEARCH_PLACEHOLDER           : 'Enter a search term',
   C_POPUP_BTN_SELECT_TEXT              : 'Select',
   C_POPUP_SHOW_SELECTED_LABEL          : "Show only selected",
-  C_POPUP_TEXT_ROWS_SELECTED           : "All results (%0) on this page has beed selected.",
+  C_POPUP_TEXT_ROWS_SELECTED           : "All results (%0) on this page has been selected.",
   C_POPUP_TEXT_NO_DATA_FOUND_SEARCH    : 'No data found for search term "%0".',
   C_POPUP_TEXT_NO_DATA_FOUND_QUERY     : 'Dictionary has no data to render.',
   C_POPUP_TEXT_CLEAR_FILTERING         : 'Click <a href="javascript: void(0)" class="clearFiltering">here</a> to clear filtering.',
@@ -1064,6 +1064,8 @@ $.widget('pretius.enhancedLovItem', {
     this.popup.state.ajaxCurrentPageRownumStart = pData.rownumStart;
     this.popup.state.ajaxCurrentPageRownumEnd   = pData.rownumEnd;
 
+    
+    
 
     if ( pData.request == 'GETONLYSELECTED' ) {
       pData = this._popupExtendDataWithExtraValues( pData );      
@@ -3599,6 +3601,12 @@ $.widget('pretius.enhancedLovItem', {
     for ( var i in pData.data ) {
       for ( var y=0; y < pSelected.length; y++ ) {
 
+/*
+        console.log( 'pSelected[y]' );
+        console.log( pSelected[y] );
+        console.log( 'pData.data[i]' );
+        console.log( pData.data[i] );
+*/
         if ( pSelected[y].value.toString() == pData.data[i].R.toString() ) {
           pData.data[i].selected = true;
           continue;

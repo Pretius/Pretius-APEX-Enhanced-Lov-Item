@@ -33,7 +33,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       ';
     end if;
 
-    return v_query;
+    return 'select * from ('||v_query||') where r is not null';
   end prepareSqlQuery;
 
   --
@@ -507,7 +507,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_result  number;
     v_query   varchar2(4000);
   begin
-    v_cursor :=  getBindedRefCursor( 'select count(1) from ('||prepareSqlQuery||') '||pi_where );
+    v_cursor :=  getBindedRefCursor( 'select count(1) from ( '||prepareSqlQuery||' )'||pi_where );
 
     FETCH v_cursor INTO v_result;
 
@@ -975,7 +975,10 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
         ' value="'                                    ||
       '');
 
-      APEX_PLUGIN_UTIL.PRINT_ESCAPED_VALUE(v_item_value);
+
+      APEX_PLUGIN_UTIL.PRINT_ESCAPED_VALUE(
+        APEX_ESCAPE.HTML( v_item_value )
+      );
 
       htp.p(''                                        ||
         '"'                                           || --closing of value attr
@@ -1069,7 +1072,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   ) is
     
     v_ajax_mode     varchar2(100)   default v('APP_AJAX_X01');
-    v_search_string varchar2(4000)  default v('APP_AJAX_X03');
+    v_search_string varchar2(4000)  default APEX_ESCAPE.HTML(v('APP_AJAX_X03'));
     v_search_column number          default v('APP_AJAX_X07');
     
   begin
@@ -1078,6 +1081,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     g_plugin    := p_plugin;
     g_debug     := case when v('DEBUG') = 'YES' then true else false end;
     g_ajax_mode := v_ajax_mode;
+
     g_ajax_search_string := replace(v_search_string, '''', '''''');
     g_ajax_search_column_idx := v('APP_AJAX_X07');
 
