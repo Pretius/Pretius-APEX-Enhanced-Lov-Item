@@ -1,6 +1,6 @@
 {
   "name": "APEX Enhanced LOV item",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "APEX Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes.",
   "keywords": [
     "oracle",
