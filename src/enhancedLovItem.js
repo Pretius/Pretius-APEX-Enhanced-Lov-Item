@@ -3600,13 +3600,6 @@ $.widget('pretius.enhancedLovItem', {
 
     for ( var i in pData.data ) {
       for ( var y=0; y < pSelected.length; y++ ) {
-
-/*
-        console.log( 'pSelected[y]' );
-        console.log( pSelected[y] );
-        console.log( 'pData.data[i]' );
-        console.log( pData.data[i] );
-*/
         if ( pSelected[y].value.toString() == pData.data[i].R.toString() ) {
           pData.data[i].selected = true;
           continue;
