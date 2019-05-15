@@ -32,7 +32,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 
 ## Install
 
-### Installaction package
+### Installation package
 * `APEX_ENHANCED_LOV_ITEM.sql` - the plugin package body
 * `APEX_ENHANCED_LOV_ITEM.plb` - the plugin package specification
 * `item_type_plugin_pl_ostrowskibartosz_apex_enhancedlovitem.sql` - the plugin installation file for Oracle APEX 5.1 or higher
