@@ -161,16 +161,24 @@ Each popup report event has access through this.data to following information:
 
 ## Changelog
 
+### 1.0.4
+* `PL/SQL` all strings inputed via search field is being escaped using ```APEX_ESCAPE.HTML``` - fix for potential XSS
+* `PL/SQL` value from session on page load is being escaped using ```APEX_ESCAPE.HTML``` - fix for potential XSS
+* `PL/SQL` Rows in which `r` columns is null is not available in `autocomplete` and `popup` mode - value in column `r` must be unique and can't be null
+* `JS` Typo in `PAELI_POPUP_TEXT_ROWS_SELECTED` has been fixed
+* `Example application` supporting objects has been updated (install script fixed, deinstall script created)
+
+
 ### 1.0.3
-* `Rapid Selection` attribute is now dependent on the plugin selection mode (multiple / singular). In singular selection unchecked `Rapid Selection` attribute results in closing autocomplete after selecting value,
-* the plugin mask (apex item visualization) is focusable and support `keypress` and `keydown` events when focused. 
+* `Plugin` `Rapid Selection` attribute is now dependent on the plugin selection mode (multiple / singular). In singular selection unchecked `Rapid Selection` attribute results in closing autocomplete after selecting value,
+* `Plugin` `Custom Autocomplete Template` attribute help text has been updated with reference to `this.data.selected` which indicates that particular row is already selected by end-user,
+* `Plugin` new component attribute `Autocomplete Rows To Fetch` is available to define,
+* `Plugin` new component attribute `Autocomplete Results Max Height` is available to define,
+* `Plugin` in case of new component attributes new translatable text `PAELI_PROMPT_TEXT_LOAD_MORE` is now available.
+* `PL/SQL` autocomplete pagination (lazy loading) has been fixed to return given number of rows (previously it was duplicating last row from requested set of data)
+* `JavaScript` the plugin mask (apex item visualization) is focusable and support `keypress` and `keydown` events when focused. 
   * pressing `Down Arrow Key` results in opening autocomplete
   * pressing any letter key results in opening autocomplete and peforming search
-* `Custom Autocomplete Template` attribute help text has been updated with reference to `this.data.selected` which indicates that particular row is already selected by end-user,
-* new component attribute `Autocomplete Rows To Fetch` is available to define,
-* new component attribute `Autocomplete Results Max Height` is available to define,
-* autocomplete pagination (lazy loading) has been fixed to return given number of rows (previously it was duplicating last row from requested set of data)
-* in case of new component attributes new translatable text `PAELI_PROMPT_TEXT_LOAD_MORE` is now available.
 
 ### 1.0.1, 1.0.2
 minor fixes for first release
