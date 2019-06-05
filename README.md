@@ -147,8 +147,7 @@ PAELI_POPUP_TEXT_NO_DATA_FOUND_SEARCH | No data found for search term "%0".
 PAELI_POPUP_TEXT_NO_DATA_FOUND_QUERY | Dictionary has no data to render.
 PAELI_POPUP_TEXT_CLEAR_FILTERING | Click <a href="javascript: void(0)" class="clearFiltering">here</a> to clear filtering.
 PAELI_POPUP_TEXT_UNSAVED_CHANGES | You have selected %0 values. Closing without saving will not save selected values.
-PAELI_POPUP_TEXT_SEACH_IN_SELECTED | You have filtered %0 row(s) from %1 selected row(s). 
-Click | <a href="javascript: void(0)" class="showSelected">here to get back to all selected rows.
+PAELI_POPUP_TEXT_SEACH_IN_SELECTED | You have filtered %0 row(s) from %1 selected row(s). <br/>Click <a href="javascript: void(0)" class="showSelected">here to get back to all selected rows.
 PAELI_POPUP_TEXT_FILTERED_INFO | %0 results found for search term "%1".
 PAELI_POPUP_TEXT_EXTRA_VALUE | Value "%0" is not within dictionary.
 PAELI_PROMPT_MENU_EXPAND_TITLE | Show or hide all tags
@@ -159,7 +158,7 @@ PAELI_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_0 | Start typing to get results.
 PAELI_PROMPT_TEXT_NO_DATA_FOUND | No data found.
 PAELI_PROMPT_TEXT_SEARCHING | Searching...
 PAELI_PROMPT_TEXT_RAPID_SELECTION | Start typing to select more...
-C_PROMPT_TEXT_LOAD_MORE | Load more...
+PAELI_PROMPT_TEXT_LOAD_MORE | Load more...
 PAELI_TAGS_LIMITED_OTHERS | and %0 more...
 PAELI_TAGS_LIMITED_0 | %0 selected
 PAELI_POPUP_PAGINATION_PREV | Previous
@@ -167,7 +166,6 @@ PAELI_POPUP_PAGINATION_NEXT | Next
 PAELI_POPUP_HEADER_SORT_ASC_TITLE | Sort ascending
 PAELI_POPUP_HEADER_SORT_DESC_TITLE | Sort descending
 PAELI_POPUP_TEXT_SEARCHING | Waiting for results...
-
 
 
 ### Plugin Events
