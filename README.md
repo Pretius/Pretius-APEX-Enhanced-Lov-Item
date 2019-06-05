@@ -17,7 +17,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
   - [Install procedure](#install-procedure)
 - [Usage Guide](#usage-guide)
 - [Plugin Settings](#plugin-settings)
-  - [Component settings](#component-settings)
+  - [Attributes](#component-settings)
   - [Plugin Events](#plugin-events)
 - [Changelog](#changelog)
   - [1.0.4](#104)
@@ -34,8 +34,7 @@ MIT
 
 
 ## Features at Glance
-* The plugin is available under MIT License
-* First supported version is Oracle APEX is 5.1+
+* compatible with Oracle APEX 5.1, 18.x, 19.x
 * The plugin has two modes: Autocomplete and popup report
 * Autocomplete custom filtering rules can be defined as SQL where clause
 * Autocomplete can render data in custom HTML template returned from JavaScript annonymouse function
