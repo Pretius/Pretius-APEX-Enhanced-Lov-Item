@@ -90,9 +90,11 @@ from
 
 ## Plugin Settings
 
-### Component settings
+### Attributes
 
 Detailed information about how to use every attribute of the plugin is presented in built-in help texts in APEX Application Builder.
+
+
 
 * **General Settings**
   * **Autocomplete** - autocomplete mode is available to end-user
