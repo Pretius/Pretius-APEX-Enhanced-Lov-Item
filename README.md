@@ -68,20 +68,23 @@ MIT
 To successfully install the plugin follow those steps:
 1. Install package `APEX_ENHANCED_LOV_ITEM` in Oracle APEX Schema
 1. Install the plugin file `item_type_plugin_pl_ostrowskibartosz_apex_enhancedlovitem.sql`
-1. Create APEX page item type Enhanced LOV item
-1. Provide SQL query and mark display column with alias `d` and return column with alias `r` `*`
-1. Explore the plugin capabilities by reading Help Texts within APEX Application Builder
-1. Configure the plugin according to your requirements
 
-`*` the plugin uses aliases `d` and `r` to recognize which column should be returned and which is general display column. **Don't use aliases enclosed with quote character!** See example below:
+## Usage Guide
+
+1. Create APEX item `PX_NAME` with type set to `APEX Enhanced LOV Item [Plug-in]`
+1. Provide SQL query and mark `display` column with alias `d` and `return` column with alias `r` *
+1. Explore the plugin capabilities by reading Help Texts within APEX Application Builder
+1. Configure the plugin according to your requirements  
+
+`*` the plugin uses aliases `d` and `r` to recognize which column should be returned and which is general display column. Don't use aliases enclosed with quote character! See example below:
 
 ```sql
 select
-  emp.empno r,
-  emp.ename d,
-  emp.*
+  e.empno r,
+  e.ename d,
+  e.*
 from
-  emp 
+  emp e
 ```
 
 ## Plugin Settings
