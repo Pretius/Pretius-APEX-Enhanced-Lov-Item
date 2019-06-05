@@ -4,7 +4,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 
 ## Preview
 
-![Preview gif](preview.gif)
+![Preview gif](images/preview_demo.gif)
 
 ## Table of Contents
 
@@ -94,7 +94,7 @@ from
 
 Detailed information about how to use every attribute of the plugin is presented in built-in help texts in APEX Application Builder.
 
-
+![Preview gif](images/preview_helptext.gif)
 
 * **General Settings**
   * **Autocomplete** - autocomplete mode is available to end-user
