@@ -6,6 +6,28 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 
 ![Preview gif](preview.gif)
 
+## Table of Contents
+
+- [License](#license)
+- [Demo Application](#demo-application)
+- [Features at Glance](#features-at-glance)
+- [Roadmap](#roadmap)
+- [Install](#install)
+  - [Installation package](#installation-package)
+  - [Install procedure](#install-procedure)
+- [Plugin Settings](#plugin-settings)
+  - [Component settings](#component-settings)
+  - [Plugin Events](#plugin-events)
+- [Changelog](#changelog)
+  - [1.0.4](#104)
+  - [1.0.3](#103)
+  - [1.0.1, 1.0.2](#101-102)
+  - [1.0.0](#100)
+
+
+## License
+MIT
+
 ## Demo Application
 [https://apex.oracle.com/pls/apex/f?p=111865:1](https://apex.oracle.com/pls/apex/f?p=111865:1)
 
@@ -187,5 +209,10 @@ minor fixes for first release
 ### 1.0.0 
 Initial Release
 
-## License
-MIT
+## Known issues
+* [Inline dialog bug](https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues/7)
+
+## About Author
+Author | Github | Twitter | E-mail
+-------|--------|---------|-------
+Bartosz Ostrowski | [@bostrowski](https://github.com/bostrowski) | [@bostrowsk1](https://twitter.com/bostrowsk1) | bostrowski@pretius.com
