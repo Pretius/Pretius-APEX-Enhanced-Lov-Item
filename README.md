@@ -19,11 +19,8 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 - [Plugin Settings](#plugin-settings)
   - [Attributes](#component-settings)
   - [Plugin Events](#plugin-events)
+  - [Translations](#translations)
 - [Changelog](#changelog)
-  - [1.0.4](#104)
-  - [1.0.3](#103)
-  - [1.0.1, 1.0.2](#101-102)
-  - [1.0.0](#100)
 
 
 ## License
@@ -133,41 +130,6 @@ Detailed information about how to use every attribute of the plugin is presented
 
 * **Dialog Width** - popup report dialog has static with given by developer
 
-### Translations
-
-To add new translations use `Shared Componentes> Globalization > Text Messages`.
-
-Translation code | Translation text
------------------|-----------------
-PAELI_POPUP_SEARCH_PLACEHOLDER | Enter a search term
-PAELI_POPUP_BTN_SELECT_TEXT | Select
-PAELI_POPUP_SHOW_SELECTED_LABEL | Show only selected
-PAELI_POPUP_TEXT_ROWS_SELECTED | All results (%0) on this page has been selected.
-PAELI_POPUP_TEXT_NO_DATA_FOUND_SEARCH | No data found for search term "%0".
-PAELI_POPUP_TEXT_NO_DATA_FOUND_QUERY | Dictionary has no data to render.
-PAELI_POPUP_TEXT_CLEAR_FILTERING | Click <a href="javascript: void(0)" class="clearFiltering">here</a> to clear filtering.
-PAELI_POPUP_TEXT_UNSAVED_CHANGES | You have selected %0 values. Closing without saving will not save selected values.
-PAELI_POPUP_TEXT_SEACH_IN_SELECTED | You have filtered %0 row(s) from %1 selected row(s). <br/>Click <a href="javascript: void(0)" class="showSelected">here to get back to all selected rows.
-PAELI_POPUP_TEXT_FILTERED_INFO | %0 results found for search term "%1".
-PAELI_POPUP_TEXT_EXTRA_VALUE | Value "%0" is not within dictionary.
-PAELI_PROMPT_MENU_EXPAND_TITLE | Show or hide all tags
-PAELI_PROMPT_MENU_SORT_TITLE | Sort tags
-PAELI_PROMPT_MENU_CLEAR_TITLE | Clear all selected values
-PAELI_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_X | Please enter %0 or more characters.
-PAELI_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_0 | Start typing to get results.
-PAELI_PROMPT_TEXT_NO_DATA_FOUND | No data found.
-PAELI_PROMPT_TEXT_SEARCHING | Searching...
-PAELI_PROMPT_TEXT_RAPID_SELECTION | Start typing to select more...
-PAELI_PROMPT_TEXT_LOAD_MORE | Load more...
-PAELI_TAGS_LIMITED_OTHERS | and %0 more...
-PAELI_TAGS_LIMITED_0 | %0 selected
-PAELI_POPUP_PAGINATION_PREV | Previous
-PAELI_POPUP_PAGINATION_NEXT | Next
-PAELI_POPUP_HEADER_SORT_ASC_TITLE | Sort ascending
-PAELI_POPUP_HEADER_SORT_DESC_TITLE | Sort descending
-PAELI_POPUP_TEXT_SEARCHING | Waiting for results...
-
-
 ### Plugin Events
 #### Atucomplete
 
@@ -221,6 +183,40 @@ Each popup report event has access through this.data to following information:
   }
 };
 ```
+
+### Translations
+
+To add new translations use `Shared Componentes> Globalization > Text Messages`.
+
+Translation code | Translation text
+-----------------|-----------------
+PAELI_POPUP_SEARCH_PLACEHOLDER | Enter a search term
+PAELI_POPUP_BTN_SELECT_TEXT | Select
+PAELI_POPUP_SHOW_SELECTED_LABEL | Show only selected
+PAELI_POPUP_TEXT_ROWS_SELECTED | All results (%0) on this page has been selected.
+PAELI_POPUP_TEXT_NO_DATA_FOUND_SEARCH | No data found for search term "%0".
+PAELI_POPUP_TEXT_NO_DATA_FOUND_QUERY | Dictionary has no data to render.
+PAELI_POPUP_TEXT_CLEAR_FILTERING | Click <a href="javascript: void(0)" class="clearFiltering">here</a> to clear filtering.
+PAELI_POPUP_TEXT_UNSAVED_CHANGES | You have selected %0 values. Closing without saving will not save selected values.
+PAELI_POPUP_TEXT_SEACH_IN_SELECTED | You have filtered %0 row(s) from %1 selected row(s). <br/>Click <a href="javascript: void(0)" class="showSelected">here to get back to all selected rows.
+PAELI_POPUP_TEXT_FILTERED_INFO | %0 results found for search term "%1".
+PAELI_POPUP_TEXT_EXTRA_VALUE | Value "%0" is not within dictionary.
+PAELI_PROMPT_MENU_EXPAND_TITLE | Show or hide all tags
+PAELI_PROMPT_MENU_SORT_TITLE | Sort tags
+PAELI_PROMPT_MENU_CLEAR_TITLE | Clear all selected values
+PAELI_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_X | Please enter %0 or more characters.
+PAELI_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_0 | Start typing to get results.
+PAELI_PROMPT_TEXT_NO_DATA_FOUND | No data found.
+PAELI_PROMPT_TEXT_SEARCHING | Searching...
+PAELI_PROMPT_TEXT_RAPID_SELECTION | Start typing to select more...
+PAELI_PROMPT_TEXT_LOAD_MORE | Load more...
+PAELI_TAGS_LIMITED_OTHERS | and %0 more...
+PAELI_TAGS_LIMITED_0 | %0 selected
+PAELI_POPUP_PAGINATION_PREV | Previous
+PAELI_POPUP_PAGINATION_NEXT | Next
+PAELI_POPUP_HEADER_SORT_ASC_TITLE | Sort ascending
+PAELI_POPUP_HEADER_SORT_DESC_TITLE | Sort descending
+PAELI_POPUP_TEXT_SEARCHING | Waiting for results...
 
 ## Changelog
 
