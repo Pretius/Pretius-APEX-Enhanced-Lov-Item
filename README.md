@@ -15,6 +15,7 @@ APEX Enhanced LOV item is powerful combobox to select singular / multiple values
 - [Install](#install)
   - [Installation package](#installation-package)
   - [Install procedure](#install-procedure)
+- [Usage Guide](#usage-guide)
 - [Plugin Settings](#plugin-settings)
   - [Component settings](#component-settings)
   - [Plugin Events](#plugin-events)
