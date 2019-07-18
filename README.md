@@ -1,4 +1,4 @@
-# Oracle APEX Item Plugin - Pretius APEX Enhanced LOV item
+# Pretius APEX Enhanced LOV item
 
 APEX Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes.
 
