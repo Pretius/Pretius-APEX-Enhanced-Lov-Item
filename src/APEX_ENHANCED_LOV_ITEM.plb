@@ -162,8 +162,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     apex_json.write('lov_display_null', p_item.lov_display_null);
     apex_json.write('lov_null_text', p_item.lov_null_text);
     apex_json.write('lov_null_value', p_item.lov_null_value);
-    apex_json.write('lov_cascade_parent_items', p_item.lov_cascade_parent_items);
-    apex_json.write('ajax_items_to_submit', p_item.ajax_items_to_submit);
+    apex_json.write('lov_cascade_parent_items', apex_plugin_util.page_item_names_to_jquery(p_item.lov_cascade_parent_items));
+    apex_json.write('ajax_items_to_submit', apex_plugin_util.page_item_names_to_jquery(p_item.ajax_items_to_submit));
     apex_json.write('ajax_optimize_refresh', p_item.ajax_optimize_refresh);
     apex_json.write('element_width', p_item.element_width);
     apex_json.write('element_max_length', p_item.element_max_length);
