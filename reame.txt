@@ -1,0 +1,66 @@
+I add translation text for pagination " of " 
+
+  C_PAGINATION_TEXT_OF_NBR_RECORD: ' of '
+  
+  _popupPaginationUpdate: function () {
+    apex.debug.log(this.logPrefix, '_popupPaginationUpdate');
+
+    var
+      start = this.popup.state.ajaxCurrentPageRownumStart,
+      end = this.popup.state.ajaxCurrentPageRownumEnd,
+      total = this.popup.state.ajaxDataTotalCount;
+    var modelPagination = '%0 - %1 %2 %3';
+
+    end = end > total ? total : end;
+    modelPagination = modelPagination.replace('%0', start).replace('%1', end).replace('%2', this.C_PAGINATION_TEXT_OF_NBR_RECORD).replace('%3', total);
+    this.popup.paginationCurrent.text(modelPagination);
+...
+
+  
+
+I change the way to display the "input tag" of the item. 
+The procedure APEX_PLUGIN_UTIL.PRINT_ESCAPED_VALUE adds a "carriage return or fucking blank" (I do not know why). 
+When we inspect the element we see
+
+<input id="P6_SELECTION_MENU" name="P6_SELECTION_MENU" class="text_field apex-item-text " maxlength="" size="30" autocomplete="off" placeholder="Rechercher" value="
+" data-return-value="" required="" style="display: none;" type="text">
+
+		
+Then attribut value is on two lines or blank " " (different browser) and this sets item attribut  isChanged  to true. While using only apex_string.html we do not have this problem.
+
+    -- Pattern for input tag                                                 
+    v_tag_input constant varchar2(32767) := '<input type=''text'' id=''%0''name=''%1'' class=''text_field apex-item-text %2'' ' || 
+                                            'maxlength=''%3'' size=''%4'' autocomplete=''off'' ' ||
+                                            'placeholder=''%5'' value=''%6'' data-return-value=''%7''';
+
+
+         -- replace parameter in a pattern string                                                       
+         htp.p(apex_string.format(p_message => v_tag_input, 
+                                  p0 => p_item.name,
+                                  p1 => v_item_name_attr, 
+                                  p2 => p_item.element_css_classes,
+                                  p3 => p_item.element_max_length, 
+                                  p4 => p_item.element_width,
+                                  p5 => p_item.placeholder,
+                                  p6 => case p_item.escape_output
+                                            when true then
+                                             apex_escape.html(v_item_value)
+                                            else
+                                             v_item_value
+                                         end, 
+                                  p7 => v_is_required));    
+with this code:
+
+<input  id="P6_SELECTION_MENU" 
+		name="P6_SELECTION_MENU" 
+		class="text_field apex-item-text " 
+		maxlength="" size="30" 
+		autocomplete="off" 
+		placeholder="Rechercher" 
+		value="" 
+		data-return-value="required" 
+		style="display: none;" 
+		type="text">
+		
+Check the file printscreen.pdf		
+								  
