@@ -914,7 +914,11 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_attr_autocomplete_maxHeight  APEX_APPLICATION_PAGE_ITEMS.attribute_14%type := p_item.attribute_14;
     v_attr_autocomplete_rows2show  APEX_APPLICATION_PAGE_ITEMS.attribute_15%type := p_item.attribute_15;
     v_item_icon_class              APEX_APPLICATION_PAGE_ITEMS.ITEM_ICON_CSS_CLASSES%TYPE ;
-    v_apex_version                 APEX_RELEASE.VERSION_NO%TYPE;    
+    v_apex_version                 APEX_RELEASE.VERSION_NO%TYPE;
+    --    
+    -- class to add for input field when warn on save is ignore
+    --
+    cv_js_ignoreChange             varchar2(20) := ' js-ignoreChange ';
   begin
 
     g_item := p_item;
@@ -967,7 +971,11 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
         ' type="text"'                                ||
         ' id="'||p_item.name||'"'                     ||
         ' name="'||v_item_name_attr||'"'              ||
-        ' class="text_field apex-item-text '|| p_item.element_css_classes ||'"' ||
+        ' class="text_field apex-item-text '|| p_item.element_css_classes ||
+        --
+        -- If ignore change add class js-ignoreChange
+        -- 
+        case p_item.ignore_change when true then cv_js_ignoreChange else null end || '"' ||
         ' maxlength="'||p_item.element_max_length||'"'||
         ' size="'||p_item.element_width||'"'          ||
         ' autocomplete="off"'                         ||
