@@ -1,12 +1,18 @@
 create or replace package body APEX_ENHANCED_LOV_ITEM as
 
-  g_app_id  number default v('APP_ID');
-  g_page_id number default v('APP_PAGE_ID');
-  g_debug   boolean default case when v('DEBUG') = 'YES' then true else false end;
-  g_ajax_mode varchar2(4000);
+  g_app_id  number  default v('APP_ID');
+  g_page_id number  default v('APP_PAGE_ID');
+  g_debug   boolean default case when v('DEBUG') in ('YES', 'LEVEL6', 'LEVEL9') then true else false end;
 
-  g_ajax_search_string varchar2(4000);
-  g_ajax_search_column_idx number;
+  g_logprefix constant varchar2(100) := '# Pretius Enhanced LOV Item';
+
+  g_ajax_mode               varchar2(4000); --x01
+  g_ajax_rows_per_page      number;         --x02
+  g_ajax_search_string      varchar2(4000); --x03
+  g_ajax_fetch_page         number;         --x04
+  g_ajax_repot_sort_col_idx number;         --x05
+  g_ajax_repot_sort_col_dir varchar2(4);    --x06
+  g_ajax_search_column_idx  number;         --x07
 
   g_item   apex_plugin.t_page_item;
   g_plugin apex_plugin.t_plugin;
@@ -36,6 +42,23 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     return 'select * from ('||v_query||') where r is not null';
   end prepareSqlQuery;
 
+  procedure meta_data (
+      p_item   in            apex_plugin.t_item,
+      p_plugin in            apex_plugin.t_plugin,
+      p_param  in            apex_plugin.t_item_meta_data_param,
+      p_result in out nocopy apex_plugin.t_item_meta_data_result )
+  is
+
+    l_query     varchar2(32767);
+
+  begin
+
+    g_item := p_item;
+
+    p_result.display_lov_definition := prepareSqlQuery();
+    p_result.is_multi_value := instr(':'||p_item.attribute_05||':', ':MS:') > 0;
+
+  end meta_data;
   --
   -- getBindedRefCursor
   --
@@ -46,6 +69,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_apex_items_names    DBMS_SQL.VARCHAR2_TABLE;
     v_cursor              pls_integer;
     v_status              number;
+    v_value               varchar2(4000);
   begin
     v_apex_items_names := WWV_FLOW_UTILITIES.GET_BINDS( pi_sql );
 
@@ -54,18 +78,37 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
 
     dbms_sql.parse (v_cursor, pi_sql, dbms_sql.native);
 
+    apex_debug.info(g_logprefix||' -> Bind Variables Start ... ');
+
     -- bind items
     for i in 1..v_apex_items_names.count loop
       
       if v_apex_items_names(i) = ':SEARCH_STRING' then
+        apex_debug.info(g_logprefix||' -> Bind Variable "'||v_apex_items_names(i)||'" with Value "'||g_ajax_search_string||'" ');
+
         dbms_sql.bind_variable (v_cursor, v_apex_items_names(i), g_ajax_search_string );
       else
-        dbms_sql.bind_variable (v_cursor, v_apex_items_names(i), v( trim(both ':' from v_apex_items_names(i)) ) );
+        v_value := v( trim(both ':' from v_apex_items_names(i)) );
+
+        /*        
+        if v_value is null then
+          apex_debug.info(g_logprefix||' -> NULL');
+        else
+          apex_debug.info(g_logprefix||' -> length = '||LENGTH(v_value));
+          apex_debug.info(g_logprefix||' -> ascii = '||ASCII(v_value));
+        end if;
+        */
+
+        apex_debug.info(g_logprefix||' -> Bind Variable "'||v_apex_items_names(i)||'" with Value "'||v_value||'" ');
+
+        dbms_sql.bind_variable (v_cursor, v_apex_items_names(i), v_value );
       end if;
       
     end loop;
 
     v_status := dbms_sql.execute(v_cursor);
+
+    apex_debug.info(g_logprefix||' -> Bind Variables End. ');
 
     return dbms_sql.to_refcursor(v_cursor);  
   end getBindedRefCursor;
@@ -162,8 +205,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     apex_json.write('lov_display_null', p_item.lov_display_null);
     apex_json.write('lov_null_text', p_item.lov_null_text);
     apex_json.write('lov_null_value', p_item.lov_null_value);
-    apex_json.write('lov_cascade_parent_items', p_item.lov_cascade_parent_items);
-    apex_json.write('ajax_items_to_submit', p_item.ajax_items_to_submit);
+    apex_json.write('lov_cascade_parent_items', apex_plugin_util.item_names_to_jquery(p_item_names => p_item.lov_cascade_parent_items, p_item => p_item));
+    apex_json.write('ajax_items_to_submit'    , apex_plugin_util.item_names_to_jquery(p_item_names => p_item.ajax_items_to_submit    , p_item => p_item));
     apex_json.write('ajax_optimize_refresh', p_item.ajax_optimize_refresh);
     apex_json.write('element_width', p_item.element_width);
     apex_json.write('element_max_length', p_item.element_max_length);
@@ -507,7 +550,17 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_result  number;
     v_query   varchar2(4000);
   begin
-    v_cursor :=  getBindedRefCursor( 'select count(1) from ( '||prepareSqlQuery||' )'||pi_where );
+    apex_debug.info(g_logprefix||' -> Popup Report "Current Page Data Count" ... ');
+
+    v_query := 'select count(1) from ( '||prepareSqlQuery||' )'||pi_where;
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => v_query,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
+    );
+
+    v_cursor :=  getBindedRefCursor( v_query );
 
     FETCH v_cursor INTO v_result;
 
@@ -515,16 +568,6 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
 
     return v_result;
   end f_popupGetCurrentPageDataCount;
-
-  --
-  -- f_queryRemoveOrderBy
-  --
-  function f_queryRemoveOrderBy(
-    pi_sql_query in varchar2
-  ) return varchar2 is
-  begin
-    return REGEXP_REPLACE(pi_sql_query, '(\s{0,})order(\s{1,})by(\s{1,})([^\sdecode])(.*)|(\s{1,})(order(\s{1,})by(\s{1,})decode\([^\)]*\))', '');
-  end f_queryRemoveOrderBy;
 
   --
   -- p_ajax_getReturnValues
@@ -549,6 +592,14 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       )
       '||v_where||'
     ';
+
+    apex_debug.info(g_logprefix||' -> SQL Query "Return Values" ... ');
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => v_query,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
+    );
 
     v_ref_cursor := getBindedRefCursor(v_query);
 
@@ -580,7 +631,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_attr_autocomplete_search   APEX_APPLICATION_PAGE_ITEMS.attribute_02%type := g_item.attribute_02;
     
   begin
-    v_lov_query := f_queryRemoveOrderBy( prepareSqlQuery );
+    v_lov_query := prepareSqlQuery;
 
     v_query := '
       select 
@@ -632,6 +683,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     pi_query           in varchar2
   ) return varchar2 is
   begin
+
+
    return '
       select
         query.* 
@@ -642,10 +695,35 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       ) query
       on
         c001 = r
+        --replace(c001, '''||g_item.lov_null_value||''', r) = to_char(r)
       where
         collection_name = '''||pi_collection_name||'''
     ';
   end f_query_popupSelected;
+
+  --
+  -- f_query_popupSelected
+  --
+  function f_query_popupDataNotMatch(
+    pi_collection_name in varchar2,
+    pi_query           in varchar2
+  ) return varchar2 is
+  begin
+
+    return '
+      select
+        c001 d,
+        c001 r
+      from 
+        apex_collections
+      where
+        collection_name = '''||pi_collection_name||'''
+        and c001 not in (
+          select r from ( '||pi_query||' )
+        )
+    ';
+      
+  end f_query_popupDataNotMatch;  
 
 
   --
@@ -666,6 +744,14 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       p_separator => ':'
     );
 
+    begin
+      APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
+      APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
+    exception
+      when others then
+        null;  
+    end;
+
     APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION( v_collection_name );
     
     APEX_COLLECTION.ADD_MEMBERS(
@@ -673,14 +759,22 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       p_c001            => v_selected_arr
     );
 
-    v_query := f_queryRemoveOrderBy( prepareSqlQuery );
+    v_query := prepareSqlQuery;
 
     v_query := f_query_popupSelected(
       pi_collection_name => v_collection_name,
       pi_query           => v_query
     );
 
-    open v_ref_cursor for v_query;
+    apex_debug.info(g_logprefix||' -> Item SQL Query "Get Session State" ... ');
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => v_query,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
+    );
+
+    v_ref_cursor := getBindedRefCursor(v_query);
 
     apex_json.open_object;
     
@@ -703,8 +797,6 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_ref_cursor     sys_refcursor;
     v_ref_cursor_cnt sys_refcursor;
 
-    v_rows_per_page number default to_number(v('APP_AJAX_X02'));
-    v_page          number default to_number(v('APP_AJAX_X04'));
     v_start_rownum  number;
     v_end_rownum    number;
 
@@ -712,15 +804,23 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   begin
 
     v_start_rownum := f_getRownumLimiterStart(
-      p_page => v_page,
-      p_rows_per_page => v_rows_per_page
+      p_page => g_ajax_fetch_page,
+      p_rows_per_page => g_ajax_rows_per_page
     );
     
-    v_end_rownum := v_start_rownum + v_rows_per_page;
+    v_end_rownum := v_start_rownum + g_ajax_rows_per_page;
 
     v_query := f_queryAutocomplete(
       pi_rownum_start => v_start_rownum,
       pi_rownum_end   => v_end_rownum
+    );
+
+    apex_debug.info(g_logprefix||' -> Autocomplete SQL Query ... ');
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => v_query,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
     );
 
     v_ref_cursor := getBindedRefCursor(v_query);
@@ -738,8 +838,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     apex_json.write( 'searchString',  g_ajax_search_string, true );
     apex_json.write( 'rownumStart',   v_start_rownum, true );
     apex_json.write( 'rownumEnd',     v_end_rownum , true );
-    apex_json.write( 'requestedPage', v_page , true );
-    apex_json.write( 'rowsPerPage',   v_rows_per_page , true );
+    apex_json.write( 'requestedPage', g_ajax_fetch_page , true );
+    apex_json.write( 'rowsPerPage',   g_ajax_rows_per_page , true );
     apex_json.write( 'data',          v_ref_cursor );
     apex_json.write( 'dataVolume',    v_ref_cursor_cnt );
     
@@ -752,13 +852,9 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   -- p_ajax_popup_report
   --
   procedure p_ajax_popup_report is
-    v_rows_per_page       number default to_number(v('APP_AJAX_X02'));
-    v_page                number default to_number(v('APP_AJAX_X04'));
-    v_sortColumnIdx       number default to_number(v('APP_AJAX_X05'));
     v_start_rownum        number;
     v_end_rownum          number;
 
-    v_sortColumnDirection varchar2(4) default v('APP_AJAX_X06');
     v_query               varchar2(32767);
     v_order_by            varchar2(4000);
     v_where               varchar2(32767);
@@ -768,11 +864,11 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     e_open_ref_cursor     exception;
   begin
     v_start_rownum := f_getRownumLimiterStart(
-      p_page => v_page,
-      p_rows_per_page => v_rows_per_page
+      p_page => g_ajax_fetch_page,
+      p_rows_per_page => g_ajax_rows_per_page
     );
 
-    v_end_rownum := v_start_rownum + v_rows_per_page -1;
+    v_end_rownum := v_start_rownum + g_ajax_rows_per_page -1;
 
     v_query := prepareSqlQuery;
 
@@ -781,17 +877,15 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_query := replace(v_query, chr(10), ' ');
     v_query := replace(v_query, chr(13), ' ');
 
-    if  instr(v_query, '*/ disp, val from') = 0  then
-      v_query := f_queryRemoveOrderBy( v_query );
-    end if;
 
-    if v_sortColumnIdx is not null then
-      v_order_by := 'order by '||v_sortColumnIdx||' '||v_sortColumnDirection||'';
+    if g_ajax_repot_sort_col_idx is not null then
+      v_order_by := 'order by '||g_ajax_repot_sort_col_idx||' '||g_ajax_repot_sort_col_dir||'';
     end if;
 
     if g_ajax_search_string is not null then
       v_where := f_queryPrepareConditions( v_query );
     end if;
+
 
     v_query := '
       select 
@@ -815,6 +909,14 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
         pretius_rnum >= '||v_start_rownum||'
     ';
 
+    apex_debug.info(g_logprefix||' -> Popup Report "Report" SQL Query ... ');
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => v_query,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
+    );
+
     v_ref_cursor := getBindedRefCursor(v_query);
 
     apex_json.open_object;
@@ -823,17 +925,17 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       apex_json.write( 'query', v_query, true );
     end if;
 
-    apex_json.write( 'request', g_ajax_mode, true );
-    apex_json.write( 'searchString', g_ajax_search_string, true );
-    apex_json.write( 'rownumStart', v_start_rownum, true );
-    apex_json.write( 'rownumEnd', v_end_rownum, true );
-    apex_json.write( 'requestedPage', v_page, true );
-    apex_json.write( 'rowsPerPage', v_rows_per_page, true );
-    apex_json.write( 'sortByColumnIdx', v_sortColumnIdx, true );
-    apex_json.write( 'sortByColumnDirection', v_sortColumnDirection, true );
-    apex_json.write( 'searchColumnIdx', g_ajax_search_column_idx, true );
-    apex_json.write( 'totalCount', f_popupGetCurrentPageDataCount( v_where ) );
-    apex_json.write( 'data', v_ref_cursor );  
+    apex_json.write( 'request'               , g_ajax_mode, true );
+    apex_json.write( 'searchString'          , g_ajax_search_string, true );
+    apex_json.write( 'rownumStart'           , v_start_rownum, true );
+    apex_json.write( 'rownumEnd'             , v_end_rownum, true );
+    apex_json.write( 'requestedPage'         , g_ajax_fetch_page, true );
+    apex_json.write( 'rowsPerPage'           , g_ajax_rows_per_page, true );
+    apex_json.write( 'sortByColumnIdx'       , g_ajax_repot_sort_col_idx, true );
+    apex_json.write( 'sortByColumnDirection' , g_ajax_repot_sort_col_dir, true );
+    apex_json.write( 'searchColumnIdx'       , g_ajax_search_column_idx, true );
+    apex_json.write( 'totalCount'            , f_popupGetCurrentPageDataCount( v_where ) );
+    apex_json.write( 'data'                  , v_ref_cursor );  
     
     apex_json.close_object;
 
@@ -846,24 +948,59 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_selected_arr    APEX_APPLICATION_GLOBAL.VC_ARR2 default APEX_APPLICATION.G_F01;
     v_collection_name APEX_COLLECTIONS.COLLECTION_NAME%TYPE := g_item.name||'_SHOWSELECTED';
 
-    v_ref_cursor sys_refcursor;
-    v_query      varchar2(32000);
+    v_ref_cursor             sys_refcursor;
+    v_ref_cursor_not_matched sys_refcursor;
+    v_query             varchar2(32000);
+    v_query_not_matched varchar2(32000);
+
+    v_null_value_selected boolean := false;
   begin
+
+    begin
+      APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
+      APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
+    exception
+      when others then
+        null;  
+    end;
+
     APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION( v_collection_name );
     
-    APEX_COLLECTION.ADD_MEMBERS(
-      p_collection_name => v_collection_name,
-      p_c001 => v_selected_arr
-    );
+    for i in 1..v_selected_arr.count loop
+      if v_selected_arr(i) = g_item.lov_null_value then
+        v_null_value_selected := true;
+        continue;
+      end if;
 
-    v_query := f_queryRemoveOrderBy( prepareSqlQuery );
+      APEX_COLLECTION.ADD_MEMBER(
+        p_collection_name => v_collection_name,
+        p_c001 => v_selected_arr(i)
+      );
+    end loop;
+
+    v_query := prepareSqlQuery;
+
+    v_query_not_matched := f_query_popupDataNotMatch(
+      pi_collection_name => v_collection_name,
+      pi_query           => v_query
+    );
 
     v_query := f_query_popupSelected(
       pi_collection_name => v_collection_name,
       pi_query           => v_query
     );
 
-    open v_ref_cursor for v_query;
+    apex_debug.info(g_logprefix||' -> Popup Report "Show only selected" SQL Query:', 'fnord');
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => v_query,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
+    );
+
+    v_ref_cursor := getBindedRefCursor(v_query);
+
+    v_ref_cursor_not_matched := getBindedRefCursor( v_query_not_matched );
 
     apex_json.open_object;
     
@@ -872,7 +1009,14 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     end if;
 
     apex_json.write( 'request', g_ajax_mode, true );
-    apex_json.write( 'data', v_ref_cursor );  
+    apex_json.write( 'data', v_ref_cursor ); 
+    apex_json.write( 'dataNotMatched', v_ref_cursor_not_matched ); 
+
+    if v_null_value_selected then
+      apex_json.write( 'nullValueSelected', true );
+    else
+      apex_json.write( 'nullValueSelected', false );
+    end if;
     
     apex_json.close_object;
 
@@ -882,7 +1026,6 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   --
   -- procedure render
   --
-
   procedure render (
     p_item   in            apex_plugin.t_item,
     p_plugin in            apex_plugin.t_plugin,
@@ -913,38 +1056,25 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_attr_popup_height            APEX_APPLICATION_PAGE_ITEMS.attribute_13%type := p_item.attribute_13;
     v_attr_autocomplete_maxHeight  APEX_APPLICATION_PAGE_ITEMS.attribute_14%type := p_item.attribute_14;
     v_attr_autocomplete_rows2show  APEX_APPLICATION_PAGE_ITEMS.attribute_15%type := p_item.attribute_15;
+
     v_item_icon_class              APEX_APPLICATION_PAGE_ITEMS.ITEM_ICON_CSS_CLASSES%TYPE ;
     v_apex_version                 APEX_RELEASE.VERSION_NO%TYPE;    
   begin
 
     g_item := p_item;
     g_plugin := p_plugin;
-    g_debug := case when v('DEBUG') = 'YES' then true else false end;
-    
+
     SELECT 
       VERSION_NO 
     into
       v_apex_version
     FROM 
-      APEX_RELEASE;
+      APEX_RELEASE
+    ;
 
     v_item_name_attr := apex_plugin.get_input_name_for_page_item(
-      p_is_multi_value => true
+      p_is_multi_value => instr(':'||p_item.attribute_05||':', ':MS:') > 0
     );
-
-    if g_debug then
-      apex_javascript.add_onload_code (
-        p_code => 'apex.debug.log("'||v_debug_prefix||'", "p_item", '||t_page_item_to_json(p_item)||');'
-      );
-
-      apex_javascript.add_onload_code (
-        p_code => 'apex.debug.log("'||v_debug_prefix||'", "p_plugin", '||t_plugin_to_json(p_plugin)||');'
-      );
-
-      apex_javascript.add_onload_code (
-        p_code => 'apex.debug.log("'||v_debug_prefix||'", "p_params", '||t_item_render_param_to_json(p_param)||');'
-      );    
-    end if;
 
     apex_plugin_util.print_hidden_if_readonly (
       p_item_name           => p_item.name,
@@ -962,25 +1092,27 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
         p_attributes       => p_item.element_attributes
       );
     else 
-      htp.p(''                                        ||
+      htp.prn(''                                      ||
         '<input'                                      ||
         ' type="text"'                                ||
-        ' id="'||p_item.name||'"'                     ||
-        ' name="'||v_item_name_attr||'"'              ||
-        ' class="text_field apex-item-text '|| p_item.element_css_classes ||'"' ||
         ' maxlength="'||p_item.element_max_length||'"'||
         ' size="'||p_item.element_width||'"'          ||
-        ' autocomplete="off"'                         ||
-        ' placeholder="'||p_item.placeholder||'"'     ||
+        --id, name, class, autocomplete, placeholder
+        apex_plugin_util.get_element_attributes(
+          p_item => p_item,
+          p_name => v_item_name_attr,
+          p_default_class => 'text_field apex-item-text',
+          p_add_id => true,
+          p_add_labelledby => true
+        )                                             ||
         ' value="'                                    ||
       '');
-
 
       APEX_PLUGIN_UTIL.PRINT_ESCAPED_VALUE(
         APEX_ESCAPE.HTML( v_item_value )
       );
 
-      htp.p(''                                        ||
+      htp.prn(''                                      ||
         '"'                                           || --closing of value attr
         ' data-return-value=""'                       ||
         ' '||v_is_required                            ||
@@ -1007,21 +1139,20 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       apex_json.initialize_clob_output;
       apex_json.open_object;
       
-      apex_json.write('autoCompleteSettings',             v_attr_autocomplete_settings,   true);
-      apex_json.write('autoCompleteSettingsSearchLogic',  v_attr_autocomplete_search,     true);
-      apex_json.write('autoCompleteSettingsTemplate',     v_attr_autocomplete_template,   true);
-      apex_json.write('autoCompleteTagsNo',               v_attr_autocomplete_tags_no,    true);
-      apex_json.write('autoCompleteMinInputLength',       v_attr_autocomplete_min_length, true);
-      apex_json.write('autoCompleteMaxHeight',            v_attr_autocomplete_maxHeight,  true);
-      apex_json.write('autoCompleteRows2Show',            v_attr_autocomplete_rows2show,  true);
-      
-      apex_json.write('settings',                         NVL(v_attr_settings, ''), true);
-      apex_json.write('popupSettings',                    v_attr_popup_settings, true);
-      apex_json.write('popupColumnSettings',              v_attr_popup_columns_settings, true);
-      apex_json.write('popupReportBasicConf',             v_attr_popup_report_basic_conf, true);
-      apex_json.write('popupTitleText',                   v_attr_popup_title_text, true);
-      apex_json.write('popupWidth',                       v_attr_popup_width, true);
-      apex_json.write('popupHeight',                      v_attr_popup_height, true);
+      apex_json.write('autoCompleteSettings'            , v_attr_autocomplete_settings   , true);
+      apex_json.write('autoCompleteSettingsSearchLogic' , v_attr_autocomplete_search     , true);
+      apex_json.write('autoCompleteSettingsTemplate'    , v_attr_autocomplete_template   , true);
+      apex_json.write('autoCompleteTagsNo'              , v_attr_autocomplete_tags_no    , true);
+      apex_json.write('autoCompleteMinInputLength'      , v_attr_autocomplete_min_length , true);
+      apex_json.write('autoCompleteMaxHeight'           , v_attr_autocomplete_maxHeight  , true);
+      apex_json.write('autoCompleteRows2Show'           , v_attr_autocomplete_rows2show  , true);
+      apex_json.write('settings'                        , NVL(v_attr_settings, '')       , true);
+      apex_json.write('popupSettings'                   , v_attr_popup_settings          , true);
+      apex_json.write('popupColumnSettings'             , v_attr_popup_columns_settings  , true);
+      apex_json.write('popupReportBasicConf'            , v_attr_popup_report_basic_conf , true);
+      apex_json.write('popupTitleText'                  , v_attr_popup_title_text        , true);
+      apex_json.write('popupWidth'                      , v_attr_popup_width             , true);
+      apex_json.write('popupHeight'                     , v_attr_popup_height            , true);
       
       open v_translations_ref for
         select 
@@ -1048,18 +1179,31 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       apex_javascript.add_onload_code(''                                                                ||
         '$("#' ||v_item_name || '").enhancedLovItem({'                                                  ||
         '  "item":  $.extend('||t_page_item_to_json(p_item)||', {"icon": "'||v_item_icon_class||'"}),'  ||
-        '  "param": '||  t_item_render_param_to_json(p_param)||','                                      ||
-        '  "plugin": '|| t_plugin_to_json(p_plugin)          ||','                                      ||
-        '  "columns": '||f_queryGetColumnsJson||','                                                   ||
-        '  "attributes": '||v_item_attributes||','                                                      ||
-        '  "apexVersion": "'||v_apex_version||'",'                                                      ||
-        '  "debug": "'||v('DEBUG')||'" == "YES" ? true : false '                                        ||
+        '  "param": '         ||t_item_render_param_to_json(p_param)  ||','                             ||
+        '  "plugin": '        ||t_plugin_to_json(p_plugin)            ||','                             ||
+        '  "columns": '       ||f_queryGetColumnsJson                 ||','                             ||
+        '  "attributes": '    ||v_item_attributes                     ||','                             ||
+        '  "apexVersion": "'  ||v_apex_version                        ||'",'                            ||
+        '  "debug": '|| CASE g_debug when true then 'true' else 'false' end                             ||
         '});'                                                                                           ||
       '');
 
     end if;  
 
   end render;
+
+  function escape_ajax(
+    p_value in varchar2
+  ) return varchar2 
+  is
+    v_return varchar2(4000);
+  begin
+
+    v_return := APEX_ESCAPE.HTML( p_value );
+    v_return := replace(v_return, '''', '''''');
+
+    return v_return;
+  end;
 
   --
   -- procedure ajax
@@ -1071,19 +1215,37 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     p_result in out nocopy apex_plugin.t_item_ajax_result 
   ) is
     
-    v_ajax_mode     varchar2(100)   default v('APP_AJAX_X01');
-    v_search_string varchar2(4000)  default APEX_ESCAPE.HTML(v('APP_AJAX_X03'));
-    v_search_column number          default v('APP_AJAX_X07');
-    
   begin
 
     g_item      := p_item;
     g_plugin    := p_plugin;
-    g_debug     := case when v('DEBUG') = 'YES' then true else false end;
-    g_ajax_mode := v_ajax_mode;
+    g_debug     := case when v('DEBUG') in ('YES', 'LEVEL6', 'LEVEL9') then true else false end;
+    
+    g_ajax_mode               :=            escape_ajax( v('APP_AJAX_X01') )  ;
+    g_ajax_rows_per_page      := to_number( escape_ajax( v('APP_AJAX_X02') ) );
+    g_ajax_search_string      :=            escape_ajax( v('APP_AJAX_X03') )  ;
+    g_ajax_fetch_page         := to_number( escape_ajax( v('APP_AJAX_X04') ) );
+    g_ajax_repot_sort_col_idx := to_number( escape_ajax( v('APP_AJAX_X05') ) );
+    g_ajax_repot_sort_col_dir :=            escape_ajax( v('APP_AJAX_X06') )  ;
+    g_ajax_search_column_idx  := to_number( escape_ajax( v('APP_AJAX_X07') ) );
 
-    g_ajax_search_string := replace(v_search_string, '''', '''''');
-    g_ajax_search_column_idx := v('APP_AJAX_X07');
+    apex_debug.info(g_logprefix||' -> AJAX call start');
+
+    apex_debug.info(g_logprefix||': AJAX_X01 (Mode) = '                    ||'"'||g_ajax_mode              ||'"');
+    apex_debug.info(g_logprefix||': AJAX_X02 (Rows Per Page) = '           ||'"'||g_ajax_rows_per_page     ||'"');
+    apex_debug.info(g_logprefix||': AJAX_X03 (Search String) = '           ||'"'||g_ajax_search_string     ||'"');
+    apex_debug.info(g_logprefix||': AJAX_X04 (Fetch Page No.) = '          ||'"'||g_ajax_fetch_page        ||'"');
+    apex_debug.info(g_logprefix||': AJAX_X05 (Report Sort Column No.) = '  ||'"'||g_ajax_repot_sort_col_idx||'"');
+    apex_debug.info(g_logprefix||': AJAX_X06 (Report Sort Direction) = '   ||'"'||g_ajax_repot_sort_col_dir||'"');
+    apex_debug.info(g_logprefix||': AJAX_X07 (Report Search Column No.) = '||'"'||g_ajax_search_column_idx ||'"');
+
+    apex_debug.info(g_logprefix||': Item SQL Query ... ');
+
+    APEX_DEBUG.LOG_LONG_MESSAGE (
+      p_message    => g_item.lov_definition,
+      p_enabled    => false,
+      p_level      => apex_debug.c_log_level_info 
+    );
 
     if g_ajax_mode = 'AUTOCOMPLETE' then
       p_ajax_autocomplete;
@@ -1102,6 +1264,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     else
       p_ajax_getReturnValues;
     end if;
+
+    apex_debug.info('Pretius Enhanced LOV Item -> AJAX call end.');
 
   end ajax;  
 end;
