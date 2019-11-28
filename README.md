@@ -40,17 +40,17 @@ MIT
 
 ## Roadmap
 * [ ] RTL support
-* [ ] Floating label template
+* [x] Floating label template (since v1.1.0)
 * [ ] Mobile devices support
 * [ ] Show only selected in autocomplete mode
-* [ ] Support for pasting values (for example from Excell file)
+* [x] Support for pasting values (for example from Excell file) (since v1.1.0)
 * [ ] Different types of pagination in popup report
 * [ ] Creating new values in autocomplete mode
 * [ ] Oracle APEX Theme roller integration
 * [ ] Keyboard shortcuts
 * [ ] Highlighting search term in autocomplete
 * [ ] Columns order configurable in JSON
-* [ ] Interactive GRID support
+* [x] Interactive GRID support (since v1.1.0)
 
 
 ## Install
