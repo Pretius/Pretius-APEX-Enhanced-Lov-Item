@@ -39,18 +39,18 @@ MIT
 * The plugin texts are translatable
 
 ## Roadmap
-* RTL support
-* Floating label template
-* Mobile devices support
-* Show only selected in autocomplete mode
-* Support for pasting values (for example from Excell file)
-* Different types of pagination in popup report
-* Creating new values in autocomplete mode
-* Oracle APEX Theme roller integration
-* Keyboard shortcuts
-* Highlighting search term in autocomplete
-* Columns order configurable in JSON
-* Interactive GRID support
+* [ ] RTL support
+* [ ] Floating label template
+* [ ] Mobile devices support
+* [ ] Show only selected in autocomplete mode
+* [ ] Support for pasting values (for example from Excell file)
+* [ ] Different types of pagination in popup report
+* [ ] Creating new values in autocomplete mode
+* [ ] Oracle APEX Theme roller integration
+* [ ] Keyboard shortcuts
+* [ ] Highlighting search term in autocomplete
+* [ ] Columns order configurable in JSON
+* [ ] Interactive GRID support
 
 
 ## Install
@@ -214,11 +214,30 @@ PAELI_TAGS_LIMITED_OTHERS | and %0 more...
 PAELI_TAGS_LIMITED_0 | %0 selected
 PAELI_POPUP_PAGINATION_PREV | Previous
 PAELI_POPUP_PAGINATION_NEXT | Next
+PAELI_POPUP_PAGINATION_OF | of
 PAELI_POPUP_HEADER_SORT_ASC_TITLE | Sort ascending
 PAELI_POPUP_HEADER_SORT_DESC_TITLE | Sort descending
 PAELI_POPUP_TEXT_SEARCHING | Waiting for results...
 
 ## Changelog
+
+### 1.1.0
+* `Plugin` pasting list of values is now available (new menu position)
+* `Plugin` Interactive Grid is supported
+* `JS` Debug messages are divided to each level
+* `PL/SQL` Debug via APEX Debugger is now available
+* `Plugin` Floating template is supported
+
+* `JavaScript` inline dialog bug is fixed [#7](/../../issues/7). Item prompt is no longer hidden behind inline dialog,
+* `PL/SQL` Funcionality `Warn On Unsaved Changes` is supported,
+* `PL/SQL` item value is printed using `htp.prn` instead of `htp.p`. No new line `\n` character added to item value attribute at the end of string,
+* `Plugin` new translation text `PAELI_POPUP_PAGINATION_OF` for pagination is now supported,
+* `PL/SQL` `order by` clause in provided SQL Query is no longer removed. It fixes bug `ORA-00907: missing right parenthesis` when aliases `d`, `e`, `c`, `o` has been used in `order by` clause,
+* `PL/SQL` Cascading LOV funcionality has been fixed and now supports multiple parent items ([#15](/../../issues/15)),
+* `PL/SQL` Loading display value for item session state on `Page load` has been fixed. (fix [#14](/../../issues/14), [#12](/../../issues/12)),
+* `Plugin` component name changed from `APEX Enhanced LOV Item` to `Pretius APEX Enhanced LOV Item`
+
+New Translation texts
 
 ### 1.0.4
 * `PL/SQL` all strings inputed via search field is being escaped using ```APEX_ESCAPE.HTML``` - fix for potential XSS
