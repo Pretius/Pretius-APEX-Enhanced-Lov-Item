@@ -240,8 +240,8 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 ## Changelog
 
 ### 1.1.0
-
-#### New functionalities
+#### General
+* component name changed from `APEX Enhanced LOV Item` to `Pretius APEX Enhanced LOV Item`
 * Possibility to paste list of values (ie. from excel column)
   * new translation texts were added (see translation texts table)
 * Interactive Grid is supported
@@ -257,6 +257,10 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 * Code have been refactored
 * Debug messages are divided to each level
 
+#### PL/SQL
+* Code have been refactored
+* Debug via APEX Debugger is now available
+
 #### Bugs fixed
 * [#7](/../../issues/7) inline dialog bug is fixed . Item prompt is no longer hidden behind inline dialog,
 * [#12](/../../issues/12) Loading display value for item session state on `Page load` has been fixed.,
@@ -266,13 +270,6 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 * `order by` clause in provided SQL Query is no longer removed. It fixes bug `ORA-00907: missing right parenthesis` when aliases `d`, `e`, `c`, `o` has been used in `order by` clause,
 * `Warn On Unsaved Changes` is supported,
 * item value is printed using `htp.prn` instead of `htp.p`. No new line `\n` character added to item value attribute at the end of string,
-
-#### General
-* component name changed from `APEX Enhanced LOV Item` to `Pretius APEX Enhanced LOV Item`
-
-#### PL/SQL
-* Code have been refactored
-* Debug via APEX Debugger is now available
 
 
 ### 1.0.4
