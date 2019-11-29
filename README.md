@@ -39,18 +39,19 @@ MIT
 * The plugin texts are translatable
 
 ## Roadmap
-* [ ] RTL support
+* [x] Interactive GRID support (since v1.1.0)
 * [x] Floating label template (since v1.1.0)
+* [x] Support for pasting values (for example from Excell file) (since v1.1.0)
+* [ ] RTL support
 * [ ] Mobile devices support
 * [ ] Show only selected in autocomplete mode
-* [x] Support for pasting values (for example from Excell file) (since v1.1.0)
 * [ ] Different types of pagination in popup report
 * [ ] Creating new values in autocomplete mode
 * [ ] Oracle APEX Theme roller integration
 * [ ] Keyboard shortcuts
 * [ ] Highlighting search term in autocomplete
 * [ ] Columns order configurable in JSON
-* [x] Interactive GRID support (since v1.1.0)
+* [ ] Grouping in autocomplete and popup report
 
 
 ## Install
@@ -247,6 +248,7 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 
 #### Enhancments
 * Possibility to open popup report from autocomplete menu
+* Processing AJAX call in popup report doesn't flicker content of report
 
 #### APEX Integration
 * Floating template is supported
