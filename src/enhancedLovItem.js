@@ -1273,8 +1273,8 @@ $.widget('pretius.enhancedLovItem', {
     });
 
     var
-      mode     = pValue == null || pValue == undefined ? 'GETSESSIONSTATE' : 'GETONLYSELECTED',
-      values   = pValue == null || pValue == undefined ? [] : pValue.split(this.C_VALUE_SEPARATOR),
+      mode     = pValue == null || pValue == undefined || pValue == "" ? 'GETSESSIONSTATE' : 'GETONLYSELECTED',
+      values   = pValue == null || pValue == undefined || pValue == "" ? [] : pValue.split(this.C_VALUE_SEPARATOR),
       ajaxData = {
         "x01": mode,  //tryb
         "f01": values, //selected values
@@ -2027,10 +2027,6 @@ $.widget('pretius.enhancedLovItem', {
     });
 
     var returnValue = this.element.val();
-
-    if ( returnValue == "" || returnValue.length == 0 ) {
-      returnValue = null;
-    }
 
     apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_elementGetValue returns "'+returnValue+'"');
 
