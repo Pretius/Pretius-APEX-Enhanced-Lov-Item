@@ -244,7 +244,6 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 * component name changed from `APEX Enhanced LOV Item` to `Pretius APEX Enhanced LOV Item`
 * Possibility to paste list of values (ie. from excel column)
   * new translation texts were added (see translation texts table)
-* Interactive Grid is supported
 
 #### Enhancments
 * Possibility to open popup report from autocomplete menu
@@ -252,6 +251,7 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 
 #### APEX Integration
 * Floating template is supported
+* Interactive Grid is supported
 
 #### JavaScript
 * Code have been refactored
