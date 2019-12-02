@@ -21,7 +21,9 @@ Pretius APEX Enhanced LOV item is powerful combobox to select singular / multipl
   - [Plugin Events](#plugin-events)
   - [Translations](#translations)
 - [Changelog](#changelog)
-
+- [Known issues](#known-issues)
+- [About Author](#about-author)
+- [About Pretius](#about-pretius)
 
 ## License
 MIT
