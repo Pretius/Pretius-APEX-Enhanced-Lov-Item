@@ -186,50 +186,55 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     p_item in apex_plugin.t_item
   ) return clob
   is
+    v_lov_cascade_parent_items  p_item.lov_cascade_parent_items%TYPE;
+    v_ajax_items_to_submit      p_item.ajax_items_to_submit%TYPE;
     v_clob clob;
   begin
+
+    v_lov_cascade_parent_items  := apex_plugin_util.item_names_to_jquery(p_item_names => p_item.lov_cascade_parent_items, p_item => p_item);
+    v_ajax_items_to_submit      := apex_plugin_util.item_names_to_jquery(p_item_names => p_item.ajax_items_to_submit    , p_item => p_item);
 
     apex_json.initialize_clob_output;
     apex_json.open_object;
 
-    apex_json.write('id', p_item.id);
-    apex_json.write('name', p_item.name);
-    apex_json.write('label', p_item.label);
-    apex_json.write('plain_label', p_item.plain_label);
-    apex_json.write('label_id', p_item.label_id);
-    apex_json.write('placeholder', p_item.placeholder);
-    apex_json.write('format_mask', p_item.format_mask);
-    apex_json.write('is_required', p_item.is_required);
-    apex_json.write('lov_definition', p_item.lov_definition);
-    apex_json.write('lov_display_extra', p_item.lov_display_extra);
-    apex_json.write('lov_display_null', p_item.lov_display_null);
-    apex_json.write('lov_null_text', p_item.lov_null_text);
-    apex_json.write('lov_null_value', p_item.lov_null_value);
-    apex_json.write('lov_cascade_parent_items', apex_plugin_util.item_names_to_jquery(p_item_names => p_item.lov_cascade_parent_items, p_item => p_item));
-    apex_json.write('ajax_items_to_submit'    , apex_plugin_util.item_names_to_jquery(p_item_names => p_item.ajax_items_to_submit    , p_item => p_item));
-    apex_json.write('ajax_optimize_refresh', p_item.ajax_optimize_refresh);
-    apex_json.write('element_width', p_item.element_width);
-    apex_json.write('element_max_length', p_item.element_max_length);
-    apex_json.write('element_height', p_item.element_height);
-    apex_json.write('element_css_classes', p_item.element_css_classes);
-    apex_json.write('element_attributes', p_item.element_attributes);
-    apex_json.write('element_option_attributes', p_item.element_option_attributes);
-    apex_json.write('escape_output', p_item.escape_output);
-    apex_json.write('attribute_01', p_item.attribute_01);
-    apex_json.write('attribute_02', p_item.attribute_02);
-    apex_json.write('attribute_03', p_item.attribute_03);
-    apex_json.write('attribute_04', p_item.attribute_04);
-    apex_json.write('attribute_05', p_item.attribute_05);
-    apex_json.write('attribute_06', p_item.attribute_06);
-    apex_json.write('attribute_07', p_item.attribute_07);
-    apex_json.write('attribute_08', p_item.attribute_08);
-    apex_json.write('attribute_09', p_item.attribute_09);
-    apex_json.write('attribute_10', p_item.attribute_10);
-    apex_json.write('attribute_11', p_item.attribute_11);
-    apex_json.write('attribute_12', p_item.attribute_12);
-    apex_json.write('attribute_13', p_item.attribute_13);
-    apex_json.write('attribute_14', p_item.attribute_14);
-    apex_json.write('attribute_15', p_item.attribute_15);
+    apex_json.write('id'                       , p_item.id                        , true );
+    apex_json.write('name'                     , p_item.name                      , true );
+    apex_json.write('label'                    , p_item.label                     , true );
+    apex_json.write('plain_label'              , p_item.plain_label               , true );
+    apex_json.write('label_id'                 , p_item.label_id                  , true );
+    apex_json.write('placeholder'              , p_item.placeholder               , true );
+    apex_json.write('format_mask'              , p_item.format_mask               , true );
+    apex_json.write('is_required'              , p_item.is_required               , true );
+    apex_json.write('lov_definition'           , p_item.lov_definition            , true );
+    apex_json.write('lov_display_extra'        , p_item.lov_display_extra         , true );
+    apex_json.write('lov_display_null'         , p_item.lov_display_null          , true );
+    apex_json.write('lov_null_text'            , p_item.lov_null_text             , true );
+    apex_json.write('lov_null_value'           , p_item.lov_null_value            , true );
+    apex_json.write('lov_cascade_parent_items' , v_lov_cascade_parent_items       , true );
+    apex_json.write('ajax_items_to_submit'     , v_ajax_items_to_submit           , true );
+    apex_json.write('ajax_optimize_refresh'    , p_item.ajax_optimize_refresh     , true );
+    apex_json.write('element_width'            , p_item.element_width             , true );
+    apex_json.write('element_max_length'       , p_item.element_max_length        , true );
+    apex_json.write('element_height'           , p_item.element_height            , true );
+    apex_json.write('element_css_classes'      , p_item.element_css_classes       , true );
+    apex_json.write('element_attributes'       , p_item.element_attributes        , true );
+    apex_json.write('element_option_attributes', p_item.element_option_attributes , true );
+    apex_json.write('escape_output'            , p_item.escape_output             , true );
+    apex_json.write('attribute_01'             , p_item.attribute_01              , true );
+    apex_json.write('attribute_02'             , p_item.attribute_02              , true );
+    apex_json.write('attribute_03'             , p_item.attribute_03              , true );
+    apex_json.write('attribute_04'             , p_item.attribute_04              , true );
+    apex_json.write('attribute_05'             , p_item.attribute_05              , true );
+    apex_json.write('attribute_06'             , p_item.attribute_06              , true );
+    apex_json.write('attribute_07'             , p_item.attribute_07              , true );
+    apex_json.write('attribute_08'             , p_item.attribute_08              , true );
+    apex_json.write('attribute_09'             , p_item.attribute_09              , true );
+    apex_json.write('attribute_10'             , p_item.attribute_10              , true );
+    apex_json.write('attribute_11'             , p_item.attribute_11              , true );
+    apex_json.write('attribute_12'             , p_item.attribute_12              , true );
+    apex_json.write('attribute_13'             , p_item.attribute_13              , true );
+    apex_json.write('attribute_14'             , p_item.attribute_14              , true );
+    apex_json.write('attribute_15'             , p_item.attribute_15              , true );
 
     apex_json.close_object;
 

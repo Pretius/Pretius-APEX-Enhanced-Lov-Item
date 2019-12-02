@@ -65,7 +65,8 @@ $.widget('pretius.enhancedLovItem', {
     var 
       popupColumnSettingsJson = undefined;
 
-    this.logPrefix = '# ('+this.element.get(0).id+') '+this.options.plugin.name+':';
+    this.logPrefix = '# '+this.options.plugin.name+':';
+    //this.logPrefix = '# ('+this.element.get(0).id+') '+this.options.plugin.name+':';
 
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'options', {
       "options": this.options, 
@@ -472,6 +473,40 @@ $.widget('pretius.enhancedLovItem', {
   },
   /*
     *
+    * function name: _itemNullValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _itemNullValue: function(){
+    var returnValue = undefined;
+
+    if ( this.options.item.lov_display_null ) {
+      if ( this.options.item.lov_null_value == null ) {
+        returnValue = "";
+      }
+      else {
+        returnValue = this.options.item.lov_null_value;
+      }
+    }
+    else {
+      returnValue = "";
+    }
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_itemNullValue', {
+      "arguments": arguments,
+      "domElement": this.element.get(0),
+      "return": returnValue,
+      "lov_display_null": this.options.item.lov_display_null,
+      "lov_null_value": this.options.item.lov_null_value
+    });
+
+    return returnValue;
+  },
+  /*
+    *
     * function name: _integrateWithApexApi
     * description  : https://docs.oracle.com/en/database/oracle/application-express/19.1/aexjs/item.html
     * params:
@@ -572,7 +607,8 @@ $.widget('pretius.enhancedLovItem', {
           * nullValue
           *
         */
-        "nullValue":  this.options.item.lov_display_null ? this.options.item.lov_null_value : "",
+        "nullValue": this._itemNullValue(),
+        //"nullValue":  this.options.item.lov_display_null ? this.options.item.lov_null_value : "",
         /*
           *
           * reinit
@@ -587,6 +623,7 @@ $.widget('pretius.enhancedLovItem', {
             "id": this.element.get(0).id
           });
 
+          //return void(0);
           var 
             displayArr = pDisplay.split( this.C_DISPLAY_SEPARATOR ),
             notEmpty = false,
@@ -599,6 +636,13 @@ $.widget('pretius.enhancedLovItem', {
 
             if ( !Array.isArray( pValue ) ) {
               pValue = pValue.split( this.C_VALUE_SEPARATOR );
+            }
+
+            if ( pValue.length == 1 && pValue[0].length == 0 ) {
+              //empty value
+              apex.debug.message(this.C_LOG_WARNING, this.logPrefix, 'reinit', 'Value is not set');
+              this._elementSetValue( "" );
+              return void(0);
             }
 
             for (var i=0; i < pValue.length; i++) {
@@ -634,6 +678,7 @@ $.widget('pretius.enhancedLovItem', {
             } 
             else {
               apex.debug.message(this.C_LOG_WARNING, this.logPrefix, 'reinit', 'Value is not set');
+              this._elementSetValue( "" );
             }           
           }
 
@@ -765,6 +810,7 @@ $.widget('pretius.enhancedLovItem', {
             "id": this.element.get(0).id,
             "return": returnValue
           });
+          
           
           return returnValue;
         }, this),
@@ -5191,6 +5237,7 @@ $.widget('pretius.enhancedLovItem', {
 
     var 
       promptZIndex;
+
 
     $(document).on('mousedown.promptcheck-'+this.element.get(0).id, $.proxy(this._promptCheckClickOutside, this));
 
