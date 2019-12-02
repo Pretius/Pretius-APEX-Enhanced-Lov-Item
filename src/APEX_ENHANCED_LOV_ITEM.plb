@@ -55,7 +55,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
 
     g_item := p_item;
 
-    p_result.display_lov_definition := prepareSqlQuery();
+    p_result.display_lov_definition := 'select d, r from ('||prepareSqlQuery()||')';
     p_result.is_multi_value := instr(':'||p_item.attribute_05||':', ':MS:') > 0;
 
   end meta_data;

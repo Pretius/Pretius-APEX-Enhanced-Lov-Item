@@ -138,6 +138,7 @@ $.widget('pretius.enhancedLovItem', {
     this.popup = this._popupCreateObject();
     
     //nalezy rozdzielic analogicznie do this.popup
+
     this.mask = this._maskCreateNew();
 
     this.prompt = this._promptCreateNew();
@@ -184,6 +185,9 @@ $.widget('pretius.enhancedLovItem', {
 
     if ( this._elementGetValueLenght() > 0 && !this.pluginStopped ) {
       this._getOnLoadLov( this._elementGetValue() );
+    }
+    else {
+      this._promptPlaceHolderShow();
     }
 
 
@@ -1982,11 +1986,13 @@ $.widget('pretius.enhancedLovItem', {
     *
   */  
   _promptPlaceHolderShow: function(){
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptPlaceHolderShow', {
-      "arguments": arguments
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptPlaceHolderShow', {
+      "arguments": arguments,
+      "placeholder": this.mask.placeholder
     });
 
     this.mask.placeholder.show();
+    this.mask.itemContainerBody.hide();
   },
   /*
     *
@@ -1998,11 +2004,12 @@ $.widget('pretius.enhancedLovItem', {
     *
   */  
   _promptPlaceHolderHide: function(){
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptPlaceHolderHide', {
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptPlaceHolderHide', {
       "arguments": arguments
     });
 
     this.mask.placeholder.hide();
+    this.mask.itemContainerBody.show();
   },
   /*
     *
@@ -6132,6 +6139,7 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.selected.sort( this._sortJson( "display", direction ) );
 
     this._promptRenderTags();
+    this._promptApplyValues(true);
 
     //set state of mask
     this.mask.state.sorted = direction;
@@ -7037,7 +7045,7 @@ $.widget('pretius.enhancedLovItem', {
 
       this._elementSetValue( arrayOfValues.join( this.C_VALUE_SEPARATOR ) );
       
-      this.mask.state.selected.sort( this._sortJson( "display", this.mask.state.sorted ) );
+      //this.mask.state.selected.sort( this._sortJson( "display", this.mask.state.sorted ) );
     }
     else {
       this._elementSetValue( null );
@@ -7689,66 +7697,7 @@ $.widget('pretius.enhancedLovItem', {
 
     return returnObject
   },
-  /*
-    *
-    * function name: _getItemContainerBody
-    * description
-    * params:
-    *   -
-    *   -
-    *
-  */  
-  _getItemContainerBody: function(){
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getItemContainerBody', {
-      "arguments": arguments
-    });
 
-    var returnObject = this.mask.container.find('.itemContainerBody');
-    
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getItemContainerBody', "returns", returnObject);
-
-    return returnObject;
-  },
-  /*
-    *
-    * function name: _getTagsContainer
-    * description
-    * params:
-    *   -
-    *   -
-    *
-  */  
-  _getTagsContainer: function(){
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getTagsContainer', {
-      "arguments": arguments
-    });
-
-    var returnObject = this.mask.container.find('.tags');
-    
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getTagsContainer', "returns", returnObject);
-    
-    return returnObject;
-  },
-  /*
-    *
-    * function name: _getMaskInput
-    * description
-    * params:
-    *   -
-    *   -
-    *
-  */  
-  _getMaskInput: function(){
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getMaskInput', {
-      "arguments": arguments
-    });
-
-    var returnObject = this.mask.container.find('.fakeInput');
-    
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getMaskInput', "returns", returnObject);
-    
-    return returnObject;
-  },
   /*
     *
     * function name: _isNavigationKey
@@ -8101,7 +8050,8 @@ $.widget('pretius.enhancedLovItem', {
       maskLayer   = $('<div class="masking"></div>'),
       popupButton = this._createItemPopupButton(),
       ajaxStateButton = this._createItemAjaxButton(),
-      placeholder = $('<div class="placeholder">'+this.element.attr('placeholder')+'</div>'),
+      palceholderText = this.element.attr('placeholder') == undefined ? "" : this.element.attr('placeholder'),
+      placeholder = $('<div class="placeholder">'+palceholderText+'</div>'),
       container = $('<div></div>'),
       itemContainer = $('<div></div>'),
       itemContainerBody = $('<div></div>'),

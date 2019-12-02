@@ -1,5 +1,4 @@
-
-.itemContainer ~ button {
+.pretius--enhancedLovItem.mask > div.itemContainer ~ button {
   order: 4;
 }
 
@@ -8,6 +7,7 @@
   opacity: 0.5;
 }
 
+/* item mask */
 .pretius--enhancedLovItem.mask {
   max-width: 100%;
   display: flex;
@@ -21,15 +21,54 @@
 }
 
 
-.itemContainer {
+/* Item disabled */
+.pretius--enhancedLovItem.mask.disabled > div.itemContainer {
+  cursor: default;
+}
+
+/* Item Container */
+.pretius--enhancedLovItem.mask > div.itemContainer {
   border: 1px solid rgba(0,0,0,.125);
   min-width: 0px;
   flex-grow: 1;
   cursor: text;
   position: relative;
+  overflow: hidden;
 }
 
-.t-Form--stretchInputs .pretius--enhancedLovItem.mask,
+  /* Item Container Body */
+  .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody {
+    height: 100%;
+  }
+
+    /* masking div */
+    .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody .masking {
+      background: rgba(255,255,255,0);
+      background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(100%, rgba(255,255,255,1)));
+      background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 10px;
+      height: 100%;
+    }
+
+  
+  /* placeholder */
+  .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder {
+    opacity: 0.5;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;  
+  }
+
+/* strech item*/
+.t-Form--stretchInputs                .pretius--enhancedLovItem.mask,
 .t-Form-fieldContainer--stretchInputs .pretius--enhancedLovItem.mask {
   flex: 1;  
 }
@@ -39,133 +78,225 @@
   opacity: 0.5;  
 }
 
-.pretius--enhancedLovItem.mask.disabled .itemContainer {
-  cursor: default;
-}
 
-.itemContainerBody .masking {
-  background: rgba(255,255,255,0);
-  background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: -webkit-gradient(left top, right top, color-stop(0%, rgba(255,255,255,0)), color-stop(100%, rgba(255,255,255,1)));
-  background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: -o-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 10px;
-  height: 100%;
-}
-
-.itemContainer > .itemContainerBody input[type=text].fakeCursorHandler {
-  width: 100%;
-  margin-top: 0.2rem;
-  border: none;
-  background: none;
-  height: 1.8rem;
+/* common */
+.pretius--enhancedLovItem > div.itemContainer,
+.pretius--enhancedLovItem.prompt,
+.pretius--enhancedLovItem.prompt > div.fixBorder,
+.pretius--enhancedLovItem.prompt > div.body > div.loadMore {
+  border-color: rgb(223, 223, 223);
 }
 
 /*
-.itemContainer > .itemContainerBody input[type=text] {
-  border: none;
-  background: none;
-  flex-grow: 1;
-  flex-shrink: 1;
-  margin: 0px;
+  paste
+*/
+.pretius--enhancedLovItem.paste .body {
+  overflow: auto;
+  position: relative;
   padding: 0px;
-  height: 1.8rem;
+  min-height: 206px;
+  height: 206px;
+  max-height: 206px;
 }
+
+.pretius--enhancedLovItem.paste textarea {
+  padding: 10px;
+  resize: none;
+  width: 100%;
+  height: 206px;
+  vertical-align: top;
+  border: none;
+}
+
+.pretius--enhancedLovItem.paste .body.summary table td:last-child {
+  font-weight: bold;
+  text-align: right;
+}
+
+.pretius--enhancedLovItem.paste .body table tr:last-child td {
+  border-bottom: none !important;
+}
+
+.ui-dialog.pretius--enhancedLovItem.paste .footer {
+  border-top: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: row;
+  padding: 10px 15px;
+}
+
+.ui-dialog.pretius--enhancedLovItem.paste .footer .left,
+.ui-dialog.pretius--enhancedLovItem.paste .footer .right {
+  flex-grow: 1;
+  display: flex;
+}
+
+.ui-dialog.pretius--enhancedLovItem.paste .footer .left {
+  justify-content: flex-start;
+}
+
+.ui-dialog.pretius--enhancedLovItem.paste .footer .right {
+  justify-content: flex-end;
+}
+
+/* floating template support */
+.t-Form-fieldContainer--floatingLabel.is-active .pretius--enhancedLovItem.mask .tags,
+.t-Form-fieldContainer--floatingLabel           .pretius--enhancedLovItem.mask .tags,
+.t-Form-fieldContainer--floatingLabel           .placeholder {
+  margin-top: 24px;
+}
+
+.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large.is-active  .pretius--enhancedLovItem.mask .tags,
+.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--xlarge.is-active .pretius--enhancedLovItem.mask .tags,
+.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large            .pretius--enhancedLovItem.mask .tags,
+.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--xlarge           .pretius--enhancedLovItem.mask .tags,
+.t-Form-fieldContainer--floatingLabel           .placeholder {
+  margin-top: 24px;
+}
+
+.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large .t-Form-labelContainer label {
+  padding-top: 6px;
+}
+
+.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel .itemContainer {
+  padding-left: 8px;
+}
+
+.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large  .itemContainer,
+.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--xlarge .itemContainer {
+  padding-left: 12px;
+}
+
+/*
+  error popup
 */
 
-.itemContainer > .itemContainerBody div.fakeInput {
-  flex-grow: 1;
-  background: silver;
-  min-width: 20px;
+.fa.error {
+  color: red;
 }
 
-/* item disabled -> tags */
-
-.pretius--enhancedLovItem.mask.disabled div.tags > div.tag:hover {
-  border-color: rgba(214,214,214);
-  background: rgba(214,214,214, 0.5);  
+.pretius--enhancedLovItem.ui-dialog .ajaxError,
+.pretius--enhancedLovItem.error .container {
+  padding: 15px;
+  overflow: auto;
+}
+.pretius--enhancedLovItem.ui-dialog .ajaxError .error {
+  white-space: pre;  
 }
 
-.pretius--enhancedLovItem.mask.disabled div.tags > div.tag > .remove {
-  cursor: default;
+.pretius--enhancedLovItem.ui-dialog .ajaxError pre,
+.pretius--enhancedLovItem.error pre{
+  padding: 15px;
+  border: 1px solid rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.08);;
+  border-radius: 5px;
+  overflow-x: auto;
 }
 
-/* item -> tags -> state -> expanded */
-.pretius--enhancedLovItem.mask.expanded .itemContainer > .itemContainerBody > div.tags {
-  flex-wrap: wrap; 
-  overflow: visible;
-}
 
-/* item -> tags -> */
-.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow: hidden;
-}
-
-.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag > .value{
-  flex-shrink: 1;
-  flex-grow: 1;
-  text-overflow: ellipsis;
-  overflow: hidden;
-}
-
-.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag > .remove {
-  flex-shrink: 0;
-  flex-grow: 0;  
+/* */
+.pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
   font-size: 1rem;
-  line-height: 2rem;
   padding-left: 0.2rem;
-  cursor: pointer;
-  color: rgba(0,0,0,1);
-  align-self: center;
 }
 
-.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag.extra {
-  background: #ffdfdf;
+/* Sizes / default / Container */
+.pretius--enhancedLovItem.mask > div.itemContainer {
+  padding: 0 0.2rem 0.2rem 0.2rem;
 }
 
-.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag {
-  /*display: inline-block;*/
-  display: flex;
-  max-width: 100%;
-  border: 1px solid rgba(214,214,214);
-  position: relative;
-  border-radius: 6px;
-  background: rgba(214,214,214, 0.5);
-  flex-shrink: 0;
-  color: rgba(0,0,0,0.5);
-  -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */  
-}
-
-
-.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag:hover {
-  border-color: #b1b1b1;
-}
-
+/* Sizes / default / tag margin*/
 .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag:not(:last-child) {
   margin-right: 0.2rem;
 }
 
-
-
-.itemContainer > input[type=text]:focus,
-.itemContainer > input[type=text]:hover {
-  background-color: transparent !important;
+/* Sizes / default / tag */
+.pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag {
+  padding: 0 0.5rem 0 0.5rem;
+  margin-top: 0.2rem;
 }
 
+/* Sizes / default / tag / value, placeholder */
+.pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder,
+.pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value {
+  font-size: 1.2rem;
+}
+
+/* Sizes / default / tag / value, remove */
+.pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value,
+.pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
+  line-height: 1.6rem;
+}
+
+
+/* Sizes / large / tag margin*/
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag:not(:last-child) {
+  margin-right: 0.2rem;
+}
+
+/* Sizes / large / Container */
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer {
+  padding: 0 0.2rem 0.2rem 0.2rem;
+}
+
+/* Sizes / large / tag */
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag {
+  padding: 0 0.5rem 0 0.5rem;
+  margin-top: 0.2rem;
+}
+
+/* Sizes / large / tag / value, placeholder */
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder {
+  padding: 0.6rem 0 0 0.4rem;
+}
+
+/* Sizes / large / tag / value, placeholder */
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder,
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value {
+  font-size: 1.4rem;
+}
+
+/* Sizes / large / tag / value, remove */
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value,
+.t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
+  line-height: 2.4rem;
+}
+
+/* Sizes / large / tag margin*/
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag:not(:last-child) {
+  margin-right: 0.4rem;
+}
+
+/* Sizes / xlarge / Container */
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer {
+  padding: 0 0.4rem 0.4rem 0.4rem;
+}
+
+/* Sizes / xlarge / tag */
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag {
+  padding: 0 0.5rem 0 0.5rem;
+  margin-top: 0.4rem;
+}
+
+/* Sizes / xlarge / tag / value, placeholder */
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder {
+  padding: 0.8rem 0 0 0.6rem;
+}
+
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder,
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value {
+  font-size: 1.6rem;
+}
+
+/* Sizes / xlarge / tag / value, remove */
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value,
+.t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
+  line-height: 2.7rem;
+}
+
+
+/*
+  Element: prompt
+*/
 .pretius--enhancedLovItem.prompt {
   border-color: rgba(0,0,0,0.125);
   position: absolute;
@@ -173,10 +304,6 @@
   z-index: 400;
 }
 
-/* inline dialog */
-.t-DialogRegion-body .pretius--enhancedLovItem.prompt {
-  position: fixed;
-}
 
 .pretius--enhancedLovItem.prompt.hidden {
   display: none;
@@ -353,512 +480,6 @@
   display: block;
 }
 
-
-/*popup*/
-.ui-dialog.pretius--enhancedLovItem.popup .body {
-  overflow: auto;
-  position: relative;
-
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body .searchingForResultsMask {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #fff;
-  opacity: 0.6;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body .searchingForResults {
-  position: absolute;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body .nodatafoundContainer,
-.ui-dialog.pretius--enhancedLovItem.popup .body .searchingForResults {
-  padding: 20px 0;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body.searching,
-.ui-dialog.pretius--enhancedLovItem.popup .body.nodatafound {
-  display: flex;
-  justify-content: center;
-  padding: 0px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body .searchingForResults,
-.ui-dialog.pretius--enhancedLovItem.popup .body .nodatafoundContainer {
-  align-self: center;
-  text-align: center;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body .searchingForResults  .icon > .fa ,
-.ui-dialog.pretius--enhancedLovItem.popup .body .nodatafoundContainer .icon > .fa {
-  font-size: 100px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body .searchingForResults .text,
-.ui-dialog.pretius--enhancedLovItem.popup .body .nodatafoundContainer .text {
-  padding-top: 10px;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup.selectViaRows td {
-  cursor: pointer;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer .footer-showSelected.inactive {
-  opacity: 0.5;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer .footer-showSelected,
-.ui-dialog.pretius--enhancedLovItem.popup .footer .footer-buttons {
-  flex-shrink: 1;
-  flex-grow: 1;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer {
-  border-top: 1px solid rgba(0,0,0,0.05);
-  display: flex;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer label {
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer label {
-  line-height: 32px;
-  font-size: 12px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer .fakeCheckbox {
-  line-height: 32px;
-}
-
-
-.ui-dialog.pretius--enhancedLovItem.popup .footer .footer-buttons {
-  text-align: right;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .header.paginationOnly .paginationContainer {
-  text-align: center;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .header .paginationContainer .fa,
-.ui-dialog.pretius--enhancedLovItem.popup .header .paginationContainer {
-  text-align: right;
-  font-size: 12px;
-  line-height: 30px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .header .paginationContainer .prev {
-  margin-right: 5px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .header .paginationContainer .next {
-  margin-left: 5px; 
-}
-
-
-
-.ui-dialog.pretius--enhancedLovItem.popup .header {
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  display: flex;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .header > div {
-  flex-shrink: 1;
-  flex-grow: 1;
-}
-
-
-.ui-dialog.pretius--enhancedLovItem.popup .searchContainer {
-  position: relative;
-  text-align: left;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .searchContainer input {
-  padding: 5px;
-  line-height: 16px;
-  width: 100%;
-  height: 32px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .rowsPerPageContainer select {
-  padding: 5px;
-  line-height: 16px;
-  border-left: none;
-  height: 32px;
-}
-
-
-
-.ui-dialog.pretius--enhancedLovItem.popup .searchContainer.multiple input {
-  width: 100%;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .searchContainer .fa {
-  top: 0px;
-  line-height: 30px;
-  position: absolute;
-  right: 15px;
-  opacity: 0.5;
-  font-size: 14px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input ~ .search,
-.ui-dialog.pretius--enhancedLovItem.popup input.empty ~ .clear {
-  display: none;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input.empty ~ .search,
-.ui-dialog.pretius--enhancedLovItem.popup input ~ .clear {
-  display: block;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input ~ div {
-  top: 0px;
-  line-height: 34px;
-  position: absolute;
-  right: 0px;
-  
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input ~ div > .search,
-.ui-dialog.pretius--enhancedLovItem.popup input.empty ~ div > .clear {
-  display: none;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input.empty ~ div > .search,
-.ui-dialog.pretius--enhancedLovItem.popup input ~ div > .clear {
-  opacity: 0.5;
-  display: block;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .clear {
-  cursor: pointer;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .clear:hover {
-  opacity: 1;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .header,
-.ui-dialog.pretius--enhancedLovItem.popup .footer {
-  padding: 10px 15px;
-}
-
-
-
-.ui-dialog.pretius--enhancedLovItem.popup .header.hidden,
-.ui-dialog.pretius--enhancedLovItem.popup .footer.hidden {
-  display: none;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .body table {
-  
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .u-Report-sort {
-  white-space: nowrap;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup th:first-child,
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders th:first-child,
-.ui-dialog.pretius--enhancedLovItem.popup td.t-Report-cell:first-child {
-  
-  width: 42px;
-  min-width: 42px;
-  max-width: 42px;
-  
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup th {
-  border-top:none;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders  {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders th {
-  background: #fff;
-  position: relative;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup tr.hiddenDueToFilter {
-  display: none;
-}
-
-.highlight {
-  background: yellow;
-}
-
-
-/* information region */
-.ui-dialog.pretius--enhancedLovItem.popup .information.hidden {
-  display: none;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .information {
-  background: #f3f3f3;
-  position: relative;
-  min-height: 30px;
-  text-align: center;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .information .text {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  line-height: 20px;
-  font-size: 12px;
-}
-
-/* column filtering and sorting */
-
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders th.is-active .a-Icon, 
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders th.is-active .fa {
-  color: #fff;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders th.is-active,
-.ui-dialog.pretius--enhancedLovItem.popup .columnOperations {
-  background-color: #4e4e4e;
-  border-color: #4e4e4e;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup table.stickyHeaders th.is-active a {
-  color: #fff;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .columnOperations {
-  position: absolute;
-  top: 0px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .columnOperations .a-Icon {
-  color: #fff;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .sorting,
-.ui-dialog.pretius--enhancedLovItem.popup .filtering {
-  position: relative;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .filtering .fa {
-  position: absolute;
-  right: 7px;
-  top: 7px;
-  color: #fff;
-  opacity: 0.5;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .sorting a {
-  display: inline-block;
-  width: auto;
-  padding: 5px 10px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .sorting {
-  border-left: 1px solid;
-  border-right: 1px solid;
-  border-top: 1px solid;
-
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .filtering {
-  border: 1px solid;  
-  background: #616161;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .filtering input {
-  border: none;
-  background: transparent;
-  padding: 5px;
-  width: 100%;
-  color: #fff;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup .fakeRadio,
-.ui-dialog.pretius--enhancedLovItem.popup .fakeCheckbox {
-  cursor: pointer;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input[type=radio]:not(:checked) ~ .fa-circle-o,
-.ui-dialog.pretius--enhancedLovItem.popup input[type=radio]:checked ~ .fa-dot-circle-o {
-  display: inline-block;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup input[type=radio],
-.ui-dialog.pretius--enhancedLovItem.popup input[type=radio]:checked ~ .fa-circle-o,
-.ui-dialog.pretius--enhancedLovItem.popup input[type=radio]:not(:checked) ~ .fa-dot-circle-o {
-  display: none;
-}
-
-
-.ui-dialog.pretius--enhancedLovItem.popup input[type=checkbox]:not(:checked) ~ .fa-square-o,
-.ui-dialog.pretius--enhancedLovItem.popup input[type=checkbox]:checked ~ .fa-check-square-o {
-  display: inline-block;
-}
-
-/* hack to make label and checkbox work, but not to show checkbox itself*/
-.ui-dialog.pretius--enhancedLovItem.popup .footer input[type=checkbox] {
-  position: fixed;
-  opacity: 0;
-  top: -10px;
-  left: -10px;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup th input[type=checkbox],
-.ui-dialog.pretius--enhancedLovItem.popup td input[type=checkbox],
-
-.ui-dialog.pretius--enhancedLovItem.popup input[type=checkbox]:checked ~ .fa-square-o,
-.ui-dialog.pretius--enhancedLovItem.popup input[type=checkbox]:not(:checked) ~ .fa-check-square-o {
-  display: none;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup tr:nth-child(even).extraValue td.t-Report-cell,
-.ui-dialog.pretius--enhancedLovItem.popup tr:nth-child(even).extraValue.selected td.t-Report-cell,
-.ui-dialog.pretius--enhancedLovItem.popup tr:nth-child(odd).extraValue td.t-Report-cell,
-.ui-dialog.pretius--enhancedLovItem.popup tr:nth-child(odd).extraValue.selected td.t-Report-cell {
-  background: #ffdfdf;
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup tr td.t-Report-cell {
-  white-space: nowrap;  
-}
-
-
-.ui-dialog.pretius--enhancedLovItem.popup tr:nth-child(odd).selected td.t-Report-cell,
-.ui-dialog.pretius--enhancedLovItem.popup tr.selected td.t-Report-cell {
-  background: rgba(255, 249, 0, 0.05);
-  text-shadow: 0 0 0.001px rgba(0,0,0, 0.5);
-
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup tr.selected:hover .t-Report-cell, 
-.ui-dialog.pretius--enhancedLovItem.popup tr.selected:nth-child(odd):hover .t-Report-cell {
-  background: rgba(255, 249, 0, 0.1) !important; 
-}
-
-.ui-dialog.pretius--enhancedLovItem.popup tr.selected td.t-Report-cell .fakeCheckbox {
-  text-shadow: none;
-}
-
-/* sizes */
-
-/* default */
-.itemContainerBody {
-  height: 100%;
-}
-
-.itemContainer > .itemContainerBody > div.tags > div.tag {
-  padding: 0 0.5rem 0 0.5rem;
-  margin-top: 0.2rem;
-  height: 2rem;
-  line-height: 2rem;
-  font-size: 1.1rem;
-}
-
-
-.itemContainer > .itemContainerBody > div.tags > div.tag.summary {
-  cursor: pointer;
-}
-
-.itemContainer {
-  padding: 0 0.2rem 0.2rem 0.2rem;
-  overflow: hidden;
-}
-
-.itemContainer .placeholder {
-  line-height: 2.2rem;
-  font-size: 1.2rem;
-  opacity: 0.5;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;  
-}
-
-/* large */
-.t-Form-fieldContainer--large .itemContainer > .itemContainerBody > div.tags > div.tag {
-  padding: 0 0.6rem 0 0.6rem;
-  margin-top: 0.3rem;
-  height: 2rem;
-  line-height: 1.8rem;
-  font-size: 1.3rem;
-}
-
-.t-Form-fieldContainer--large .itemContainer > .itemContainerBody > div.tags > div.tag > .remove {
-  line-height: 1.8rem;
-  font-size: 1rem;
-}
-
-.t-Form-fieldContainer--large .itemContainer {
-  padding: 0 0.3rem 0.3rem 0.3rem;
-}
-
-.t-Form-fieldContainer--large .itemContainer .placeholder {
-  padding: 0.2rem 0.5rem 0 0.5rem;
-  line-height: 1.8rem;
-  font-size: 1.1rem;
-}
-
-
-/* x-large */
-.t-Form-fieldContainer--xlarge .itemContainer > .itemContainerBody > div.tags > div.tag {
-  padding: 0 0.7rem 0 0.7rem;
-  margin-top: 0.4rem;
-  height: 2.6rem;
-  line-height: 2.4rem;
-  font-size: 1.2rem;
-}
-
-.t-Form-fieldContainer--xlarge .itemContainer > .itemContainerBody > div.tags > div.tag > .remove {
-  font-size: 1.2rem;
-  line-height: 2.4rem;
-}
-
-.t-Form-fieldContainer--xlarge .itemContainer {
-  padding: 0 0.4rem 0.4rem 0.4rem;
-}
-
-.t-Form-fieldContainer--xlarge .itemContainer .placeholder {
-  padding: 0.2rem 0.7rem 0 0.7rem;
-  line-height: 3.2rem;
-  font-size: 1.6rem;
-}
-
-/*
-  error popup
-*/
-
-.fa.error {
-  color: red;
-}
-
-.pretius--enhancedLovItem.ui-dialog .ajaxError,
-.pretius--enhancedLovItem.error .container {
-  padding: 15px;
-  overflow: auto;
-}
-.pretius--enhancedLovItem.ui-dialog .ajaxError .error {
-  white-space: pre;  
-}
-
-.pretius--enhancedLovItem.ui-dialog .ajaxError pre,
-.pretius--enhancedLovItem.error pre{
-  padding: 15px;
-  border: 1px solid rgba(0,0,0,0.3);
-  background: rgba(0,0,0,0.08);;
-  border-radius: 5px;
-  overflow-x: auto;
-}
-
-
 .pretius--enhancedLovItem.prompt .loadMore {
   padding: 2px;
   text-transform: uppercase;
@@ -876,52 +497,409 @@
   text-shadow: -1px -1px 0px rgb(255, 255, 255, 0.5);
 }
 
-.pretius--enhancedLovItem.paste .body {
+
+/*
+  Element: prompt
+  description: fix for item embeded in inline dialog
+*/
+
+.t-DialogRegion-body .pretius--enhancedLovItem.prompt {
+  position: fixed;
+}
+
+
+/*
+  Element: popup
+  description: fix for item embeded in inline dialog
+*/
+
+/* popup / body */
+
+.pretius--enhancedLovItem.ui-dialog.popup .body {
   overflow: auto;
   position: relative;
-  padding: 0px;
-  min-height: 206px;
-  height: 206px;
-  max-height: 206px;
 }
 
-.pretius--enhancedLovItem.paste textarea {
-  padding: 10px;
-  resize: none;
+.pretius--enhancedLovItem.ui-dialog.popup .body .searchingForResultsMask {
+  position: absolute;
   width: 100%;
-  height: 206px;
-  vertical-align: top;
-  border: none;
+  height: 100%;
+  background: #fff;
+  opacity: 0.6;
 }
 
-.pretius--enhancedLovItem.paste .body.summary table td:last-child {
-  font-weight: bold;
+.pretius--enhancedLovItem.ui-dialog.popup .body .searchingForResults {
+  position: absolute;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .body .nodatafoundContainer,
+.pretius--enhancedLovItem.ui-dialog.popup .body .searchingForResults {
+  padding: 20px 0;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .body.searching,
+.pretius--enhancedLovItem.ui-dialog.popup .body.nodatafound {
+  display: flex;
+  justify-content: center;
+  padding: 0px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .body .searchingForResults,
+.pretius--enhancedLovItem.ui-dialog.popup .body .nodatafoundContainer {
+  align-self: center;
+  text-align: center;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .body .searchingForResults  .icon > .fa ,
+.pretius--enhancedLovItem.ui-dialog.popup .body .nodatafoundContainer .icon > .fa {
+  font-size: 100px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .body .searchingForResults .text,
+.pretius--enhancedLovItem.ui-dialog.popup .body .nodatafoundContainer .text {
+  padding-top: 10px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* popup / footer */
+.pretius--enhancedLovItem.ui-dialog.popup .footer .footer-showSelected.inactive {
+  opacity: 0.5;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .footer .footer-showSelected,
+.pretius--enhancedLovItem.ui-dialog.popup .footer .footer-buttons {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .footer {
+  border-top: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .footer label {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .footer label {
+  line-height: 32px;
+  font-size: 12px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .footer .fakeCheckbox {
+  line-height: 32px;
+}
+
+
+.pretius--enhancedLovItem.ui-dialog.popup .footer .footer-buttons {
   text-align: right;
 }
 
-.pretius--enhancedLovItem.paste .body table tr:last-child td {
-  border-bottom: none !important;
+/* popup / header */
+.pretius--enhancedLovItem.ui-dialog.popup .header.paginationOnly .paginationContainer {
+  text-align: center;
 }
 
-.ui-dialog.pretius--enhancedLovItem.paste .footer {
-  border-top: 1px solid rgba(0,0,0,0.05);
+.pretius--enhancedLovItem.ui-dialog.popup .header .paginationContainer .fa,
+.pretius--enhancedLovItem.ui-dialog.popup .header .paginationContainer {
+  text-align: right;
+  font-size: 12px;
+  line-height: 30px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .paginationContainer .prev {
+  margin-right: 5px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .paginationContainer .next {
+  margin-left: 5px; 
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
   display: flex;
-  flex-direction: row;
+}
+
+
+
+.pretius--enhancedLovItem.ui-dialog.popup .header > div {
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .searchContainer {
+  position: relative;
+  text-align: left;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .searchContainer input {
+  padding: 5px;
+  line-height: 16px;
+  width: 100%;
+  height: 32px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .rowsPerPageContainer select {
+  padding: 5px;
+  line-height: 16px;
+  border-left: none;
+  height: 32px;
+}
+
+
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .searchContainer.multiple input {
+  width: 100%;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .searchContainer .fa {
+  top: 0px;
+  line-height: 30px;
+  position: absolute;
+  right: 15px;
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header input ~ .search,
+.pretius--enhancedLovItem.ui-dialog.popup .header input.empty ~ .clear {
+  display: none;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header input.empty ~ .search,
+.pretius--enhancedLovItem.ui-dialog.popup .header input ~ .clear {
+  display: block;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header input ~ div {
+  top: 0px;
+  line-height: 34px;
+  position: absolute;
+  right: 0px;
+  
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header input ~ div > .search,
+.pretius--enhancedLovItem.ui-dialog.popup .header input.empty ~ div > .clear {
+  display: none;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header input.empty ~ div > .search,
+.pretius--enhancedLovItem.ui-dialog.popup .header input ~ div > .clear {
+  opacity: 0.5;
+  display: block;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .clear {
+  cursor: pointer;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header .clear:hover {
+  opacity: 1;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .header,
+.pretius--enhancedLovItem.ui-dialog.popup .footer {
   padding: 10px 15px;
 }
 
-.ui-dialog.pretius--enhancedLovItem.paste .footer .left,
-.ui-dialog.pretius--enhancedLovItem.paste .footer .right {
-  flex-grow: 1;
-  display: flex;
+.pretius--enhancedLovItem.ui-dialog.popup .header.hidden,
+.pretius--enhancedLovItem.ui-dialog.popup .footer.hidden {
+  display: none;
 }
 
-.ui-dialog.pretius--enhancedLovItem.paste .footer .left {
-  justify-content: flex-start;
+.pretius--enhancedLovItem.ui-dialog.popup .u-Report-sort {
+  white-space: nowrap;
 }
 
-.ui-dialog.pretius--enhancedLovItem.paste .footer .right {
-  justify-content: flex-end;
+.pretius--enhancedLovItem.ui-dialog.popup th:first-child,
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders th:first-child,
+.pretius--enhancedLovItem.ui-dialog.popup td.t-Report-cell:first-child {
+  width: 42px;
+  min-width: 42px;
+  max-width: 42px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup th {
+  border-top:none;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders  {
+  position: absolute;
+  top: 0px;
+  width: 100%;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders th {
+  background: #fff;
+  position: relative;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup tr.hiddenDueToFilter {
+  display: none;
+}
+
+.highlight {
+  background: yellow;
+}
+
+
+/* information region */
+.pretius--enhancedLovItem.ui-dialog.popup .information.hidden {
+  display: none;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .information {
+  background: #f3f3f3;
+  position: relative;
+  min-height: 30px;
+  text-align: center;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .information .text {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+/* column filtering and sorting */
+
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders th.is-active .a-Icon, 
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders th.is-active .fa {
+  color: #fff;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders th.is-active,
+.pretius--enhancedLovItem.ui-dialog.popup .columnOperations {
+  background-color: #4e4e4e;
+  border-color: #4e4e4e;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup table.stickyHeaders th.is-active a {
+  color: #fff;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .columnOperations {
+  position: absolute;
+  top: 0px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .columnOperations .a-Icon {
+  color: #fff;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .sorting,
+.pretius--enhancedLovItem.ui-dialog.popup .filtering {
+  position: relative;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .filtering .fa {
+  position: absolute;
+  right: 7px;
+  top: 7px;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .sorting a {
+  display: inline-block;
+  width: auto;
+  padding: 5px 10px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .sorting {
+  border-left: 1px solid;
+  border-right: 1px solid;
+  border-top: 1px solid;
+
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .filtering {
+  border: 1px solid;  
+  background: #616161;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .filtering input {
+  border: none;
+  background: transparent;
+  padding: 5px;
+  width: 100%;
+  color: #fff;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup .fakeRadio,
+.pretius--enhancedLovItem.ui-dialog.popup .fakeCheckbox {
+  cursor: pointer;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup input[type=radio]:not(:checked) ~ .fa-circle-o,
+.pretius--enhancedLovItem.ui-dialog.popup input[type=radio]:checked ~ .fa-dot-circle-o {
+  display: inline-block;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup input[type=radio],
+.pretius--enhancedLovItem.ui-dialog.popup input[type=radio]:checked ~ .fa-circle-o,
+.pretius--enhancedLovItem.ui-dialog.popup input[type=radio]:not(:checked) ~ .fa-dot-circle-o {
+  display: none;
+}
+
+
+.pretius--enhancedLovItem.ui-dialog.popup input[type=checkbox]:not(:checked) ~ .fa-square-o,
+.pretius--enhancedLovItem.ui-dialog.popup input[type=checkbox]:checked ~ .fa-check-square-o {
+  display: inline-block;
+}
+
+/* hack to make label and checkbox work, but not to show checkbox itself*/
+.pretius--enhancedLovItem.ui-dialog.popup .footer input[type=checkbox] {
+  position: fixed;
+  opacity: 0;
+  top: -10px;
+  left: -10px;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup th input[type=checkbox],
+.pretius--enhancedLovItem.ui-dialog.popup td input[type=checkbox],
+
+.pretius--enhancedLovItem.ui-dialog.popup input[type=checkbox]:checked ~ .fa-square-o,
+.pretius--enhancedLovItem.ui-dialog.popup input[type=checkbox]:not(:checked) ~ .fa-check-square-o {
+  display: none;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup tr:nth-child(even).extraValue td.t-Report-cell,
+.pretius--enhancedLovItem.ui-dialog.popup tr:nth-child(even).extraValue.selected td.t-Report-cell,
+.pretius--enhancedLovItem.ui-dialog.popup tr:nth-child(odd).extraValue td.t-Report-cell,
+.pretius--enhancedLovItem.ui-dialog.popup tr:nth-child(odd).extraValue.selected td.t-Report-cell {
+  background: #ffdfdf;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup tr td.t-Report-cell {
+  white-space: nowrap;  
+}
+
+
+.pretius--enhancedLovItem.ui-dialog.popup tr:nth-child(odd).selected td.t-Report-cell,
+.pretius--enhancedLovItem.ui-dialog.popup tr.selected td.t-Report-cell {
+  background: rgba(255, 249, 0, 0.05);
+  text-shadow: 0 0 0.001px rgba(0,0,0, 0.5);
+
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup tr.selected:hover .t-Report-cell, 
+.pretius--enhancedLovItem.ui-dialog.popup tr.selected:nth-child(odd):hover .t-Report-cell {
+  background: rgba(255, 249, 0, 0.1) !important; 
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup tr.selected td.t-Report-cell .fakeCheckbox {
+  text-shadow: none;
+}
+
+.pretius--enhancedLovItem.ui-dialog.popup.selectViaRows td {
+  cursor: pointer;
 }
 
 /* IG support */
@@ -940,36 +918,82 @@
   border-color: rgb(223, 223, 223) !important;
 }
 
-
-/* floating template support */
-.t-Form-fieldContainer--floatingLabel.is-active .pretius--enhancedLovItem.mask .tags,
-.t-Form-fieldContainer--floatingLabel           .pretius--enhancedLovItem.mask .tags {
-  margin-top: 20px;
+/* tags */
+.pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: hidden;
 }
 
-.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large.is-active  .pretius--enhancedLovItem.mask .tags,
-.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--xlarge.is-active .pretius--enhancedLovItem.mask .tags,
-.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large            .pretius--enhancedLovItem.mask .tags,
-.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--xlarge           .pretius--enhancedLovItem.mask .tags {
-  margin-top: 24px;
+/* mask expanded */
+.pretius--enhancedLovItem.mask.expanded .itemContainer > .itemContainerBody > div.tags {
+  flex-wrap: wrap; 
+  overflow: visible;
 }
 
-.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large .t-Form-labelContainer label {
-  padding-top: 6px;
-}
+  .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > 
+  div.tags > div.tag {
+    /*display: inline-block;*/
+    display: flex;
+    max-width: 100%;
+    border: 1px solid rgba(214,214,214);
+    position: relative;
+    border-radius: 6px;
+    background: rgba(214,214,214, 0.5);
+    flex-shrink: 0;
+    color: rgba(0,0,0,0.5);
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */  
+  }
 
-.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel .itemContainer {
-  padding-left: 8px;
-}
+    .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > 
+    div.tags > div.tag:hover {
+      border-color: #b1b1b1;
+    }
 
-.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--large  .itemContainer,
-.t-Form-fieldContainer.t-Form-fieldContainer--floatingLabel.t-Form-fieldContainer--xlarge .itemContainer {
-  padding-left: 12px;
-}
+    /* mask disabled */
+    .pretius--enhancedLovItem.mask.disabled .itemContainer > .itemContainerBody > 
+    div.tags > div.tag:hover {
+      border-color: rgba(214,214,214);
+      background: rgba(214,214,214, 0.5);  
+    }
 
-.pretius--enhancedLovItem.prompt,
-.itemContainer,
-.fixBorder,
-.pretius--enhancedLovItem.prompt .loadMore {
-  border-color: rgb(223, 223, 223);
-}
+
+    .pretius--enhancedLovItem.mask.itemContainer > .itemContainerBody > 
+    div.tags > div.tag.summary {
+      cursor: pointer;
+    }
+
+    .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > 
+    div.tags > div.tag.extra {
+      background: #ffdfdf;
+    }
+
+      .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > 
+      div.tags > div.tag > span.value {
+        flex-shrink: 1;
+        flex-grow: 1;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > 
+      div.tags > div.tag > span.remove {
+        flex-shrink: 0;
+        flex-grow: 0;  
+        cursor: pointer;
+        color: rgba(0,0,0,1);
+        align-self: center;
+      }
+
+      /* mask disabled */
+      .pretius--enhancedLovItem.mask.disabled .itemContainer > .itemContainerBody > 
+      div.tags > div.tag > span.remove {
+        cursor: default;
+      }      
+
