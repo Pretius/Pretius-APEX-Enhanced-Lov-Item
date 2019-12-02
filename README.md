@@ -301,7 +301,7 @@ minor fixes for first release
 Initial Release
 
 ## Known issues
-* [Inline dialog bug](https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues/7)
+* [Inline dialog bug](https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues/7) fixed v1.1.0
 
 ## About Author
 Author | Github | Twitter | E-mail
