@@ -194,6 +194,12 @@ $.widget('pretius.enhancedLovItem', {
     this.element.after( this.mask.container );
     this.element.hide();
 
+    this.ig = {
+      "isEmbededInGrid": this.element.closest('.a-GV-columnItem').length > 0,
+      "grid": undefined,
+      "region": undefined
+    };
+
     this._integrateWithApexApi();
 
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'Debug level = "'+apex.debug.getLevel()+'"');
@@ -532,20 +538,19 @@ $.widget('pretius.enhancedLovItem', {
           *
         */
         "getPopupSelector": $.proxy( function(){
-          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'getPopupSelector', {
-            "arguments" : arguments/*,
-            "this.prompt.isVisible": this.prompt.isVisible,
-            "this.popup.state.isVisible": this.popup.state.isVisible
-            */
-          });
-
           var 
             selectors = [
-              '[data-popup="'+this.widgetUniqueId+'"]',
-              '[data-paste="'+this.widgetUniqueId+'"]',
-              '[data-prompt="'+this.widgetUniqueId+'"]'
-              //'[data-mask="'+this.widgetUniqueId+'"]'   
+              '[data-prompt="'+this.widgetUniqueId+'"]',
+              '[data-popup="'+this.widgetUniqueId+'"]'
+              //'[data-paste="'+this.widgetUniqueId+'"]',
+              //'[data-mask="'+this.widgetUniqueId+'"]'   */
             ];
+
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'getPopupSelector', {
+            "arguments" : arguments,
+            "selector": selectors.join(','),
+            "selector eval": $(selectors.join(','))
+          });
 
           return selectors.join(',');
         }, this ),
@@ -627,12 +632,16 @@ $.widget('pretius.enhancedLovItem', {
             "id": this.element.get(0).id
           });
 
-          //return void(0);
           var 
             displayArr = pDisplay.split( this.C_DISPLAY_SEPARATOR ),
             notEmpty = false,
             objectTemp;
 
+          if ( this.ig.isEmbededInGrid ) {
+            this.ig.region = this.element.closest('.a-IG');
+            this.ig.grid = this.ig.region.interactiveGrid('getViews').grid;
+          }
+  
           this._promptEmptyTags();
           this._promptEmptyMaskState();
 
@@ -4886,6 +4895,9 @@ $.widget('pretius.enhancedLovItem', {
     this.popup.showSelectedCheckbox.prop('checked', false);
 
     $('body').removeClass('apex-no-scroll');
+    
+    this._resetFocus();
+
   },
   /*
     *
@@ -5102,8 +5114,11 @@ $.widget('pretius.enhancedLovItem', {
     menu
       .append( menuExpand )
       .append( menuSort )
-      .append( menuClear )
-      .append( menuPaste );
+      .append( menuClear );
+      
+    if ( this.pluginSettings.isMultipleSelection ) {
+      menu.append( menuPaste );
+    }
 
     if ( this.pluginSettings.isPopupReportAvailable ) {
       menu.append( menuPopup );
@@ -5130,7 +5145,6 @@ $.widget('pretius.enhancedLovItem', {
       .css({
         'maxHeight': this.pluginSettings.prompt.maxHeight
       });
-
 
     //tbd
     //this is not needed, because maxlength has been used to
@@ -6672,7 +6686,39 @@ $.widget('pretius.enhancedLovItem', {
 
     this._triggerEvent('paeli_prompt_data_rendered', this._promptGetEventData());
   },
+  /*
+    *
+    * function name: _resetFocus
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _resetFocus: function(){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_resetFocus', {
+      "arguments": arguments
+    });
 
+
+    if ( this.ig.isEmbededInGrid ) {
+      var 
+        widget = this,
+        recordId = this.ig.grid.model.getRecordId(this.ig.grid.view$.grid('getSelectedRecords')[0]),
+        column = this.ig.region.interactiveGrid('option').config.columns.filter(function (pColumn) {
+          
+          return pColumn.staticId === widget.options.item.name
+        })[0];
+        
+      this.ig.grid.view$.grid('gotoCell', recordId, column.name)
+      //this.ig.grid.focus();
+      this.ig.region.interactiveGrid('focus');
+    }
+    else {
+      this.element.focus();
+    }
+
+  },
   /*
     *
     * function name: _promptGetHiglighted
@@ -8097,6 +8143,7 @@ $.widget('pretius.enhancedLovItem', {
   
     itemContainer.after( ajaxStateButton.hide() );
 
+    
     //transfer result width of APEX item after rendering the element
     if ( this.element.closest('.col').outerWidth() >= this.element.outerWidth() ) {
       container.css('minWidth', this.element.outerWidth());
