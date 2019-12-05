@@ -633,7 +633,8 @@ $.widget('pretius.enhancedLovItem', {
           });
 
           var 
-            displayArr = pDisplay.split( this.C_DISPLAY_SEPARATOR ),
+            //displayArr = pDisplay == null ? pValue.split( this.C_DISPLAY_SEPARATOR ) : pDisplay.split( this.C_DISPLAY_SEPARATOR ),
+            displayArr = [],
             notEmpty = false,
             objectTemp;
 
@@ -650,6 +651,17 @@ $.widget('pretius.enhancedLovItem', {
             if ( !Array.isArray( pValue ) ) {
               pValue = pValue.split( this.C_VALUE_SEPARATOR );
             }
+
+            try {
+              displayArr = pDisplay.split( this.C_DISPLAY_SEPARATOR );
+            } catch( pError ) {
+              //              
+              displayArr = pValue;
+
+              apex.debug.message(this.C_LOG_WARNING, this.logPrefix, 'reinit', 'Couldn\'t split display value(s) because it is null.', {
+                'pError' : pError
+              });            
+            }            
 
             if ( pValue.length == 1 && pValue[0].length == 0 ) {
               //empty value
@@ -673,7 +685,7 @@ $.widget('pretius.enhancedLovItem', {
 
             notEmpty = pValue.length > 0;
           }
-          else {
+          else { //singular selection
             if ( pValue.length > 0 ) {
               objectTemp = {
                 "value"  : pValue,
@@ -794,17 +806,32 @@ $.widget('pretius.enhancedLovItem', {
             arrayOfDisplay = [],
             returnValue;
 
-          arrayOfDisplay = this.mask.state.selected.map( function( pElem ){
-            return pElem.display
-          } );         
+          for (var i=0; i < this.mask.state.selected.length; i++) {
+            if ( pValue.indexOf( this.mask.state.selected[i].value ) > -1 ) {
+              arrayOfDisplay.push( this.mask.state.selected[i] );
+            }
+          }
 
-          returnValue = arrayOfDisplay.join( this.C_DISPLAY_SEPARATOR );
+          arrayOfDisplay = arrayOfDisplay.map( function( pElem ){
+            return pElem.display
+          } );   
+
+          if (arrayOfDisplay.length == 0) {
+            returnValue = pValue;
+          }
+          else {
+            returnValue = arrayOfDisplay.join( this.C_DISPLAY_SEPARATOR );  
+          }
+
+          
 
           apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'displayValueFor', {
             "arguments": arguments,
             "pValue": pValue,
             "id": this.element.get(0).id,
-            "return": returnValue
+            "return": returnValue,
+            "arrayOfDisplay": arrayOfDisplay,
+            "arrayOfDisplay length": arrayOfDisplay.length
           });
 
           return returnValue;
@@ -2607,7 +2634,7 @@ $.widget('pretius.enhancedLovItem', {
       .append( showSelectedInput )
       .append( showSelectedLabel );
 
-    if ( apex.debug.getLevel() == this.C_LOG_LEVEL6 ) {
+    if ( apex.debug.getLevel() >= this.C_LOG_LEVEL6 ) {
       buttonDebug.click( $.proxy( this._popupDebugStateObject, this ) );
       footerButtons.append( buttonDebug );
     }
@@ -5287,6 +5314,7 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     this._triggerEvent('paeli_prompt_shown', this._promptGetEventData());
+
   },
   /*
     *
@@ -7574,6 +7602,11 @@ $.widget('pretius.enhancedLovItem', {
       "arguments": arguments,
       "pEvent": pEvent
     });
+
+    if ( !this.pluginSettings.isAutocompleteAvailable ) {
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_maskHandleKeyPress', 'Autocomplete is not available');
+      return void(0);
+    }
 
     if ( pEvent.keyCode != 13 ) {
       this.prompt.input.val( pEvent.key )
