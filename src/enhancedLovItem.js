@@ -1,75 +1,88 @@
 $.widget('pretius.enhancedLovItem', {
 //
 //
-  C_VALUE_SEPARATOR                    : ':',
-  C_AJAX_STATUS_SUCCESS                : 'SUCCESS',
-  C_AJAX_STATUS_ERROR                  : 'ERROR',
-  C_POPUP_SEARCH_PLACEHOLDER           : 'Enter a search term',
-  C_POPUP_BTN_SELECT_TEXT              : 'Select',
-  C_POPUP_SHOW_SELECTED_LABEL          : "Show only selected",
-  C_POPUP_TEXT_ROWS_SELECTED           : "All results (%0) on this page has been selected.",
-  C_POPUP_TEXT_NO_DATA_FOUND_SEARCH    : 'No data found for search term "%0".',
-  C_POPUP_TEXT_NO_DATA_FOUND_QUERY     : 'Dictionary has no data to render.',
-  C_POPUP_TEXT_CLEAR_FILTERING         : 'Click <a href="javascript: void(0)" class="clearFiltering">here</a> to clear filtering.',
-  C_POPUP_TEXT_UNSAVED_CHANGES         : 'You have selected %0 values. Closing without saving will not save selected values.',
-  C_POPUP_TEXT_SEACH_IN_SELECTED       : 'You have filtered %0 row(s) from %1 selected row(s). </br>Click <a href="javascript: void(0)" class="showSelected">here</a> to get back to all selected rows.',
-  C_POPUP_TEXT_FILTERED_INFO           : '%0 results found for search term "%1". ',
-  C_POPUP_TEXT_EXTRA_VALUE             : 'Value "%0" is not within dictionary.',
-  C_PROMPT_MENU_EXPAND_TITLE           : 'Show or hide all tags',
-  C_PROMPT_MENU_SORT_TITLE             : 'Sort tags',
-  C_PROMPT_MENU_CLEAR_TITLE            : 'Clear all selected values',
-  C_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_X : 'Please enter %0 or more characters.',
-  C_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_0 : 'Start typing to get results.',
-  C_PROMPT_TEXT_NO_DATA_FOUND          : 'No data found.',
-  C_PROMPT_TEXT_SEARCHING              : 'Searching...',
-  C_PROMPT_TEXT_RAPID_SELECTION        : 'Start typing to select more...',
-  C_PROMPT_TEXT_LOAD_MORE              : 'Load more...',
-  C_ERROR_DEBUG_OFF                    : 'Please contact application administrator for more information.'+"\n"+'Detailed information available in debug mode.',
-  C_TAGS_LIMITED_OTHERS                : 'and %0 more...',
-  C_TAGS_LIMITED_0                     : '%0 selected',
-  C_POPUP_PAGINATION_PREV              : 'Previous',
-  C_POPUP_PAGINATION_NEXT              : 'Next',
-  C_POPUP_HEADER_SORT_ASC_TITLE        : 'Sort ascending',
-  C_POPUP_HEADER_SORT_DESC_TITLE       : 'Sort descending',
-  C_POPUP_TEXT_SEARCHING               : 'Waiting for results...',
+  C_LOG_DEBUG    : apex.debug.LOG_LEVEL.INFO,
+  C_LOG_WARNING  : apex.debug.LOG_LEVEL.WARN,
+  C_LOG_ERROR    : apex.debug.LOG_LEVEL.ERROR,
+  C_LOG_LEVEL6   : apex.debug.LOG_LEVEL.APP_TRACE,
+  C_LOG_LEVEL9   : apex.debug.LOG_LEVEL.ENGINE_TRACE,
+//
+//
+  C_VALUE_SEPARATOR                             : ':',
+  C_DISPLAY_SEPARATOR                           : ',',
+  C_AJAX_STATUS_SUCCESS                         : 'SUCCESS',
+  C_AJAX_STATUS_ERROR                           : 'ERROR',
+  C_POPUP_SEARCH_PLACEHOLDER                    : 'Enter a search term',
+  C_POPUP_BTN_SELECT_TEXT                       : 'Select',
+  C_POPUP_SHOW_SELECTED_LABEL                   : "Show only selected",
+  C_POPUP_TEXT_ROWS_SELECTED                    : "All results (%0) on this page has been selected.",
+  C_POPUP_TEXT_NO_DATA_FOUND_SEARCH             : 'No data found for search term "%0".',
+  C_POPUP_TEXT_NO_DATA_FOUND_QUERY              : 'Dictionary has no data to render.',
+  C_POPUP_TEXT_CLEAR_FILTERING                  : 'Click <a href="javascript: void(0)" class="clearFiltering">here</a> to clear filtering.',
+  C_POPUP_TEXT_UNSAVED_CHANGES                  : 'You have selected %0 values. Closing without saving will not save selected values.',
+  C_POPUP_TEXT_SEACH_IN_SELECTED                : 'You have filtered %0 row(s) from %1 selected row(s). </br>Click <a href="javascript: void(0)" class="showSelected">here</a> to get back to all selected rows.',
+  C_POPUP_TEXT_FILTERED_INFO                    : '%0 results found for search term "%1". ',
+  C_POPUP_TEXT_EXTRA_VALUE                      : 'Value "%0" is not within dictionary.',
+  C_PROMPT_MENU_EXPAND_TITLE                    : 'Show or hide all tags',
+  C_PROMPT_MENU_SORT_TITLE                      : 'Sort tags',
+  C_PROMPT_MENU_CLEAR_TITLE                     : 'Clear all selected values',
+  C_PROMPT_MENU_PASTE_TITLE                     : 'Paste values',
+  C_PROMPT_MENU_POPUP_TITLE                     : 'Open popup report',
+  C_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_X          : 'Please enter %0 or more characters.',
+  C_PROMPT_TEXT_MINIMAL_INPUT_LENGTH_0          : 'Start typing to get results.',
+  C_PROMPT_TEXT_NO_DATA_FOUND                   : 'No data found.',
+  C_PROMPT_TEXT_SEARCHING                       : 'Searching...',
+  C_PROMPT_TEXT_RAPID_SELECTION                 : 'Start typing to select more...',
+  C_PROMPT_TEXT_LOAD_MORE                       : 'Load more...',
+  C_ERROR_DEBUG_OFF                             : "Please contact application administrator for more information.\nDetailed information available in debug mode.",  
+  C_TAGS_LIMITED_OTHERS                         : 'and %0 more...',
+  C_TAGS_LIMITED_0                              : '%0 selected',
+  C_POPUP_PAGINATION_PREV                       : 'Previous',
+  C_POPUP_PAGINATION_NEXT                       : 'Next',
+  C_POPUP_PAGINATION_OF                         : 'of',
+  C_POPUP_HEADER_SORT_ASC_TITLE                 : 'Sort ascending',
+  C_POPUP_HEADER_SORT_DESC_TITLE                : 'Sort descending',
+  C_POPUP_TEXT_SEARCHING                        : 'Waiting for results...',
+  //v1.1.0
+  C_POPUP_PASTE_TEXTAREA_PLACEHOLDER            : 'Values must be separated by a newline character',
+  C_POPUP_PASTE_BTN_PARSE_TEXT                  : 'Parse',
+  C_POPUP_PASTE_BTN_CLEAR_TEXT                  : 'Clear',
+  C_POPUP_PASTE_BTN_SELECT_TEXT                 : 'Apply',
+  C_POPUP_PASTE_BTN_BACK_TEXT                   : 'Back',
+  C_POPUP_PASTE_SUMMARY_PASTED_COUNT            : 'Total number of pasted values',
+  C_POPUP_PASTE_SUMMARY_PASTED_LENGHT           : 'Total length of pasted values including separator',
+  C_POPUP_PASTE_SUMMARY_MAX_LENGTH              : 'Maximum length',
+  C_POPUP_PASTE_SUMMARY_VALUES_TO_BE_APPLIED    : 'Number of pasted values to be applied %0',
+  C_POPUP_PASTE_SUMMARY_VALUES_EXCEEDING_LIMIT  : 'Number of pasted values exceeding the maximum length %0',
+  C_POPUP_PASTE_SUMMARY_SHOW_LIST_ANCHOR        : '(show list)',
+  C_POPUP_PASTE_SUMMARY_MAXLENGTH_NOTSET        : 'not set',
+  C_POPUP_PASTE_SUMMARY_TH_VALUES_OUT           : 'Values exceeding maximum length limit',
+  C_POPUP_PASTE_SUMMARY_TH_VALUES_IN            : 'Values ready to be applied',
+  C_POPUP_PASTE_SUMMARY_TH_SUMMARY              : 'Summary',
+
 
   _create: function(){
     var 
-      popupColumnSettingsJson = undefined,
-      isBasicConfiguration = false;
+      popupColumnSettingsJson = undefined;
 
-    this.logPrefix = '# ('+this.element.get(0).id+') '+this.options.plugin.name+':';
-    apex.debug.log(this.logPrefix, '_create', 'options', this.options, this);
+    this.logPrefix = '# '+this.options.plugin.name+':';
+    //this.logPrefix = '# ('+this.element.get(0).id+') '+this.options.plugin.name+':';
+
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'Debug level = "'+apex.debug.getLevel()+'"');
+
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'options', {
+      "options": this.options, 
+      'widget': this
+    });
 
     this._super( this.options );
     this._applyTranslations();
 
     this.pluginStopped = false;
 
-    if (
-      //popup settings is empty
-      this.options.attributes.popupSettings == null
-      || (
-        //popup settings is not empty but checkbox is not checked
-        this.options.attributes.popupSettings != null
-        && this.options.attributes.popupSettings.indexOf('RCC') == -1
-      )
-    ) {
-      isBasicConfiguration = true;
-    }
-
-    if ( 
-      this.options.attributes.popupSettings != null 
-      && this.options.attributes.popupSettings.indexOf('CT') > -1
-    ) {
-      popupTitleText = this.options.attributes.popupTitleText
-    }
-    else {
-      popupTitleText = this.options.item.plain_label;
-    }
-
 
     this.pluginSettings = {
+      "maxlength"                : this.options.item.element_max_length,
       "isDebugOn"                : this.options.debug,
       "displayExtra"             : this.options.item.lov_display_extra,
       "popupSearchDebounceTime"  : 300,
@@ -79,9 +92,10 @@ $.widget('pretius.enhancedLovItem', {
       "popup": {
         "width"                  : this.options.attributes.popupWidth,
         "height"                 : this.options.attributes.popupHeight,
-        "title"                  : popupTitleText,
+        "title"                  : this._getPluginSettings_popupTitleText(),
         "rowsPerPage"            : 10,
-        "isReportBasicConf"      : isBasicConfiguration,
+        "isReportBasicConf"      : this._getPluginSettings_isBasicConfiguration(),        
+        //sprwadz w kontekscie isReportBasicConf
         "isReportAdvancedConf"   : this.options.attributes.popupSettings != null && this.options.attributes.popupSettings.indexOf('RCC') > -1,
         "isDisplayColumnVisible" : this.options.attributes.popupReportBasicConf != null && this.options.attributes.popupReportBasicConf.indexOf('DDC') > -1,
         "isReturnColumnVisible"  : this.options.attributes.popupReportBasicConf != null && this.options.attributes.popupReportBasicConf.indexOf('DRC') > -1,
@@ -105,201 +119,55 @@ $.widget('pretius.enhancedLovItem', {
         "template"               : this.options.attributes.autoCompleteSettingsTemplate,
         "isMinimalInputLength"   : this.options.attributes.autoCompleteSettings != null && this.options.attributes.autoCompleteSettings.indexOf('MIL') > -1,
         "minimalInputLength"     : this.options.attributes.autoCompleteMinInputLength,
-        "isRapidSelection"       : this.options.attributes.autoCompleteSettings != null && this.options.attributes.autoCompleteSettings.indexOf('RS') > -1
+        "isRapidSelection"       : this.options.attributes.autoCompleteSettings != null && this.options.attributes.autoCompleteSettings.indexOf('RS') > -1,
+        "hideToolbar"            : this.options.attributes.autoCompleteSettings != null && this.options.attributes.autoCompleteSettings.indexOf('HT') > -1
         
       }
     };
 
     this.inputCss = {
-      "borderColor" : this.element.css('borderColor'),
+      //"borderColor" : this.element.css('borderColor') == 'rgb(0, 0, 0)' ? 'rgb(223, 223, 223)' : this.element.css('borderColor'),
       "fontSize"    : this.element.css('fontSize'),
       "lineHeight"  : this.element.css('lineHeight')
     };
+
     if ( this.options.item.lov_cascade_parent_items != undefined ) {
-      $('#'+this.options.item.lov_cascade_parent_items).on('change', $.proxy(this._cascadingLovItem, this));
-    }
+      $(this.options.item.lov_cascade_parent_items).on('change', $.proxy(this._cascadingLovItem, this));
+    }    
     
+    this.widgetUniqueId  = $('<div></div>').uniqueId().attr('id');
     
-    //create mask handling events and displaying tags
     this.mask = this._maskCreateNew();
+    this.popup = this._popupCreateObject();
 
-    this.mask = $.extend( this.mask, {
+    this.prompt = this._promptCreateNew();
+
+    if ( this.element.closest('.t-DialogRegion').length > 0 ) {
+      this.element.closest('.t-DialogRegion-body').append( this.prompt.container );
+    }
+    else {
+      $('body').append( this.prompt.container );  
+    }
+
+    this.paste = {
+      "popup": this._pastePopupCreateNew(),
+      "classes": {
+        "body": "body"
+      },
       "state": {
-        "xhr"                 : undefined,
-        "isVisible"           : false,
-        "currentSearchText"   : '',
-        "lastFetchedPage"     : null,
-        "totalCount"          : 0,
-        "ajaxRunning"         : false,
-        "currentSelection"    : undefined,
-        "areResultsAvailable" : false,
-        "selected"            : [],
-        "tags"                : [],
-        "sorted"              : undefined,
-        "disabled"            : false,
-        "extraValues"         : [],
-        "error"               : false
+        "pasted": [],
+        "parsed": [],
+        "outOfLimit": []
       }
-    } );    
-
-    this.prompt = {
-      "customTemplateFunction": this._promptPrepateCustomTemplateFunction(),
-      "container"             : undefined,
-      "fixBorder"             : undefined,
-      "header"                : undefined,
-      "body"                  : undefined,
-      "input"                 : undefined,
-      "isVisible"             : false
+  
     };
 
-
-    //to be changed to private method
-    if ( this.pluginSettings.isPopupReportAvailable ) {
-      if ( this.pluginSettings.popup.isReportAdvancedConf ) {
-        try{
-          popupColumnSettingsJson = JSON.parse(this.options.attributes.popupColumnSettings);
-        } catch(error) {
-          this._maskAjaxStateButtonSetError({
-            "addInfo"  : error.name+': '+error.message,
-            "error"    : 'Invalid plugin "'+this.options.plugin.name+'" configuration.',
-            "techInfo" : [
-              {
-                "name": 'Reason',
-                "value": 'Parsing JSON object for popup report failed: inavlid JSON object.'
-              },
-              {
-                "name": 'JSON object to parse',
-                "value": this.options.attributes.popupColumnSettings
-              }
-              
-            ]
-          }, true);
-
-          this._maskAjaxStateButtonError( );
-        }
-      }
-
-      this.popup = {
-        "defaultReportSettings": {
-          //"heading": "",
-          "thAlign": "left",
-          "tdAlign": "left",
-          "visible": true,
-          "sort"   : true,
-          "filter" : true
-        },
-        "headers"  : popupColumnSettingsJson,
-        "container": this._popupCreateNew(),
-        "headerActionContainer": undefined,
-        "state": {
-          "informationText"           : undefined,
-          "informationTemplate"       : undefined,
-          "selecting"                 : false, //to recognize manual select and close
-          "xhr"                       : undefined,
-          "isVisible"                 : false,
-          "lastFetchedPage"           : null,
-          "searchString"              : undefined,
-          "searchStringOnFocus"       : undefined,
-          "sortedColumnIdx"           : null,
-          "sortedColumnDirection"     : 'asc',
-          "ajaxRunning"               : false,
-          "searchColumnIdx"           : undefined,
-          "ajaxDataFetchedCount"      : 0,
-          "ajaxDataTotalCount"        : undefined,
-          "ajaxStatus"                : undefined,
-          "ajaxCurrentPageData"       : [],
-          "ajaxSelectedData"          : [],
-          "ajaxCurrentPageRownumStart": undefined,
-          "ajaxCurrentPageRownumEnd"  : undefined,
-          "cache"                     : [], /* do dopisania kiedyś */
-          "selected"                  : [],
-          "selectedHash"              : 0
-        }
-      };
-
-      this.popup = $.extend( this.popup, {
-        "dialogHeader"          : this.popup.container.parent().find('.ui-dialog-titlebar'),
-        "header"                : this.popup.container.find('.header'),
-        "informationContainer"  : this.popup.container.find('.information'),
-        "informationText"       : this.popup.container.find('.information .text'),
-        "body"                  : this.popup.container.find('.body'),
-        "footer"                : this.popup.container.find('.footer'),
-        "showSelectedContainer" : this.popup.container.find('.footer-showSelected'),
-        "stickyHeaders"         : undefined,
-        "search"                : this.popup.container.find('.searchContainer :input'),
-        "selectAllCheckbox"     : undefined,
-        "showSelectedCheckbox"  : this.popup.container.find('.footer :checkbox'),
-        "showSelectedLabel"     : this.popup.container.find('.footer label'),
-        "clear"                 : this.popup.container.find('.searchContainer .clear'),
-        "select"                : this.popup.container.find('.select'),
-        "paginationContainer"   : this.popup.container.find('.paginationContainer'),
-        "paginationPrevPage"    : this.popup.container.find('.prev'),
-        "paginationNextPage"    : this.popup.container.find('.next'),
-        "paginationCurrent"     : this.popup.container.find('.current'),
-        "rowsPerPage"           : this.popup.container.find('select'),
-        "contentTable"          : undefined,
-        "rowsPerPageContainer"  : this.popup.container.find('.rowsPerPageContainer')
-      } );
-
-      this.popup.body.on('scroll', $.proxy( this._popupScrollCallback, this ) );   
-      this.popup.clear.on('click', $.proxy( this._popupSearchClear, this, true ) );
-      
-      this.popup.paginationPrevPage.on('click', $.proxy( this._popupPaginationPrevPage, this ));
-      this.popup.paginationNextPage.on('click', $.proxy( this._popupPaginationNextPage, this ));
-      this.popup.rowsPerPage.on('change', $.proxy( this._popupChangeRowsPerPage, this ) )
-
-      this.popup.showSelectedCheckbox.on('change', $.proxy( this._popupShowSelectedCheckboxChange, this ) );
-
-      if ( this.pluginSettings.popup.clickOnRowSelectsIt ) {
-        this.popup.container.on('click', 'td', $.proxy( this._popupClickOnCell, this) );
-      }
-      
-      this.popup.container
-        .on('click',  '.fakeCheckbox',            $.proxy( this._popupFakeCheckboxClick,          this) )
-        .on('click',  'button.select',            $.proxy( this._popupSelectAndClose,             this) )
-        .on('click',  'a.showSelected',           $.proxy( this._popupShowSelectedCheckboxChange, this) )
-        .on('click',  'a.clearFiltering',         $.proxy( this._popupClearFiltering,             this) )
-        .on('click',  '.fakeRadio',               $.proxy( this._popupFakeRadioClick,             this) )
-        .on('change', 'th:first-child :checkbox', $.proxy( this._popupThCheckboxChange,           this) )
-        .on('change', 'td:first-child :checkbox', $.proxy( this._popupTdCheckboxChange,           this) )
-        .on('change', 'td:first-child :radio',    $.proxy( this._popupTdRadioChange,              this) );
-
-      this.popup.search
-        .on('keyup', this._debounce($.proxy( this._popupSearchKeyUp, this, null, null), this.pluginSettings.popupSearchDebounceTime))
-        .on('keyup', $.proxy( this._maskKeyUpManageIcons, this) )
-        .on('focus', $.proxy( this._popupSearchFocus, this ) );
-
-
-    }
-
-    this.mask.itemContainer
-      .on('click',    $.proxy( this._promptSearchInputFocusHandler, this ) )
-      .on('focus',    $.proxy( this._maskHandleFocus, this ) )
-      .on('blur',     $.proxy( this._maskHandleBlur, this ) )
-      .on('keypress', $.proxy( this._maskHandleKeyPress, this ) )
-      .on('keydown',  $.proxy( this._maskHandleKeyDown, this ) );
-
-    //listen to event click on "x" icon in tag
-    this.mask.tagsContainer.on('click', '.remove', $.proxy( this._maskRemoveTagFromDOM, this ) );
-
-    this.mask.popupButton.on('keydown', $.proxy( this._maskPopupButtonKeyDown, this ) )
-
-    this.widgetUniqueId  = $('<div></div>').uniqueId().attr('id');
-
-    apex.debug.log(this.logPrefix, '_create', 'Plugin instance created. Unique id = '+this.widgetUniqueId, this.options);
-
-    if ( this.pluginSettings.isDebugOn ) {
+    if ( apex.debug.getLevel() >= this.C_LOG_LEVEL6 ) {
       this._createMaskDebugButton();  
     }
 
-    if ( this.element.val().length > 0 && !this.pluginStopped ) {
-      this._getOnLoadLov( this.element.val() );
-    }
-
-    this._integrateWithApexApi();
-
     $( window ).resize($.proxy( function(){
-      apex.debug.log(this.logPrefix, 'window resized, reposition prompt');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'window resized, reposition prompt');
 
       if ( this.prompt.isVisible ) {
         
@@ -307,16 +175,38 @@ $.widget('pretius.enhancedLovItem', {
       }
     }, this));
 
-    this.element.after( this.mask.container );
-    this.element.hide();
+
     this.element.on('apexrefresh', $.proxy(this._manualRefreshCallback, this));
 
-    apex.debug.log(this.logPrefix, 'pluginSettings', this.pluginSettings);    
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'Plugin instance created. Unique id = "#'+this.widgetUniqueId+'"');
 
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'pluginSettings', this.pluginSettings);    
+
+
+
+    this.element.after( this.mask.container );
+    this.element.hide();
+
+    this.ig = {
+      "isEmbededInGrid": this.element.closest('.a-GV-columnItem').length > 0,
+      "grid": undefined,
+      "region": undefined
+    };
+
+    this._integrateWithApexApi();
+
+    if ( this._elementGetValueLenght() > 0 && !this.pluginStopped ) {
+      this._getOnLoadLov( this._elementGetValue() );
+    }
+    else {
+      this._promptPlaceHolderShow();
+    }
+    
   },
 // jQuery widget native methods
 //
   _destroy: function(){
+
   },
 //
   _setOption: function( pKey, pValue ) {
@@ -333,70 +223,198 @@ $.widget('pretius.enhancedLovItem', {
   _setOptions: function( pOptions ) {
     this._super( pOptions );
   },
+  /*
+    *
+    * function name: _getPluginSettings_popupTitleText
+    * description  :
+    * params       : none
+    *
+  */
+
+  _getPluginSettings_popupTitleText: function() {
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_getPluginSettings_popupTitleText', {
+      "arguments": arguments
+    });
+
+    var returnValue = 'Undefined';
+
+    if ( 
+      this.options.attributes.popupSettings != null 
+      && this.options.attributes.popupSettings.indexOf('CT') > -1
+    ) {
+      returnValue = this.options.attributes.popupTitleText
+    }
+    else {
+      returnValue = this.options.item.plain_label;
+    }
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_getPluginSettings_popupTitleText', "returns", {
+      "returnValue": returnValue
+    });
+
+    return returnValue;
+  },  
+  /*
+    *
+    * function name: _getPluginSettings_isBasicConfiguration
+    * description  :
+    * params       : none
+    *
+  */
+  _getPluginSettings_isBasicConfiguration: function() {
+    var returnValue = false;
+
+    if (
+      //popup settings is empty
+      this.options.attributes.popupSettings == null
+      || (
+        //popup settings is not empty but checkbox is not checked
+        this.options.attributes.popupSettings != null
+        && this.options.attributes.popupSettings.indexOf('RCC') == -1
+      )
+    ) {
+      returnValue = true;
+    }
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_getPluginSettings_isBasicConfiguration', {
+      "arguments": arguments,
+      "return": returnValue
+    });
+
+    return returnValue;
+  },
+  /*
+    *
+    * function name: _cascadingLovItem
+    * description  :
+    * params       : none
+    *
+  */  
   _cascadingLovItem: function(){
-    apex.debug.log(this.logPrefix, '_cascadingLovItem');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_cascadingLovItem', {
+      "arguments": arguments
+    });
 
     var
       ajaxData = {
         "x01": "CASCADINGLOV",
-        "pageItems": '#'+this.options.item.lov_cascade_parent_items
+        "pageItems": this._ajaxGetPageItems()
       },
       ajaxOptions = {
+        "target"     : this.element.get(0),
         "beforeSend": $.proxy(function(){
           this._maskAjaxStateButtonRunning();
         }, this),
         "complete": $.proxy(function(){
-          this._maskAjaxStateButtonHide();          
+          this._maskAjaxStateButtonHide();
+          this._getOnLoadLov( this._elementGetValue() );
         },this)
       };
 
     apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );
   },
+  /*
+    *
+    * function name: _triggerEvent
+    * description  : Triggers given event on APEX item
+    * params:
+    *   - pEventName - event name to be triggered
+    *   - pData      - data to be passed with the event (this.data in dynamic action)
+    *
+  */
   _triggerEvent: function( pEventName, pData ) {
-    apex.debug.log(this.logPrefix, '_triggerEvent');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_triggerEvent', {
+      "arguments"  : arguments,
+      "pEventName" : pEventName,
+      "pData"      : pData
+    });
 
     apex.event.trigger( this.element.get(0), pEventName, pData );
   },
+  /*
+    *
+    * function name: _manualRefreshCallback
+    * description  :
+    * params       : none
+    *
+  */
   _manualRefreshCallback: function(){
-    apex.debug.log(this.logPrefix, '_manualRefreshCallback');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_manualRefreshCallback', {
+      "arguments"  : arguments
+    });
 
     this._getOnLoadLov();
   },
+  /*
+    *
+    * function name: _getColumnIdxByColumnName
+    * description  : 
+    * params:
+    *   - pColumnName - tbd
+    *
+    * 
+  */
   _getColumnIdxByColumnName: function( pColumnName ){
-    apex.debug.log(this.logPrefix, '_getColumnIdxByColumnName', 'pColumnName', pColumnName, 'columns', this.options.columns);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getColumnIdxByColumnName', {
+      "arguments"  : arguments,
+      "pColumnName": pColumnName, 
+      "columns"    : this.options.columns
+    });
 
     var 
       returnValue = undefined;
 
     for (var i in this.options.columns) {
       if ( this.options.columns[i].COLUMN_NAME == pColumnName) {
-        apex.debug.log(this.logPrefix, '_getColumnIdxByColumnName column "'+pColumnName+'" found, return its IDX.');
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getColumnIdxByColumnName column "'+pColumnName+'" found, return its IDX.');
         returnValue = this.options.columns[i].IDX;
         break;
       }
     }
 
     if ( returnValue == undefined ) {
-      apex.debug.log(this.logPrefix, '_getColumnIdxByColumnName column "'+pColumnName+'" not found, return 1st column.', this.options.columns[0].IDX);
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getColumnIdxByColumnName column "'+pColumnName+'" not found, return 1st column.', this.options.columns[0].IDX);
       returnValue = this.options.columns[0].IDX;
     }
 
-    apex.debug.log(this.logPrefix, '_getColumnIdxByColumnName returns "'+returnValue+'"');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getColumnIdxByColumnName returns "'+returnValue+'"');
 
     return returnValue;
-
   },
+  /*
+    *
+    * function name: printFunctionToConsole
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   printFunctionToConsole: function( pFunctionBody ){
-    apex.debug.log(this.logPrefix, 'printFunctionToConsole');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'printFunctionToConsole', {
+      "arguments"    : arguments,
+      "pFunctionBody": pFunctionBody
+    });
 
     var array = pFunctionBody.split("\n");
 
     for ( var i = 0; i < array.length; i++ ) {
-      apex.debug.info(this.logPrefix, '#', array[i]);  
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'printFunctionToConsole #', array[i]);
+      //apex.debug.info(this.logPrefix, '#', array[i]);  
     }
   },
+  /*
+    *
+    * function name: _promptPrepateCustomTemplateFunction
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _promptPrepateCustomTemplateFunction: function(){
-    apex.debug.log(this.logPrefix, '_promptPrepateCustomTemplateFunction');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptPrepateCustomTemplateFunction', {
+      "arguments": arguments
+    });
 
     var func;
 
@@ -404,16 +422,15 @@ $.widget('pretius.enhancedLovItem', {
       func = new Function(
         "pRow",
         "this.data = pRow;\n"+
-        '//apex.debug.log("'+this.logPrefix+'", "promptCustomTemplate", pRow);'+"\n"+
         this.pluginSettings.prompt.template
       );
 
       this.printFunctionToConsole( func.toString() );
 
-      apex.debug.log(this.logPrefix, '_promptPrepateCustomTemplateFunction', "function created");
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptPrepateCustomTemplateFunction', "function created");
     
     } catch(error) {
-      apex.debug.log(this.logPrefix, '_promptPrepateCustomTemplateFunction', "function can't be created: "+error.message);
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptPrepateCustomTemplateFunction', "function can't be created: "+error.message);
       this.printFunctionToConsole( this.pluginSettings.prompt.template );
 
       this._maskAjaxStateButtonSetError({
@@ -440,90 +457,447 @@ $.widget('pretius.enhancedLovItem', {
     return func;
 
   },
+  /*
+    *
+    * function name: _applyTranslations
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _applyTranslations: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_applyTranslations', {
+      "arguments": arguments
+    });
+
     var translations = this.options.attributes.translations;
 
     if ( translations.length > 0 ) {
       for ( var i in translations ) {
-        apex.debug.log(this.logPrefix, '_applyTranslations', translations[i].TRANSLATABLE_MESSAGE, translations[i].MESSAGE_TEXT);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_applyTranslations', translations[i].TRANSLATABLE_MESSAGE, translations[i].MESSAGE_TEXT);
         this[translations[i].TRANSLATABLE_MESSAGE.replace('PAELI_', 'C_')] = translations[i].MESSAGE_TEXT;
       }
     }
   },
-  _integrateWithApexApi: function(  ) {
-    apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0));
+  /*
+    *
+    * function name: _itemNullValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _itemNullValue: function(){
+    var returnValue = undefined;
+
+    if ( this.options.item.lov_display_null ) {
+      if ( this.options.item.lov_null_value == null ) {
+        returnValue = "";
+      }
+      else {
+        returnValue = this.options.item.lov_null_value;
+      }
+    }
+    else {
+      returnValue = "";
+    }
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_itemNullValue', {
+      "arguments": arguments,
+      "domElement": this.element.get(0),
+      "return": returnValue,
+      "lov_display_null": this.options.item.lov_display_null,
+      "lov_null_value": this.options.item.lov_null_value
+    });
+
+    return returnValue;
+  },
+  /*
+    *
+    * function name: _integrateWithApexApi
+    * description  : https://docs.oracle.com/en/database/oracle/application-express/19.1/aexjs/item.html
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _integrateWithApexApi: function() {
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_integrateWithApexApi', {
+      "arguments": arguments,
+      "domElement": this.element.get(0)
+    });
 
     var 
       pOptions = {
-        "setValue": $.proxy(function( pValue, pDisplayValue ) {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', 'setValue', 'pValue="'+pValue+'"', 'pDisplayValue="'+pDisplayValue+'"');
+        /*
+          *
+          * getPopupSelector
+          *
+        */
+        "getPopupSelector": $.proxy( function(){
+          var 
+            selectors = [
+              '[data-prompt="'+this.widgetUniqueId+'"]',
+              '[data-popup="'+this.widgetUniqueId+'"]'
+              //'[data-paste="'+this.widgetUniqueId+'"]',
+              //'[data-mask="'+this.widgetUniqueId+'"]'   */
+            ];
 
-          //if Suppress Change event of dynamic Set value action is set to NO
-          if ( !arguments[2] ) {
-            apex.debug.log(this.logPrefix, '_integrateWithApexApi', 'setValue', 'Suppress Change Event is set to "No". Change event will be doubled.');
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'getPopupSelector', {
+            "arguments" : arguments,
+            "selector": selectors.join(','),
+            "selector eval": $(selectors.join(','))
+          });
+
+          return selectors.join(',');
+        }, this ),
+        /*
+          *
+          * setValue
+          *
+        */
+        "setValue": $.proxy(function( pValue, pDisplayValue, pSuppressChangeEvent ) {
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'setValue', {
+            "arguments": arguments,            
+            "pValue"               : pValue,
+            "pDisplayValue"        : pDisplayValue,
+            "pSuppressChangeEvent" : pSuppressChangeEvent
+          });
+
+          this._promptEmptyTags();
+          this._promptEmptyMaskState();
+
+          if ( pValue == undefined || pValue == null || pValue != undefined && pValue != null && pValue.length == 0 ) {
+            pValue = null;
           }
 
-          if ( pValue.length == 0 ) {
-            this._promptEmptyTags();
-            this._promptEmptyMask();
-            this.element.val(null);
+          this._elementSetValue( pValue );
+
+          if ( pSuppressChangeEvent == true || pSuppressChangeEvent == undefined ) {
+            apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_integrateWithApexApi', 'setValue', 'Change event is not triggered (Suppress Change Event is set to "Yes").');
           }
           else {
-            //true -> trigger change event
+            apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_integrateWithApexApi', 'setValue', 'Change event is triggered (Suppress Change Event is set to "No").');
+
+            apex.event.trigger( this.element.get(0), 'change' );
+          }
+
+          if ( pValue == null ) {
+            // reset value
+            // do nothing
+          }
+          else if ( pDisplayValue != undefined ) {
+            // value is defined
+            // pDisplay is defined
+            // render tag
+            // for example quick picks
+
+            this._maskStateSelectedAdd(
+              {
+                "display": pDisplayValue,
+                "value"  : pValue
+              },                          // object
+              false,                      // is extra value,
+              false                       // is null value
+            );
+
+            this._promptApplyValues( false );
+            this._promptRenderTags();
+          }
+          else {
             this._getOnLoadLov( pValue );
           }
-          
+        }, this),
+        /*
+          *
+          * nullValue
+          *
+        */
+        "nullValue": this._itemNullValue(),
+        //"nullValue":  this.options.item.lov_display_null ? this.options.item.lov_null_value : "",
+        /*
+          *
+          * reinit
+          *
+        */
+        "reinit": $.proxy( function( pValue, pDisplay ){
 
-        }, this),        
-        //Specify a value that to be used to determine if the item is null. 
-        //This is used when the item supports definition of a List of Values, 
-        //where a developer can define a Null Return Value for the item and 
-        //where the default item handling needs to know this in order to assert if the item is null or empty.
-        nullValue:  "",
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'reinit', {
+            "arguments": arguments,
+            "pValue": pValue,
+            "pDisplay": pDisplay,
+            "id": this.element.get(0).id
+          });
+
+          var 
+            //displayArr = pDisplay == null ? pValue.split( this.C_DISPLAY_SEPARATOR ) : pDisplay.split( this.C_DISPLAY_SEPARATOR ),
+            displayArr = [],
+            notEmpty = false,
+            objectTemp;
+
+          if ( this.ig.isEmbededInGrid ) {
+            this.ig.region = this.element.closest('.a-IG');
+            this.ig.grid = this.ig.region.interactiveGrid('getViews').grid;
+          }
+
+          //reset autocomplete search string
+          this.prompt.input.val(null);
+
+          //reset popup report state
+          this.popup.state.searchString          = undefined;
+          this.popup.state.lastFetchedPage       = null;
+          this.popup.state.sortedColumnIdx       = null;
+          this.popup.state.sortedColumnDirection = 'asc';
+          this.popup.state.searchColumnIdx       = undefined;
+ 
+          this._promptEmptyTags();
+          this._promptEmptyMaskState();
+
+          if ( this.pluginSettings.isMultipleSelection ) {
+
+            if ( !Array.isArray( pValue ) ) {
+              pValue = pValue.split( this.C_VALUE_SEPARATOR );
+            }
+
+            try {
+              displayArr = pDisplay.split( this.C_DISPLAY_SEPARATOR );
+            } catch( pError ) {
+              //              
+              displayArr = pValue;
+
+              apex.debug.message(this.C_LOG_WARNING, this.logPrefix, 'reinit', 'Couldn\'t split display value(s) because it is null.', {
+                'pError' : pError
+              });            
+            }            
+
+            if ( pValue.length == 1 && pValue[0].length == 0 ) {
+              //empty value
+              apex.debug.message(this.C_LOG_WARNING, this.logPrefix, 'reinit', 'Value is not set');
+              this._elementSetValue( "" );
+              return void(0);
+            }
+
+            for (var i=0; i < pValue.length; i++) {
+              objectTemp = {
+                "value"  : pValue[i],
+                "display": displayArr[i]
+              };
+
+              this._maskStateSelectedAdd( 
+                objectTemp, // object
+                false,      // is extra value
+                false       // is null value
+              );
+            }
+
+            notEmpty = pValue.length > 0;
+          }
+          else { //singular selection
+            if ( pValue.length > 0 ) {
+              objectTemp = {
+                "value"  : pValue,
+                "display": pDisplay
+              };
+          
+              this._maskStateSelectedAdd( 
+                objectTemp, // object
+                false,      // is extra value
+                false       // is null value
+              );
+
+              notEmpty = true;
+
+            } 
+            else {
+              apex.debug.message(this.C_LOG_WARNING, this.logPrefix, 'reinit', 'Value is not set');
+              this._elementSetValue( "" );
+            }           
+          }
+
+          if ( notEmpty ) {
+            this._elementSetValue( pValue );
+            this._promptApplyValues( false );
+            this._promptRenderTags();
+          }
+        }, this ),
+        /*
+          *
+          * enable
+          *
+        */
         "enable": $.proxy(function() {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'enable');
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'enable', {
+            "arguments": arguments,
+            "id": this.element.get(0).id
+          });
 
           this._enable();
         }, this),
+        /*
+          *
+          * disable
+          *
+        */
         "disable": $.proxy(function() {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'disable');
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'disable', {
+            "arguments": arguments,
+            "id": this.element.get(0).id
+          });
 
           this._disable();
         }, this),
+        /*
+          *
+          * afterModify
+          *
+        */
         "afterModify": $.proxy(function(){
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'afterModify', this.element.val());
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'afterModify', {
+            "arguments": arguments,
+            "id": this.element.get(0).id,
+            "value": this._elementGetValue()
+          });
           // code to always fire after the item has been modified (value set, enabled, etc.)
+          // deprecated by Oracle
         }, this),
-        "loadingIndicator": $.proxy(function( pLoadingIndicator$ ){
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'loadingIndicator');
+        /*
+          *
+          * loadingIndicator
+          *
+        */
+        "loadingIndicator": $.proxy(function( pLoadingIndicator ){
+          var returnElem;
+
+          returnElem = pLoadingIndicator;
+
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'loadingIndicator', {
+            "arguments": arguments,
+            "pLoadingIndicator": pLoadingIndicator,
+            "id": this.element.get(0).id,
+            "return": returnElem
+          });
+
           // code to add the loading indicator in the best place for the item
-          return pLoadingIndicator$;
-        }, this),       
-        
-
+          return returnElem;
+        }, this),
+        /*
+          *
+          * setFocusTo
+          *
+        */
         "setFocusTo": $.proxy(function(){
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'setFocusTo');
-          //tbd, w zaleznosci od trybu
+          var returnElem;
+          returnElem = this.mask.popupButton;
 
-          return this.mask.popupButton;
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'setFocusTo', {
+            "arguments": arguments,
+            "id": this.element.get(0).id,
+            "return": returnElem
+          });
+
+          return returnElem;
         }, this),
-        "setStyleTo": this.mask.container,    
-        "getValue": $.proxy(function() {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'getValue');
+        /*
+          *
+          * setStyleTo
+          *
+        */
+        "setStyleTo": this.mask.container,
+        /*
+          *
+          * displayValueFor
+          *
+        */
+        "displayValueFor": $.proxy( function( pValue ){
+          var 
+            arrayOfDisplay = [],
+            returnValue;
+
+          for (var i=0; i < this.mask.state.selected.length; i++) {
+            if ( pValue.indexOf( this.mask.state.selected[i].value ) > -1 ) {
+              arrayOfDisplay.push( this.mask.state.selected[i] );
+            }
+          }
+
+          arrayOfDisplay = arrayOfDisplay.map( function( pElem ){
+            return pElem.display
+          } );   
+
+          if (arrayOfDisplay.length == 0) {
+            returnValue = pValue;
+          }
+          else {
+            returnValue = arrayOfDisplay.join( this.C_DISPLAY_SEPARATOR );  
+          }
+
           
-          return this.element.val();
+
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'displayValueFor', {
+            "arguments": arguments,
+            "pValue": pValue,
+            "id": this.element.get(0).id,
+            "return": returnValue,
+            "arrayOfDisplay": arrayOfDisplay,
+            "arrayOfDisplay length": arrayOfDisplay.length
+          });
+
+          return returnValue;
 
         }, this),
+        /*
+          *
+          * getValue
+          *
+        */
+        "getValue": $.proxy(function() {
+          var returnValue = this._elementGetValue();
+
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'getValue', {
+            "arguments": arguments,
+            "id": this.element.get(0).id,
+            "return": returnValue
+          });
+          
+          
+          return returnValue;
+        }, this),
+        /*
+          *
+          * show
+          *
+        */        
         "show": $.proxy(function() {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'show');
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'show', {
+            "arguments": arguments,
+            "id": this.element.get(0).id
+          });
           // code that shows the item type
         }, this),
+        /*
+          *
+          * hide
+          *
+        */        
         "hide": $.proxy(function() {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'hide');
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'hide', {
+            "arguments": arguments,
+            "id": this.element.get(0).id
+          });
           // code that hides the item type
         }, this),
+        /*
+          *
+          * addValue
+          *
+        */        
         "addValue": $.proxy(function( pValue ) {
-          apex.debug.log(this.logPrefix, '_integrateWithApexApi', this.element.get(0).id, 'addValue', pValue);
+          apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_integrateWithApexApi', 'addValue', {
+            "arguments": arguments,
+            "pValue": pValue,
+            "id": this.element.get(0).id
+          });
           // code that adds pValue to the values already in the item type
         }, this),
       };
@@ -537,87 +911,183 @@ $.widget('pretius.enhancedLovItem', {
 //  
 // Private plugin methods
 //
+  /*
+    *
+    * function name: _disable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _disable: function(){
-    apex.debug.log(this.logPrefix, '_disable');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_disable', {
+      "arguments": arguments
+    });
 
     this.element.prop( "disabled", true );
     this.mask.state.disabled = true;
     this.mask.container.addClass('disabled');
     this.mask.popupButton.prop('disabled', true);
   },
+  /*
+    *
+    * function name: _enable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _enable: function(){
-    apex.debug.log(this.logPrefix, '_enable');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_enable', {
+      "arguments": arguments
+    });
 
     this.element.prop( "disabled", false );
     this.mask.state.disabled = false;
     this.mask.container.removeClass('disabled');
     this.mask.popupButton.prop('disabled', false);
   },
+  /*
+    *
+    * function name: _createMaskDebugButton
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _createMaskDebugButton: function(){
-    apex.debug.log(this.logPrefix, '_createMaskDebugButton');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_createMaskDebugButton', {
+      "arguments": arguments
+    });
 
+    var button = $('<button class="debugAutocomplete a-Button a-Button--popupLOV"><span class="fa fa-info"></span></button>');
 
-    var button = $('<button class="debugAutocomplete a-Button a-Button--popupLOV"><span class="fa fa-info"></span></button>').click($.proxy( function(pEvent){
+    button.click($.proxy( function(pEvent){
       pEvent.preventDefault();
 
-      apex.debug.log(this.logPrefix, 'debug prompt', this.mask);
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'debug prompt', this.mask);
 
     }, this ));
 
     button.attr('title', 'Writes to console autocomplete state');
 
-    //this.element.after( button );
     this.mask.popupButton.after( button );
-
   },
+  /*
+    *
+    * function name: _getExtraValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _getExtraValues: function( pValuesSent, pDataReturned ){
-    apex.debug.log(this.logPrefix, '_getExtraValues( '+this.element.get(0).id+' )');
-    apex.debug.log(this.logPrefix, '_getExtraValues', 'pValuesSent', pValuesSent);
-    apex.debug.log(this.logPrefix, '_getExtraValues', 'pDataReturned', pDataReturned.length, pDataReturned);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', {
+      "arguments": arguments,
+      "pValuesSent": pValuesSent,
+      "pDataReturned": pDataReturned,
+      "pDataReturned length": pDataReturned.length
+    });
 
-    var extraValues = $.extend([], pValuesSent).filter(function (element) {
+    var 
+      dataToCheck = $.extend([], pDataReturned),
+      extraValues = $.extend([], pValuesSent).filter(function (element) {
       return element != null && element.length > 0;
     });
 
-    for ( var i=0; i < pDataReturned.length; i++ ) {
+    //add null value so it won't be treated as extra value
+    if ( this.options.item.lov_display_null ) {
+      dataToCheck.push( {
+        "D": this.options.item.lov_null_text,
+        "R": this.options.item.lov_null_value
+      } );
+    }
+  
+    for ( var i=0; i < dataToCheck.length; i++ ) {
 
-      indexOf = extraValues.indexOf( pDataReturned[i].R.toString() );
+      indexOf = extraValues.indexOf( dataToCheck[i].R.toString() );
 
       if ( indexOf > -1 ) {
         extraValues.splice( indexOf, 1 );
-        apex.debug.log(this.logPrefix, '_getExtraValues', 'removing '+pDataReturned[i].R.toString()+' from ', extraValues);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'removing '+dataToCheck[i].R.toString()+' from ', extraValues);
       }
       else {
-        apex.debug.log(this.logPrefix, '_getExtraValues', 'looking for '+pDataReturned[i].R.toString()+' in ', extraValues);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'looking for '+dataToCheck[i].R.toString()+' in ', extraValues);
       }
     }
 
-    apex.debug.log(this.logPrefix, '_getExtraValues', 'extraValues', extraValues);    
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'extraValues', extraValues);
 
     return extraValues;
   },
-  //fa-exclamation-triangle
+  /*
+    *
+    * function name: _maskPopupButtonHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _maskPopupButtonHide: function(){
-    apex.debug.log(this.logPrefix, '_maskPopupButtonHide');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskPopupButtonHide', {
+      "arguments": arguments
+    });
     
     this.mask.popupButton.hide();
   },
+  /*
+    *
+    * function name: _maskPopupButtonShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _maskPopupButtonShow: function(){
-    apex.debug.log(this.logPrefix, '_maskPopupButtonShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskPopupButtonShow', {
+      "arguments": arguments
+    });
     
     this.mask.popupButton.show();
   },
+  /*
+    *
+    * function name: _maskAjaxStateButtonHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskAjaxStateButtonHide: function(){
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonHide');
-
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonHide', {
+      "arguments": arguments
+    });
     
     this._maskPopupButtonShow();
     this.mask.ajaxStateButton.button.hide();
   },
+  /*
+    *
+    * function name: _maskAjaxStateButtonSetError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskAjaxStateButtonSetError: function( pObject, pStopPlugin ){ 
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonSetError');
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonSetError', 'pObject', pObject);
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonSetError', 'pStopPlugin', pStopPlugin);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonSetError', {
+      "arguments": arguments,
+      "pObject": pObject,
+      "pStopPlugin": pStopPlugin
+    });
     
     $.extend(this.mask.ajaxStateButton, {"errorObject":pObject});
 
@@ -625,13 +1095,24 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.error = true;
 
     if ( pStopPlugin )  {
-      apex.debug.log(this.logPrefix, '_maskAjaxStateButtonSetError stop plugin!');  
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonSetError stop plugin!');  
       this.pluginStopped = true;  
       this.mask.state.disabled = true;
     }
   },
-  _maskAjaxStateButtonDisplayError: function( ){
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonDisplayError');
+  /*
+    *
+    * function name: _maskAjaxStateButtonDisplayError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _maskAjaxStateButtonDisplayError: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonDisplayError', {
+      "arguments": arguments
+    });
 
     var 
       container   = $('<div class="container"></div>'),
@@ -666,7 +1147,6 @@ $.widget('pretius.enhancedLovItem', {
       };      
 
     if ( this.pluginStopped == false ) {
-      
       this._maskPopupButtonShow();
       this.mask.ajaxStateButton.button.hide();
     }
@@ -693,20 +1173,29 @@ $.widget('pretius.enhancedLovItem', {
     divError.append( this.mask.ajaxStateButton.errorObject.addInfo );
 
     divTechInfo.append(pre);
-    
 
     container
       .append(divMessage)
       .append(divError)
       .append(divTechInfo)
       .dialog( options );
-
   },
+  /*
+    *
+    * function name: _maskAjaxStateButtonError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskAjaxStateButtonError: function( ){
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonError', this.pluginStopped);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonError', {
+      "arguments": arguments,
+      "this.pluginStopped": this.pluginStopped
+    });
 
     this._maskPopupButtonHide();
-    
 
     this.mask.ajaxStateButton.button.find('.icon')
       .removeClass()
@@ -722,11 +1211,21 @@ $.widget('pretius.enhancedLovItem', {
     }
     
   },
+  /*
+    *
+    * function name: _maskAjaxStateButtonRunning
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskAjaxStateButtonRunning: function(){
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonRunning');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonRunning', {
+      "arguments": arguments
+    });
 
     this._maskPopupButtonHide();
-    
 
     this.mask.ajaxStateButton.button.find('.icon')
       .removeAttr('class')
@@ -734,115 +1233,182 @@ $.widget('pretius.enhancedLovItem', {
 
     this.mask.ajaxStateButton.button.show();
   },
+  /*
+    *
+    * function name: _maskAjaxStateButtonShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskAjaxStateButtonShow: function(){
-    apex.debug.log(this.logPrefix, '_maskAjaxStateButtonShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskAjaxStateButtonShow', {
+      "arguments": arguments
+    });
 
     this.mask.ajaxStateButton.button.show();
   },
+  /*
+    *
+    * function name: _getOnLoadLov_SuccessCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _getOnLoadLov_SuccessCallback: function( pMode, pValuesSent, pData, pTextStatus, pJqXHR ){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', 'success', {
+      "arguments"   : arguments,
+      "pMode"       : pMode,
+      "pValuesSent" : pValuesSent,
+      "pData"       : pData,
+      "pTextStatus" : pTextStatus,
+      "pJqXHR"      : pJqXHR      ,
+    });
+
+    var 
+      objectTemp,
+      valuesExtra;
+
+    this._promptEmptyTags();
+    this._promptEmptyMaskState();
+
+    //pData.data.sort( this._sortJson( "D", "asc" ) );
+    //this.mask.state.sorted = "asc";
+
+    if ( pData.nullValueSelected ) {
+
+      objectTemp = {
+        "value"  : this.options.item.lov_null_value,
+        "display": this.options.item.lov_null_text
+      };
+
+      apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', 'success', 'NULL value selected', objectTemp);
+
+      this._maskStateSelectedAdd( 
+        objectTemp,   // object
+        false,        // is extra value
+        true          // is null value
+      );
+    }
+
+    //add values on which tags will be rendered
+    for ( var i=0; i < pData.data.length; i++ ) {
+
+      objectTemp = {
+        "value"  : pData.data[i].R.toString(),
+        "display": pData.data[i].D
+      };
+
+      this._maskStateSelectedAdd( 
+        objectTemp,   // object
+        false,        // is extra value
+        false         // is null value
+      );
+
+    }
+
+    if ( pMode == 'GETSESSIONSTATE' ) {
+      pValuesSent = pData.session;
+    }
+
+    //handle extra values (not defined in dictionary) 
+    if ( 
+      this.pluginSettings.displayExtra 
+      && pValuesSent != undefined
+      && pValuesSent.length > 0 
+    ) {
+
+      valuesExtra = this._getExtraValues( pValuesSent.split(this.C_VALUE_SEPARATOR), pData.data );
+
+      for ( var i=0; i < valuesExtra.length; i++ ) {
+        objectTemp = {
+          "value"  : valuesExtra[i],
+          "display": valuesExtra[i]
+        };
+
+        this._maskStateSelectedAdd( 
+          objectTemp, // object 
+          true,       // is extra value
+          false       // is null value
+        );
+      }
+    }
+
+    this._promptApplyValues( false );
+    
+    this._promptRenderTags();
+
+    this._maskAjaxStateButtonHide();
+
+    //when APEX item contains multiple values but
+    //it is configured to work with singular selection
+    if ( 
+      this.pluginSettings.isMultipleSelection == false
+      && this.mask.state.selected.length > 1
+    ) {
+      this._maskAjaxStateButtonSetError({
+        "error"    : 'Invalid input value according to its configuration.',
+        "addInfo"  : 'The item is defined to support singular selection but session contains multiple values.',
+        "techInfo" : 'Check session value for APEX item "'+this.element.attr('id')+'" and inspect processes handling session value of item.'
+      }, false);
+
+      this._maskAjaxStateButtonError();
+
+      this._throwErrorText( 
+        'Invalid input value according to its configuration.'+
+        'The item is defined to support singular selection but session contains multiple values.'+
+        'Check session value for APEX item "'+this.element.attr('id')+'" and inspect processes handling session value of item.'
+      );
+    }
+  },
+  /*
+    *
+    * function name: _getOnLoadLov
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _getOnLoadLov: function( pValue ){
-    apex.debug.log(this.logPrefix, '_getOnLoadLov');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', {
+      "arguments": arguments,
+      "pValue"   : pValue,
+      "target"   : this.element.get(0)
+    });
 
     var
-      mode     = pValue == null || pValue == undefined ? 'GETSESSIONSTATE' : 'GETONLYSELECTED',
-      values   = pValue == null || pValue == undefined ? [] : pValue.split(this.C_VALUE_SEPARATOR),
+      mode     = pValue == null || pValue == undefined || pValue == "" ? 'GETSESSIONSTATE' : 'GETONLYSELECTED',
+      values   = pValue == null || pValue == undefined || pValue == "" ? [] : pValue.split(this.C_VALUE_SEPARATOR),
       ajaxData = {
         "x01": mode,  //tryb
-        "f01": values //selected values
+        "f01": values, //selected values
+        "pageItems": this._ajaxGetPageItems()
       },
       ajaxOptions = {
-        
+        "target"     : this.element.get(0),
         "beforeSend" : $.proxy(function( pJqXHR, pSettings ){
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'before send');
+          apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_getOnLoadLov', 'before send', {
+            "pJqXHR": pJqXHR,
+            "pSettings": pSettings
+          });
 
           this._maskAjaxStateButtonRunning();
 
         }, this),
-        "success"    : $.proxy(function( pMode, pValuesSent, pData, pTextStatus, pJqXHR){
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'success', 'pMode', pMode);
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'success', 'pValuesSent', pValuesSent);
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'success', 'pData', pData);
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'success', 'pTextStatus', pTextStatus);
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'success', 'pJqXHR', pJqXHR);
-
-          var 
-            objectTemp,
-            valuesExtra;
-
-          pData.data.sort( this._sortJson( "D", "asc" ) );
-          this.mask.state.sorted = "asc";
-
-          this._promptEmptyTags();
-          this._promptEmptyMask();
-
-          for ( var i=0; i < pData.data.length; i++ ) {
-            
-            objectTemp = {
-              "value"  : pData.data[i].R.toString(),
-              "display": pData.data[i].D
-            };
-
-            this._maskStateSelectedAdd( objectTemp, false, false );
-          }
-
-          //if ( pMode == 'GETONLYSELECTED' ) {
-          if ( pMode == 'GETSESSIONSTATE' ) {
-            pValuesSent = pData.session;
-          }
-
-          if ( 
-            this.pluginSettings.displayExtra 
-            && pValuesSent != undefined
-            && pValuesSent.length > 0 
-          ) {
-
-            valuesExtra = this._getExtraValues( pValuesSent.split(this.C_VALUE_SEPARATOR), pData.data );
-
-            for ( var i=0; i < valuesExtra.length; i++ ) {
-              objectTemp = {
-                "value"  : valuesExtra[i],
-                "display": valuesExtra[i]
-              };
-
-              this._maskStateSelectedAdd( objectTemp, false, true );
-            }
-          }
-          //}
-    
-          this._promptRenderTags();
-
-          this._promptApplyValues( false );
-          this._maskAjaxStateButtonHide();
-
-          //when APEX item contains multiple values but
-          //it is configured to work with singular selection
-          if ( 
-            this.pluginSettings.isMultipleSelection == false
-            && this.mask.state.selected.length > 1
-          ) {
-            this._maskAjaxStateButtonSetError({
-              "error"    : 'Invalid input value according to its configuration.',
-              "addInfo"  : 'The item is defined to support singular selection but session contains multiple values.',
-              "techInfo" : 'Check session value for APEX item "'+this.element.attr('id')+'" and inspect processes handling session value of item.'
-            }, false);
-
-            this._maskAjaxStateButtonError();
-
-            this._throwErrorText( 
-              'Invalid input value according to its configuration.'+
-              'The item is defined to support singular selection but session contains multiple values.'+
-              'Check session value for APEX item "'+this.element.attr('id')+'" and inspect processes handling session value of item.'
-            );
-          }
-
-        }, this, mode, pValue ),
+        "success"    : $.proxy( this._getOnLoadLov_SuccessCallback, this, mode, pValue ),
         "error"      : $.proxy(function(pJqXHR, pTextStatus, pErrorThrown){
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'error');
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'pJqXHR', pJqXHR);
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'pTextStatus', pTextStatus);
-          apex.debug.log(this.logPrefix, '_getOnLoadLov', 'pErrorThrown', pErrorThrown);
 
-          //errorMessage
-          if ( this.element.val().length > 0 ) {
+          apex.debug.message(this.C_LOG_ERROR, this.logPrefix, '_getOnLoadLov', 'error', {
+            'pJqXHR'        : pJqXHR,
+            'pTextStatus'   : pTextStatus,
+            'pErrorThrown'  : pErrorThrown            
+          });
+
+          if ( this._elementGetValueLenght() > 0 ) {
             this._maskDrawTagsFromInvalidValues();
           }
 
@@ -853,26 +1419,34 @@ $.widget('pretius.enhancedLovItem', {
           });
 
           this._maskAjaxStateButtonError();
-
-          this._throwErrorText( pErrorThrown );
           
+          this._throwErrorText( pErrorThrown );
+
         }, this),
         "complete"   : $.proxy(function(){
-
+          //          
         }, this)
       };    
 
-    apex.debug.log(this.logPrefix, '_getOnLoadLov', 'values to get tags',values);
-    
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', 'values sent to retrieve display values', values, ajaxOptions);
+      
     apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );
   },
   /*
-    POPUP
+    *
+    * function name: _maskDrawTagsFromInvalidValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
   */
   _maskDrawTagsFromInvalidValues: function(){
-    apex.debug.log(this.logPrefix, '_maskDrawTagsFromInvalidValues');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskDrawTagsFromInvalidValues', {
+      "arguments": arguments
+    });
 
-    var values = this.element.val().split(this.C_VALUE_SEPARATOR);
+    var values = this._elementGetValue().split(this.C_VALUE_SEPARATOR);
 
     if ( values.length > 0 ) {
       for (var i in values) {
@@ -883,10 +1457,21 @@ $.widget('pretius.enhancedLovItem', {
       this._promptPlaceHolderHide();
     
     }
-      
   },
+  /*
+    *
+    * function name: _popupSelectedGetValueArr
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSelectedGetValueArr: function(){
-    apex.debug.log(this.logPrefix, '_popupSelectedGetValueArr');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupSelectedGetValueArr', {
+      "arguments": arguments
+    });
+
     var arr = [];
 
     for ( var i=0; i < this.popup.state.selected.length; i++ ) {
@@ -896,44 +1481,74 @@ $.widget('pretius.enhancedLovItem', {
       
     }
 
-    apex.debug.log(this.logPrefix, '_popupSelectedGetValueArr', arr);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupSelectedGetValueArr', arr);
     return arr;
   },
+  /*
+    *
+    * function name: _popupAjaxGetOnlySelected
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAjaxGetOnlySelected: function(){
-    apex.debug.log(this.logPrefix, '_popupAjaxGetOnlySelected');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupAjaxGetOnlySelected', {
+      "arguments": arguments,
+      "target"   : this.element.get(0)
+    });
 
     var
       ajaxData = {
-        "x01": 'GETONLYSELECTED',               //tryb
-        "f01": this._popupSelectedGetValueArr() //selected values
+        "x01": 'GETONLYSELECTED',                // mode
+        "f01": this._popupSelectedGetValueArr(), // selected values
+        "pageItems": this._ajaxGetPageItems()    // items to be sent
       },
       ajaxOptions = {
+        "target"     : this.element.get(0),
         "beforeSend" : $.proxy(this._popupAjaxBeforeSend, this),
         "success"    : $.proxy(this._popupAjaxSuccess,    this),
         "error"      : $.proxy(this._popupAjaxError,      this),
         "complete"   : $.proxy(this._popupAjaxComplete,   this)
       };
 
-    //tbd
     this.popup.state.xhr = apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );
-
   },
+  /*
+    *
+    * function name: _popupAjaxPerform
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAjaxPerform: function( pPage, pSortByColumnIdx, pDirection, pSearchString, pSearchColumn ){
-    apex.debug.log(this.logPrefix, '_popupAjaxPerform');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxPerform', {
+      "arguments": arguments,
+      "pPage": pPage,
+      "pSortByColumnIdx": pSortByColumnIdx,
+      "pDirection": pDirection,
+      "pSearchString": pSearchString,
+      "pSearchColumn": pSearchColumn
+    });
 
     var
       searchString = pSearchString,
       ajaxData = {
-        "x01": 'POPUP',                         //tryb
-        "x02": this._popupGetRowsPerPage(),     //rows per page
-        "x03": pSearchString,                   //search string
-        "x04": pPage == undefined ? 1 : pPage,  //page
-        "x05": pSortByColumnIdx,
-        "x06": pDirection,
-        "x07": pSearchColumn
+        "pageItems": this._ajaxGetPageItems(),
+        "x01": 'POPUP',                         // mode
+        "x02": this._popupGetRowsPerPage(),     // rows per page
+        "x03": pSearchString,                   // search string
+        "x04": pPage == undefined ? 1 : pPage,  // page
+        "x05": pSortByColumnIdx,                // 
+        "x06": pDirection,                      // 
+        "x07": pSearchColumn                    // 
       },
 
       ajaxOptions = {
+        "target"     : this.element.get(0),
         "beforeSend" : $.proxy(this._popupAjaxBeforeSend, this),
         "success"    : $.proxy(this._popupAjaxSuccess, this),
         "error"      : $.proxy(this._popupAjaxError, this),
@@ -946,7 +1561,6 @@ $.widget('pretius.enhancedLovItem', {
       return void(0);
     }
 
-
     //it will be set again after ajax will succeed
     this.popup.state.searchString          = pSearchString;
     this.popup.state.lastFetchedPage       = pPage == undefined ? 1 : pPage;
@@ -954,12 +1568,23 @@ $.widget('pretius.enhancedLovItem', {
     this.popup.state.sortedColumnDirection = pDirection;
     this.popup.state.searchColumnIdx       = pSearchColumn;
 
-
     this.popup.state.xhr = apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );
-
   },
-  _popupAjaxBeforeSend: function(  pJqXHR, pSettings ) {
-    apex.debug.log(this.logPrefix, '_popupAjaxBeforeSend');
+  /*
+    *
+    * function name: _popupAjaxBeforeSend
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _popupAjaxBeforeSend: function( pJqXHR, pSettings ) {
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxBeforeSend', {
+      "arguments": arguments,
+      "pJqXHR": pJqXHR,
+      "pSettings": pSettings
+    });
 
     this.popup.state.ajaxRunning = true;
     this.popup.contentTable = undefined;
@@ -970,23 +1595,47 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     this._popupReportRenderSearching(0);
-    
   },
+  /*
+    *
+    * function name: _popupAjaxDataFindIndexByReturnValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAjaxDataFindIndexByReturnValue: function( pData, pReturnValue ) {
-    apex.debug.log(this.logPrefix, '_popupAjaxDataFindIndexByReturnValue', 'pReturnValue', pReturnValue);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxDataFindIndexByReturnValue', {
+      "arguments": arguments,
+      "pData": pData,
+      "pReturnValue": pReturnValue
+    });    
 
     for ( var i=0; i < pData.data.length; i++ ) {
       if ( pData.data[i].R == pReturnValue ) {
-        apex.debug.log(this.logPrefix, '_popupAjaxDataFindIndexByReturnValue', 'pReturnValue found at index '+i);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxDataFindIndexByReturnValue', 'pReturnValue found at index '+i);
         return i;
       }
     }
     
-    apex.debug.log(this.logPrefix, '_popupAjaxDataFindIndexByReturnValue', 'pReturnValue not found');
+    apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_popupAjaxDataFindIndexByReturnValue', 'pReturnValue not found');
     return -1;
   },
+  /*
+    *
+    * function name: _popupExtendDataWithNullValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupExtendDataWithNullValues: function( pData ){
-    apex.debug.log(this.logPrefix, '_popupExtendDataWithNullValues', 'pData', pData);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupExtendDataWithNullValues', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var
       isSelected = false;
@@ -999,17 +1648,28 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     pData.data.unshift({
-      "R": this.options.item.lov_null_value,
-      "D": this.options.item.lov_null_text,
+      "R": this.options.item.lov_null_value == undefined ? "undefined" : this.options.item.lov_null_value,
+      "D": this.options.item.lov_null_text  == undefined ? "undefined" : this.options.item.lov_null_text,
       "isAPEXNullValue": true,
       "selected": isSelected
     });
 
     return pData;
-
   },
+  /*
+    *
+    * function name: _popupExtendDataWithExtraValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupExtendDataWithExtraValues: function( pData ) {
-    apex.debug.log(this.logPrefix, '_popupExtendDataWithExtraValues', 'pData', pData);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupExtendDataWithExtraValues', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var 
       idx,
@@ -1042,8 +1702,62 @@ $.widget('pretius.enhancedLovItem', {
 
     return pData;
   },
+  /*
+    *
+    * function name: _popupReportRenderSearching
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _popupReportRenderSearching: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportRenderSearching', {
+      "arguments": arguments
+    });
+
+    var 
+      searchTerm = this.popup.state.searchString,
+      searchingText = this.C_POPUP_TEXT_SEARCHING.replace('%0', searchTerm),
+      mask = $('<div class="searchingForResultsMask"></div>'),
+      container = $('                                 '+
+        '<div class="searchingForResults">            '+
+        '  <div class="icon">                         '+
+        '    <span class="fa fa-refresh fa-anim-spin"></span> '+
+        '  </div>                                     '+
+        '  <div class="text">'+searchingText+'</div>'+
+        '</div>                                       '+
+        ''
+      );
+
+    //this.popup.body.empty().append(container);
+    this.popup.body
+      .append(mask)
+      .append(container);
+
+    //this._popupHeaderHide();
+    this._popupHeaderDisable();
+    //this._popupFooterHide();
+    this._popupFooterDisable();
+    //this.popupInformationHide();
+    this._popupAdjustBodyHeight();
+  },
+  /*
+    *
+    * function name: _popupAjaxSuccess
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupAjaxSuccess: function( pData, pTextStatus, pJqXHR){
-    apex.debug.log(this.logPrefix, '_popupAjaxSuccess', 'pData', pData);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxSuccess', {
+      "arguments": arguments,
+      "pData": pData,
+      "pTextStatus": pTextStatus,
+      "pJqXHR": pJqXHR
+    });
 
     var message = this.C_POPUP_TEXT_FILTERED_INFO
           .replace('%0', pData.totalCount)
@@ -1064,15 +1778,11 @@ $.widget('pretius.enhancedLovItem', {
     this.popup.state.ajaxCurrentPageRownumStart = pData.rownumStart;
     this.popup.state.ajaxCurrentPageRownumEnd   = pData.rownumEnd;
 
-    
-    
-
     if ( pData.request == 'GETONLYSELECTED' ) {
       pData = this._popupExtendDataWithExtraValues( pData );      
       this.popup.state.ajaxSelectedData = this.popup.state.ajaxCurrentPageData;
       this._popupRowsPerPageHide();
       this._popupPaginationHide();
-
     }
     else if ( pData.request == 'POPUP' ) {
       this._popupRowsPerPageShow();
@@ -1086,10 +1796,7 @@ $.widget('pretius.enhancedLovItem', {
       if ( 
         this.popup.state.lastFetchedPage == 1 
         && pData.searchString == null
-        && (
-          this.options.item.lov_null_text != undefined
-          || this.options.item.lov_null_value != undefined
-        )
+        && this.options.item.lov_display_null
       ) {
         pData = this._popupExtendDataWithNullValues( pData );
       }
@@ -1106,11 +1813,22 @@ $.widget('pretius.enhancedLovItem', {
       this._writeQueryToConsole( pData.query );
     }
 
-    apex.debug.log(this.logPrefix, '_popupAjaxSuccess', 'state', this.popup.state);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxSuccess', 'state', this.popup.state);
   },
-  //this._popupAjaxDrawError( pJqXHR.responseJSON.error, pJqXHR.responseJSON.techInfo );
+  /*
+    *
+    * function name: _popupAjaxDrawError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupAjaxDrawError: function( pAjaxResponse ){
-    apex.debug.log(this.logPrefix, '_popupAjaxDrawError', pAjaxResponse);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxDrawError', {
+      "arguments": arguments,
+      "pAjaxResponse": pAjaxResponse
+    });
 
     var 
       container   = $('<div class="ajaxError"></div>'),
@@ -1142,16 +1860,28 @@ $.widget('pretius.enhancedLovItem', {
     this.popup.body.empty().append(container);
     this._popupPaginationHide();
     this._popupRowsPerPageHide();
-  },  
-  _popupAjaxError: function(pJqXHR, pTextStatus, pErrorThrown){
-    apex.debug.log(this.logPrefix, '_popupAjaxError', 'pJqXHR', pJqXHR);
-    apex.debug.log(this.logPrefix, '_popupAjaxError', 'pTextStatus', pTextStatus);
-    apex.debug.log(this.logPrefix, '_popupAjaxError', 'pErrorThrown', pErrorThrown);
+  },
+  /*
+    *
+    * function name: _popupAjaxError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _popupAjaxError: function( pJqXHR, pTextStatus, pErrorThrown ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxError', {
+      "arguments": arguments,
+      "pJqXHR": pJqXHR,
+      "pTextStatus": pTextStatus,
+      "pErrorThrown": pErrorThrown
+    });
 
     var array;
 
     if ( pJqXHR.statusText == 'abort' ) {
-      apex.debug.log(this.logPrefix, '_popupAjaxError', 'AJAX call aborted!');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_popupAjaxError', 'AJAX call aborted!');
       return void(0);
     }
 
@@ -1162,25 +1892,18 @@ $.widget('pretius.enhancedLovItem', {
     this._popupHeaderHide();
     this._popupFooterHide();
 
-    /*
-    if ( pTextStatus == 'parsererror' ) {
-      apex.debug.log(this.logPrefix, 'AJAX respnse ended in parse error');
-      this._popupAjaxDrawError();
-    }
-    else 
-    */
     if ( pJqXHR.responseJSON.techInfo != undefined ) {
       
       this._popupAjaxDrawError( pJqXHR.responseJSON );
 
       for (var i=0; i < pJqXHR.responseJSON.techInfo.length; i++ ) {
-        apex.debug.log(this.logPrefix, 'PL/SQL', pJqXHR.responseJSON.techInfo[i].name, pJqXHR.responseJSON.techInfo[i].value);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'PL/SQL', pJqXHR.responseJSON.techInfo[i].name, pJqXHR.responseJSON.techInfo[i].value);
 
         if ( pJqXHR.responseJSON.techInfo[i].value.indexOf('\n') > -1 ) {
           array = pJqXHR.responseJSON.techInfo[i].value.split('\n');
 
           for ( var y = 0; y < array.length; y++ ) {
-            apex.debug.log(this.logPrefix, 'PL/SQL', pJqXHR.responseJSON.techInfo[i].name, array[y]);            
+            apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'PL/SQL', pJqXHR.responseJSON.techInfo[i].name, array[y]);            
           }
         }
       }      
@@ -1190,28 +1913,54 @@ $.widget('pretius.enhancedLovItem', {
     this._triggerEvent('paeli_popup_error', this._popupGetEventData());
     this._throwError( pErrorThrown );
   },
+  /*
+    *
+    * function name: _popupAjaxComplete
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAjaxComplete: function(){
-    apex.debug.log(this.logPrefix, '_popupAjaxComplete');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxComplete', {
+      "arguments": arguments
+    });
 
     this.popup.state.ajaxRunning = false;
 
-    
-
-    apex.debug.log(this.logPrefix, '_popupAjaxComplete', 'popup state', this.popup.state);
-
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxComplete', 'popup state', this.popup.state);
   },
-
+  /*
+    *
+    * function name: _popupAjaxAbort
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAjaxAbort: function(){
-    apex.debug.log(this.logPrefix, '_popupAjaxAbort');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAjaxAbort', {
+      "arguments": arguments
+    });
 
     this.popup.state.xhr.abort();
     this.popup.state.ajaxRunning = false;
-    
-
   },
-
+  /*
+    *
+    * function name: _popupGetSelectedHash
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupGetSelectedHash: function(){
-    apex.debug.log(this.logPrefix, '_popupGetSelectedHash');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetSelectedHash', {
+      "arguments": arguments
+    });
 
     var 
       newArray = this.popup.state.selected.map(function(pCurrentValue, pIndex, pArray){
@@ -1219,13 +1968,25 @@ $.widget('pretius.enhancedLovItem', {
       }),
       hashCode = this._getHashCode( newArray.join(':') );
 
-    apex.debug.log(this.logPrefix, '_popupGetSelectedHash returns ', hashCode);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetSelectedHash returns ', hashCode);
 
     return hashCode;
   },
+  /*
+    *
+    * function name: _getHashCode
+    * description  : implementation of https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _getHashCode: function( pString ) {
-    apex.debug.log(this.logPrefix, '_getHashCode', pString);
-    //implementation of https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getHashCode', {
+      "arguments": arguments,
+      "pString": pString
+    });
+
     var 
       hash = 0, 
       i, 
@@ -1241,11 +2002,24 @@ $.widget('pretius.enhancedLovItem', {
       hash |= 0; // Convert to 32bit integer
     }
 
-    apex.debug.log(this.logPrefix, '_getHashCode returns', hash);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getHashCode returns', hash);
     return hash;
   },
+  /*
+    *
+    * function name: _popupDialogBeforeCloseCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupDialogBeforeCloseCallback: function( pEvent, pUi ){
-    apex.debug.log(this.logPrefix, '_popupDialogBeforeCloseCallback', pEvent, pUi);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupDialogBeforeCloseCallback', {
+      "arguments": arguments,
+      "pEvent": pEvent,
+      "pUi": pUi
+    });
 
     if ( this.popup.state.selecting ) {
       this.popup.state.selecting = false;
@@ -1253,7 +2027,6 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     if ( this.popup.state.selectedHash != this._popupGetSelectedHash() ) {
-    //if ( this.popup.state.selected.length > 0 ) {
       return confirm( this.C_POPUP_TEXT_UNSAVED_CHANGES.replace('%0', this.popup.state.selected.length) );
     }
     else {
@@ -1261,36 +2034,149 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
+  /*
+    *
+    * function name: _promptPlaceHolderShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptPlaceHolderShow: function(){
-    apex.debug.log(this.logPrefix, '_promptPlaceHolderShow');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptPlaceHolderShow', {
+      "arguments": arguments,
+      "placeholder": this.mask.placeholder
+    });
 
     this.mask.placeholder.show();
+    this.mask.itemContainerBody.hide();
   },
+  /*
+    *
+    * function name: _promptPlaceHolderHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptPlaceHolderHide: function(){
-    apex.debug.log(this.logPrefix, '_promptPlaceHolderHide');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptPlaceHolderHide', {
+      "arguments": arguments
+    });
 
     this.mask.placeholder.hide();
+    this.mask.itemContainerBody.show();
   },
+  /*
+    *
+    * function name: _promptEmptyTags
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptEmptyTags: function(){
-    apex.debug.log(this.logPrefix, '_promptEmptyTags');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptEmptyTags', {
+      "arguments": arguments
+    });
 
     this.mask.state.tags = [];
     this.mask.tagsContainer.empty();
     
   },
-  _promptEmptyMask: function(){
-    apex.debug.log(this.logPrefix, '_promptEmptyMask');
+  /*
+    *
+    * function name: _promptEmptyMaskState
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _promptEmptyMaskState: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptEmptyMaskState', {
+      "arguments": arguments
+    });
 
     this.mask.state.selected = [];
   },
+  /*
+    *
+    * function name: _elementGetValueLenght
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _elementGetValueLenght: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_elementGetValueLenght', {
+      "arguments": arguments
+    });
 
+    var returnValue = this.element.val().length;
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_elementGetValueLenght returns "'+returnValue+'"');
+
+    return returnValue;
+  },
+  /*
+    *
+    * function name: _elementGetValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _elementGetValue: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_elementGetValue', {
+      "arguments": arguments
+    });
+
+    var returnValue = this.element.val();
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_elementGetValue returns "'+returnValue+'"');
+
+    return returnValue;
+  },
+  /*
+    *
+    * function name: _elementSetValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _elementSetValue: function( pValue ){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_elementSetValue', {
+      "arguments": arguments,
+      "pValue": pValue
+    });
+
+    this.element.val( pValue );
+  },
+  /*
+    *
+    * function name: _popupSelectAndClose
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSelectAndClose: function(){
-    apex.debug.log(this.logPrefix, '_popupSelectAndClose');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupSelectAndClose', {
+      "arguments": arguments
+    });
 
-    this._promptEmptyMask();
     this._promptEmptyTags();
 
-    this.element.val(null);
+    this._promptEmptyMaskState();
 
     for (var i=0; i < this.popup.state.selected.length; i++) {
       this._maskStateSelectedAdd( 
@@ -1298,22 +2184,33 @@ $.widget('pretius.enhancedLovItem', {
           "display"         : this.popup.state.selected[i].display,
           "value"           : this.popup.state.selected[i].value,
           "isAPEXNullValue" : this.popup.state.selected[i].isAPEXNullValue,
-        }, //pObject
-        false, //pTriggerChangeEvent
-        this.popup.state.selected[i].isExtraValue, //pIsExtraValue
-        this.popup.state.selected[i].isAPEXNullValue //pIsNullValue
-        );
+        },                                            //object
+        this.popup.state.selected[i].isExtraValue,    //is extra value
+        this.popup.state.selected[i].isAPEXNullValue  //is null value
+      );
     }
 
     this._promptApplyValues( true );
+    this._promptRenderTags();
 
     this.popup.state.selecting = true;
 
     this._popupClose();
-    //
+    
   },
+  /*
+    *
+    * function name: _popupClearFiltering
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupClearFiltering: function(){
-    apex.debug.log(this.logPrefix, '_popupClearFiltering');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupClearFiltering', {
+      "arguments": arguments
+    });
 
     if ( this.popup.showSelectedCheckbox.is(':checked') ) {
       this._popupShowSelectedCheckboxChange();
@@ -1322,8 +2219,20 @@ $.widget('pretius.enhancedLovItem', {
       this._popupSearchClear( true );
     }
   },
+  /*
+    *
+    * function name: _popupSearchClear
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSearchClear: function( pPerformAjax ){
-    apex.debug.log(this.logPrefix, '_popupSearchClear', 'force key up', pPerformAjax);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupSearchClear', {
+      "arguments": arguments,
+      "pPerformAjax": pPerformAjax
+    });
 
     this.popup.state.searchString = null;
     this.popup.search.val(null);
@@ -1333,45 +2242,91 @@ $.widget('pretius.enhancedLovItem', {
 
       this._popupAjaxPerform(1, this._popupOpenGetDefaultSortColumnIdx(), this._popupOpenGetDefaultSortColumnDirection());
     }
-
-    //
-    
   },
+  /*
+    *
+    * function name: _popupNewOption
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupNewOption: function( pValue, pText){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupNewOption', {
+      "arguments": arguments,
+      "pValue": pValue,
+      "pText": pText
+    });
+
     return $('<option value="'+pValue+'">'+pText+'</option>');
   },
+  /*
+    *
+    * function name: _popupDebugStateObject
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupDebugStateObject: function(){
-    apex.debug.log(this.logPrefix, '_popupDebugStateObject', this.popup.state);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupDebugStateObject', {
+      "arguments": arguments,
+      "this.popup.state": this.popup.state
+    });
 
     for ( var i in this.popup.state ) {
 
       if ( this.popup.state[i] instanceof Array ) {
-        apex.debug.log( this.logPrefix, 'this.popup.state.'+i+' ARRAY START' );  
+        apex.debug.message(this.C_LOG_LEVEL6,  this.logPrefix, 'this.popup.state.'+i+' ARRAY START' );  
 
         for ( var x in this.popup.state[i] ) {
-          apex.debug.log( this.logPrefix, 'this.popup.state.'+i+'['+x+']', this.popup.state[i][x] );  
+          apex.debug.message(this.C_LOG_LEVEL6,  this.logPrefix, 'this.popup.state.'+i+'['+x+']', this.popup.state[i][x] );  
         }
 
-        apex.debug.log( this.logPrefix, 'this.popup.state.'+i+' ARRAY END' );  
+        apex.debug.message(this.C_LOG_LEVEL6,  this.logPrefix, 'this.popup.state.'+i+' ARRAY END' );  
         
       }
       else {
-        apex.debug.log( this.logPrefix, 'this.popup.state.'+i+' = "'+this.popup.state[i]+'"' );  
+        apex.debug.message(this.C_LOG_LEVEL6,  this.logPrefix, 'this.popup.state.'+i+' = "'+this.popup.state[i]+'"' );  
       }
-
-      
     }
 
   },
+  /*
+    *
+    * function name: _popupClose
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupClose: function(){
-    apex.debug.log(this.logPrefix, '_popupClose');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupClose', {
+      "arguments": arguments
+    });
 
     this.popup.container.dialog('close');
 
     this._triggerEvent('paeli_popup_hidden', this._popupGetEventData());
   },
+  /*
+    *
+    * function name: _popupGetEventData
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupGetEventData: function(){
-    return {
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupGetEventData', {
+      "arguments": arguments
+    });
+
+    var returnObject = {
       "header"       : this.popup.header,
       "container"    : this.popup.container,
       "body"         : this.popup.body,
@@ -1389,30 +2344,67 @@ $.widget('pretius.enhancedLovItem', {
         "ajaxRunning"           : this.popup.state.ajaxRunning
       }
     };
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupGetEventData returns', returnObject);
+
+    return returnObject;
   },
+  /*
+    *
+    * function name: _popupOpen
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupOpen: function(){
-    apex.debug.log(this.logPrefix, '_popupOpen');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupOpen', {
+      "arguments": arguments
+    });
 
     this.popup.body.empty();
     this.popup.container.dialog('open');
-
   },
+  /*
+    *
+    * function name: _popupOpenByButton
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupOpenByButton: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupOpenByButton');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupOpenByButton', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     pEvent.preventDefault();
 
     if ( this.mask.state.disabled ) {
-      apex.debug.log(this.logPrefix, '_popupOpenByButton', 'APEX item is disabled, do nothing.');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_popupOpenByButton', 'APEX item is disabled, do nothing.');
       return void(0);
     }
 
     this._popupOpen();
   },
+  /*
+    *
+    * function name: _popupCreatePaginationContainer
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupCreatePaginationContainer: function(){
-    apex.debug.log(this.logPrefix, '_popupCreatePaginationContainer');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupCreatePaginationContainer', {
+      "arguments": arguments
+    });
+
     var
-      //
       paginationContainer   = $('<div class="paginationContainer"></div>'),
       paginationPrevious    = $('<a href="javascript: void(0)" class="prev"><span class="fa fa-caret-left"></span> '+this.C_POPUP_PAGINATION_PREV+'</a>'),
       paginationCurrent     = $('<span class="current">?</span>'),
@@ -1427,8 +2419,164 @@ $.widget('pretius.enhancedLovItem', {
     return paginationContainer;
 
   },
+  /*
+    *
+    * function name: _popupCreateObject
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _popupCreateObject: function() {
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupCreateObject', {
+      "arguments": arguments
+    });
+
+    var 
+      popupColumnSettingsJson = undefined,
+      popupContainer = undefined,
+      object = undefined;
+
+    if ( this.pluginSettings.isPopupReportAvailable == false) {
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_popupCreateObject popup is not available.');
+      return void(0);
+    }
+
+    if ( this.pluginSettings.popup.isReportAdvancedConf ) {
+      try{
+        popupColumnSettingsJson = JSON.parse(this.options.attributes.popupColumnSettings);
+      } catch(error) {
+        this._maskAjaxStateButtonSetError({
+          "addInfo"  : error.name+': '+error.message,
+          "error"    : 'Invalid plugin "'+this.options.plugin.name+'" configuration.',
+          "techInfo" : [
+            {
+              "name": 'Reason',
+              "value": 'Parsing JSON object for popup report failed: inavlid JSON object.'
+            },
+            {
+              "name": 'JSON object to parse',
+              "value": this.options.attributes.popupColumnSettings
+            }
+            
+          ]
+        }, true);
+
+        this._maskAjaxStateButtonError( );
+      }
+    }
+
+    popupContainer = this._popupCreateNew();
+
+    object = {
+      "container": popupContainer,
+      "defaultReportSettings": {
+        //"heading": "",
+        "thAlign": "left",
+        "tdAlign": "left",
+        "visible": true,
+        "sort"   : true,
+        "filter" : true
+      },
+      "headers"  : popupColumnSettingsJson,
+      "headerActionContainer": undefined,
+      "state": {
+        "informationText"           : undefined,
+        "informationTemplate"       : undefined,
+        "selecting"                 : false, //to recognize manual select and close
+        "xhr"                       : undefined,
+        "isVisible"                 : false,
+        "lastFetchedPage"           : null,
+        "searchString"              : undefined,
+        "searchStringOnFocus"       : undefined,
+        "sortedColumnIdx"           : null,
+        "sortedColumnDirection"     : 'asc',
+        "ajaxRunning"               : false,
+        "searchColumnIdx"           : undefined,
+        "ajaxDataFetchedCount"      : 0,
+        "ajaxDataTotalCount"        : undefined,
+        "ajaxStatus"                : undefined,
+        "ajaxCurrentPageData"       : [],
+        "ajaxSelectedData"          : [],
+        "ajaxCurrentPageRownumStart": undefined,
+        "ajaxCurrentPageRownumEnd"  : undefined,
+        "cache"                     : [], // do dopisania kiedyś 
+        "selected"                  : [],
+        "selectedHash"              : 0
+      },        
+      "dialogHeader"          : popupContainer.parent().find('.ui-dialog-titlebar'),
+      "header"                : popupContainer.find('.header'),
+      "informationContainer"  : popupContainer.find('.information'),
+      "informationText"       : popupContainer.find('.information .text'),
+      "body"                  : popupContainer.find('.body'),
+      "footer"                : popupContainer.find('.footer'),
+      "showSelectedContainer" : popupContainer.find('.footer-showSelected'),
+      "stickyHeaders"         : undefined,
+      "search"                : popupContainer.find('.searchContainer :input'),
+      "selectAllCheckbox"     : undefined,
+      "showSelectedCheckbox"  : popupContainer.find('.footer :checkbox'),
+      "showSelectedLabel"     : popupContainer.find('.footer label'),
+      "clear"                 : popupContainer.find('.searchContainer .clear'),
+      "select"                : popupContainer.find('.select'),
+      "paginationContainer"   : popupContainer.find('.paginationContainer'),
+      "paginationPrevPage"    : popupContainer.find('.prev'),
+      "paginationNextPage"    : popupContainer.find('.next'),
+      "paginationCurrent"     : popupContainer.find('.current'),
+      "rowsPerPage"           : popupContainer.find('select'),
+      "contentTable"          : undefined,
+      "rowsPerPageContainer"  : popupContainer.find('.rowsPerPageContainer')
+    };
+
+    object.body.on('scroll', $.proxy( this._popupScrollCallback, this ) );   
+    object.clear.on('click', $.proxy( this._popupSearchClear, this, true ) );
+    
+    object.paginationPrevPage.on('click', $.proxy( this._popupPaginationPrevPage, this ));
+    object.paginationNextPage.on('click', $.proxy( this._popupPaginationNextPage, this ));
+    object.rowsPerPage.on('change', $.proxy( this._popupChangeRowsPerPage, this ) )
+
+    object.showSelectedCheckbox.on('change', $.proxy( this._popupShowSelectedCheckboxChange, this ) );
+
+    if ( this.pluginSettings.popup.clickOnRowSelectsIt ) {
+      object.container.on('click', 'td', $.proxy( this._popupClickOnCell, this) );
+    }
+    
+    object.container
+      .on('click',  '.fakeCheckbox',            $.proxy( this._popupFakeCheckboxClick,          this) )
+      .on('click',  'button.select',            $.proxy( this._popupSelectAndClose,             this) )
+      .on('click',  'a.showSelected',           $.proxy( this._popupShowSelectedCheckboxChange, this) )
+      .on('click',  'a.clearFiltering',         $.proxy( this._popupClearFiltering,             this) )
+      .on('click',  '.fakeRadio',               $.proxy( this._popupFakeRadioClick,             this) )
+      .on('change', 'th:first-child :checkbox', $.proxy( this._popupThCheckboxChange,           this) )
+      .on('change', 'td:first-child :checkbox', $.proxy( this._popupTdCheckboxChange,           this) )
+      .on('change', 'td:first-child :radio',    $.proxy( this._popupTdRadioChange,              this) );
+
+    object.search
+      .on('keyup', this._debounce($.proxy( this._popupSearchKeyUp, this, null, null), this.pluginSettings.popupSearchDebounceTime))
+      .on('keyup', $.proxy( this._maskKeyUpManageIcons, this) )
+      .on('focus', $.proxy( this._popupSearchFocus, this ) );    
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupCreateObject', {
+      "arguments": arguments,
+      "returns": object
+    });
+
+    return object;
+  }, 
+  /*
+    *
+    * function name: _popupCreateNew
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupCreateNew: function(){
-    apex.debug.log(this.logPrefix, '_popupCreateNew');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupCreateNew', {
+      "arguments": arguments
+    });
+
     var 
       header                = $('<div class="header"></div>'),
       information           = $('<div class="information hidden"> <div class="text"></div> </div>'),
@@ -1439,9 +2587,7 @@ $.widget('pretius.enhancedLovItem', {
       searchInput           = $('<input type="text" placeholder="'+this.C_POPUP_SEARCH_PLACEHOLDER+'" class="empty">'),
       searchIcon            = $('<span class="fa fa-search search"></span>'),
       searchClearIcon       = $('<span class="fa fa-trash-o clear"></span>'),
-      //
       body                  = $('<div class="body"></div>'),
-      //
       footer                = $('<div class="footer"></div>'),
       footerShowSelected    = $('<div class="footer-showSelected"></div>'),
       footerButtons         = $('<div class="footer-buttons"></div>'),
@@ -1454,7 +2600,7 @@ $.widget('pretius.enhancedLovItem', {
       container             = $('<div class="container" data-apex-item="'+this.element.get(0).id+'"></div>'),
       extraClass            = this.pluginSettings.popup.clickOnRowSelectsIt ? 'selectViaRows' : '',
       options               = {
-        "dialogClass"   : "pretius--enhancedLovItem "+extraClass,
+        "dialogClass"   : "pretius--enhancedLovItem popup "+extraClass,
         "autoOpen"      : false,
         "appendTo"      : 'body',
         "modal"         : true,
@@ -1475,8 +2621,6 @@ $.widget('pretius.enhancedLovItem', {
         "beforeClose"   : $.proxy( this._popupDialogBeforeCloseCallback, this )
       };
 
-    container.dialog( options );
-
     //search in all columns
     if ( this.pluginSettings.popup.searchInAllColumns ) {
       searchContainer
@@ -1492,6 +2636,8 @@ $.widget('pretius.enhancedLovItem', {
       for (var i=1; i<=10; i++) {
         rowsPerPageSelect.append( this._popupNewOption(i*10,i*10) );
       }
+
+      rowsPerPageSelect.val( this.pluginSettings.popup.rowsPerPage );
 
       rowsPerPageContainer.append( rowsPerPageSelect );
       header.append( rowsPerPageContainer )
@@ -1514,7 +2660,7 @@ $.widget('pretius.enhancedLovItem', {
       .append( showSelectedInput )
       .append( showSelectedLabel );
 
-    if ( this.pluginSettings.isDebugOn ) {
+    if ( apex.debug.getLevel() >= this.C_LOG_LEVEL6 ) {
       buttonDebug.click( $.proxy( this._popupDebugStateObject, this ) );
       footerButtons.append( buttonDebug );
     }
@@ -1531,14 +2677,37 @@ $.widget('pretius.enhancedLovItem', {
       .append( body )
       .append( footer );
 
+    //dialog constructor appends newly created container to specified element (body)
+    container.dialog( options );
+    container.attr({
+      'tabindex': 0,
+      'data-popup': this.widgetUniqueId
+    });
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupCreateNew', "returns", {
+      "container": container
+    });
+
     return container;
   },
-  _popupDialoginBtnClick: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupDialoginBtnClick');
-  },
+  /*
+    *
+    * function name: _popupSearchInSelectedData
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSearchInSelectedData: function( pSearchColumnName, pSearchColumnIdx, pSearchString, pIsSearchGlobal ){
-    apex.debug.log(this.logPrefix, '_popupSearchInSelectedData', this.popup.state.ajaxCurrentPageData);
-    apex.debug.log(this.logPrefix, '_popupSearchInSelectedData', pSearchColumnName, pSearchString, pIsSearchGlobal);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupSearchInSelectedData', {
+      "arguments": arguments,
+      "pSearchColumnName": pSearchColumnName,
+      "pSearchColumnIdx": pSearchColumnIdx,
+      "pSearchString": pSearchString,
+      "pIsSearchGlobal": pIsSearchGlobal,
+      "this.popup.state.ajaxCurrentPageData": this.popup.state.ajaxCurrentPageData
+    });
 
     var 
       newData,
@@ -1562,7 +2731,7 @@ $.widget('pretius.enhancedLovItem', {
       } );
     }   
   
-    apex.debug.log(this.logPrefix, '_popupSearchInSelectedData', 'filtered', newData);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupSearchInSelectedData', 'filtered', newData);
 
     this.popup.state.searchString    = pSearchString;
     this.popup.state.searchColumnIdx = pSearchColumnIdx;
@@ -1578,10 +2747,22 @@ $.widget('pretius.enhancedLovItem', {
 
 
   },
+  /*
+    *
+    * function name: _popupSearchBlur
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSearchBlur: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupSearchBlur', 'pEvent', pEvent);
-    apex.debug.log(this.logPrefix, '_popupSearchBlur', 'current value "'+this.popup.search.val()+'"');
-    apex.debug.log(this.logPrefix, '_popupSearchBlur', 'focus value "'+this.popup.state.searchStringOnFocus+'"'  );
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupSearchBlur', {
+      "arguments": arguments,
+      "pEvent": pEvent,
+      "current value": this.popup.search.val(),
+      "focus value": this.popup.state.searchStringOnFocus
+    });
 
     var newEvent = apex.jQuery.Event( 'keyup', { which: $.ui.keyCode.ENTER, keyCode: 13 } );
 
@@ -1590,16 +2771,35 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
+  /*
+    *
+    * function name: _popupSearchFocus
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSearchFocus: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupSearchFocus', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupSearchFocus', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     this.popup.state.searchStringOnFocus = this.popup.search.val();
 
-    apex.debug.log(this.logPrefix, '_popupSearchFocus', 'current search string is "'+this.popup.state.searchStringOnFocus+'"');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupSearchFocus', 'current search string is "'+this.popup.state.searchStringOnFocus+'"');
   },
+  /*
+    *
+    * function name: _popupSearchKeyUp
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSearchKeyUp: function( pSearchColumnName, pSearchColumnIdx, pEvent ){
-    apex.debug.log(this.logPrefix, '_popupSearchKeyUp', pEvent.keyCode);
-
     var 
       searchItem     = $(pEvent.currentTarget),
       searchString   = searchItem.val(),
@@ -1609,6 +2809,14 @@ $.widget('pretius.enhancedLovItem', {
     if ( pEvent.keyCode != 13 ) {
       return void(0);
     }
+
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupSearchKeyUp', {
+      "arguments": arguments,
+      "pSearchColumnName": pSearchColumnName,
+      "pSearchColumnIdx": pSearchColumnIdx,
+      "pEvent": pEvent,
+      "pEvent.keyCode": pEvent.keyCode
+    });
 
     //when only selected values are currently presented
     if ( this.popup.showSelectedCheckbox.is(':checked') ) {
@@ -1628,8 +2836,21 @@ $.widget('pretius.enhancedLovItem', {
       this._maskKeyUpManageIcons();
     }
   },
+  /*
+    *
+    * function name: _popupGetMaxDialogHeight
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupGetMaxDialogHeight: function( pReportHeight ){
-    apex.debug.log(this.logPrefix, '_popupGetMaxDialogHeight', 'pReportHeight', pReportHeight);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetMaxDialogHeight', {
+      "arguments": arguments,
+      "pReportHeight": pReportHeight
+    });
+
     var
       popupHeader = this.popup.dialogHeader.outerHeight(),
       totalHeight = 0;
@@ -1655,11 +2876,23 @@ $.widget('pretius.enhancedLovItem', {
       totalHeight = $(window).outerHeight() - 40;
     }
 
-    apex.debug.log(this.logPrefix, '_popupGetMaxDialogHeight', 'returns', totalHeight);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetMaxDialogHeight', 'returns', totalHeight);
     return totalHeight;
   },
+  /*
+    *
+    * function name: _popupGetMaxHeightReport
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupGetMaxHeightReport: function( pDialogTotalHeight ){
-    apex.debug.log(this.logPrefix, '_popupGetMaxHeightReport', 'pDialogTotalHeight', pDialogTotalHeight);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetMaxHeightReport', {
+      "arguments": arguments,
+      "pDialogTotalHeight": pDialogTotalHeight
+    });
 
     var
       reportMaxHeight = pDialogTotalHeight,
@@ -1684,11 +2917,23 @@ $.widget('pretius.enhancedLovItem', {
       reportMaxHeight += 17;
     }
 
-    apex.debug.log(this.logPrefix, '_popupGetMaxHeightReport', 'returns', reportMaxHeight);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetMaxHeightReport', 'returns', reportMaxHeight);
     return reportMaxHeight;
   },
+  /*
+    *
+    * function name: _popupAdjustBodyHeightAnimate
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAdjustBodyHeightAnimate: function( pDuration ){
-    apex.debug.log(this.logPrefix, '_popupAdjustBodyHeightAnimate', 'pDuration', pDuration);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAdjustBodyHeightAnimate', {
+      "arguments": arguments,
+      "pDuration": pDuration
+    });
 
     var tableHeight = this._popupGetTableHeight();
 
@@ -1726,31 +2971,56 @@ $.widget('pretius.enhancedLovItem', {
         this.popup.container.dialog('option','height', resultPopupHeight);
       }, this),
       "complete": $.proxy(function(){
-        apex.debug.log(this.logPrefix, '_popupAdjustBodyHeightAnimate', 'animation completed');
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAdjustBodyHeightAnimate', 'animation completed');
       }, this)
     });
   },
+  /*
+    *
+    * function name: _popupGetTableHeight
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupGetTableHeight: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetTableHeight', {
+      "arguments": arguments
+    });
+
     var 
       tableHeight = 0;
 
     if ( this.popup.contentTable != undefined ) {
       tableHeight = this.popup.contentTable.outerHeight();
-      apex.debug.log(this.logPrefix, '_popupGetTableHeight', 'tableHeight', tableHeight);
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetTableHeight', 'tableHeight', tableHeight);
     }
     else {
       tableHeight = this.popup.body.children().first().outerHeight();
-      apex.debug.log(this.logPrefix, '_popupGetTableHeight', 'tableHeight of children', tableHeight);
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetTableHeight', 'tableHeight of children', tableHeight);
     }
 
     tableHeight = this._popupGetMaxHeightReport( this._popupGetMaxDialogHeight( tableHeight ) );
 
-    apex.debug.log(this.logPrefix, '_popupGetTableHeight returns', tableHeight);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetTableHeight returns', tableHeight);
     return tableHeight;
 
   },
+  /*
+    *
+    * function name: _popupAdjustBodyHeight
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupAdjustBodyHeight: function( pDuration ){
-    apex.debug.log(this.logPrefix, '_popupAdjustBodyHeight');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupAdjustBodyHeight', {
+      "arguments": arguments,
+      "pDuration": pDuration
+    });
 
     var 
       height,
@@ -1770,8 +3040,20 @@ $.widget('pretius.enhancedLovItem', {
       this.popup.body.css('minHeight', height);
     }
   },
+  /*
+    *
+    * function name: _popupHighlightResults
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupHighlightResults: function( pResultsJquery ){
-    apex.debug.log(this.logPrefix, '_popupHighlightResults');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupHighlightResults', {
+      "arguments": arguments,
+      "pResultsJquery": pResultsJquery
+    });
 
     var 
       resultText,
@@ -1779,7 +3061,7 @@ $.widget('pretius.enhancedLovItem', {
       searchStringArr = searchString != null ? searchString.split('%') : [],
       tds;
 
-    apex.debug.log(this.logPrefix, '_popupHighlightResults', searchStringArr);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupHighlightResults', searchStringArr);
 
     //if there is no search string don't higlihjt results;
     if ( searchString == undefined || searchString.length == 0 ) {
@@ -1810,8 +3092,19 @@ $.widget('pretius.enhancedLovItem', {
 
     return pResultsJquery;
   },
+  /*
+    *
+    * function name: _popupShowSelectedCheckboxChange
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupShowSelectedCheckboxChange: function(){
-    apex.debug.log(this.logPrefix, '_popupShowSelectedCheckboxChange');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupShowSelectedCheckboxChange', {
+      "arguments": arguments
+    });
 
     //when there is nothing to show
     if ( this.popup.state.selected.length == 0 ) {
@@ -1832,27 +3125,57 @@ $.widget('pretius.enhancedLovItem', {
       );
 
     }
-
-    
   },
+  /*
+    *
+    * function name: popupInformationHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   popupInformationHide: function(){
-    apex.debug.log(this.logPrefix, 'popupInformationHide');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, 'popupInformationHide', {
+      "arguments": arguments
+    });
 
     this.popup.state.informationTemplate = undefined;
     this.popup.state.informationText     = undefined;
     this.popup.informationContainer.addClass('hidden');
-
   },
 
+  /*
+    *
+    * function name: popupInformationShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   popupInformationShow: function(){
-    
-    apex.debug.log(this.logPrefix, 'popupInformationShow');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, 'popupInformationShow', {
+      "arguments": arguments
+    });
 
     this.popup.informationContainer.removeClass('hidden');
-
   },
+  /*
+    *
+    * function name: _popupInformationAppend
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupInformationAppend: function( pMessage, pMessageTemplate ){
-    apex.debug.log(this.logPrefix, '_popupInformationAppend');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupInformationAppend', {
+      "arguments": arguments,
+      "pMessage": pMessage,
+      "pMessageTemplate": pMessageTemplate
+    });
 
     this.popup.informationText.empty().append( pMessage );
     this.popupInformationShow();
@@ -1860,8 +3183,20 @@ $.widget('pretius.enhancedLovItem', {
     this.popup.state.informationText     = pMessage;
     this.popup.state.informationTemplate = pMessageTemplate;
   },
+  /*
+    *
+    * function name: _popupThCheckboxChange
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupThCheckboxChange: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupThCheckboxChange', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupThCheckboxChange', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var 
       checkboxes  = this.popup.contentTable.find('tr td:first-child :checkbox'),
@@ -1869,10 +3204,12 @@ $.widget('pretius.enhancedLovItem', {
       notSelected = checkboxes.filter(function(){ return $(this).is(':not(:checked)') }).toArray(),
       message     = this.C_POPUP_TEXT_ROWS_SELECTED.replace('%0', checkboxes.length);
 
+    pEvent.stopImmediatePropagation();
+
     if ( this.popup.selectAllCheckbox.is(':checked') ) {
 
       for( var i=0; i < notSelected.length; i++ ) {
-        $( notSelected[i] ).trigger('click');
+        $( notSelected[i] ).prop('checked', true).trigger('change');
       }
 
       this._popupInformationAppend( message, this.C_POPUP_TEXT_ROWS_SELECTED );
@@ -1884,13 +3221,26 @@ $.widget('pretius.enhancedLovItem', {
       }
 
       for( var i=0; i < selected.length; i++ ) {
-        $( selected[i] ).trigger('click');
+        $( selected[i] ).prop('checked', false).trigger('change');
       }
     }
+
     this._popupAdjustBodyHeight();
   },
+  /*
+    *
+    * function name: _popupToggleRowState
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupToggleRowState: function( pInput ){
-    apex.debug.log(this.logPrefix, '_popupToggleRowState');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupToggleRowState', {
+      "arguments": arguments,
+      "pInput": pInput
+    });
 
     if ( pInput instanceof jQuery == false ) {
       pInput = $( pInput );
@@ -1903,15 +3253,28 @@ $.widget('pretius.enhancedLovItem', {
       pInput.closest('tr').removeClass('selected');
     }
   },
+  /*
+    *
+    * function name: _popupTdCheckboxChange
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupTdCheckboxChange: function( pEvent ){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupTdCheckboxChange', {
+      "arguments": arguments,
+      "pEvent": pEvent,
+      "pEvent.currentTarget": pEvent.currentTarget
+    });
+
     var 
       checkbox = $(pEvent.currentTarget),
       checkboxes  = undefined,
       selected    = undefined;
 
     pEvent.stopImmediatePropagation();
-
-    apex.debug.log(this.logPrefix, '_popupTdCheckboxChange', checkbox.get(0));
 
     checkboxes  = this.popup.contentTable.find('tr td:first-child :checkbox'),
     selected    = checkboxes.filter(function(){ return $(this).is(':checked') });
@@ -1927,9 +3290,8 @@ $.widget('pretius.enhancedLovItem', {
       }
     }
 
-
-    apex.debug.log(this.logPrefix, '_popupTdCheckboxChange', 'checkboxes cnt', checkboxes.length);
-    apex.debug.log(this.logPrefix, '_popupTdCheckboxChange', 'checked checkboxes cnt', selected.length);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupTdCheckboxChange', 'checkboxes cnt', checkboxes.length);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupTdCheckboxChange', 'checked checkboxes cnt', selected.length);
 
     if ( checkboxes.length == selected.length ) {
       
@@ -1946,8 +3308,20 @@ $.widget('pretius.enhancedLovItem', {
 
   },
 
+  /*
+    *
+    * function name: _popupTdRadioChange
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupTdRadioChange: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupTdRadioChange');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupTdRadioChange', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var radio = $(pEvent.currentTarget);
 
@@ -1967,37 +3341,73 @@ $.widget('pretius.enhancedLovItem', {
 
     this._popupToggleRowState( radio );
   },
+  /*
+    *
+    * function name: _popupIsValueSelected
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupIsValueSelected: function( pValue ){
-    apex.debug.log(this.logPrefix, '_popupIsValueSelected', pValue);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupIsValueSelected', {
+      "arguments": arguments,
+      "pValue": pValue
+    });
 
     for ( var i=0; i < this.popup.state.selected.length; i++ ) {
       if ( this.popup.state.selected[i].value == pValue ) {
-        apex.debug.log(this.logPrefix, '_popupIsValueSelected', pValue, true);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupIsValueSelected', pValue, true);
         return true;
       }
     }
     
-    apex.debug.log(this.logPrefix, '_popupIsValueSelected', pValue, false);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupIsValueSelected', pValue, false);
 
     return false;
   },
+  /*
+    *
+    * function name: _popupValueSelectedIndex
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupValueSelectedIndex: function( pValue ){
-    apex.debug.log(this.logPrefix, '_popupValueSelectedIndex', pValue);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupValueSelectedIndex', {
+      "arguments": arguments,
+      "pValue": pValue
+    });
 
     for ( var i=0; i < this.popup.state.selected.length; i++ ) {
       if ( this.popup.state.selected[i].value == pValue ) {
-        apex.debug.log(this.logPrefix, '_popupValueSelectedIndex', pValue, i);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupValueSelectedIndex', pValue, i);
         return i;
       }
     }
     
-    apex.debug.log(this.logPrefix, '_popupValueSelectedIndex', pValue, -1);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupValueSelectedIndex', pValue, -1);
 
     return -1;
   },
 
+  /*
+    *
+    * function name: _popupUnselectValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupUnselectValue: function( pValue ){
-    apex.debug.log(this.logPrefix, '_popupUnselectValue');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupUnselectValue', {
+      "arguments": arguments,
+      "pValue": pValue
+    });
 
     var 
       indexOf = this._popupValueSelectedIndex( pValue )
@@ -2009,18 +3419,40 @@ $.widget('pretius.enhancedLovItem', {
 
     removed = this.popup.state.selected.splice( indexOf, 1 );
 
-    apex.debug.log(this.logPrefix, '_popupUnselectValue', 'removed value', removed);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupUnselectValue', 'removed value', removed);
 
     this._popupShowSelectedUpdate( true );
-
   },
+  /*
+    *
+    * function name: _popupResetValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupResetValues: function(){
-    apex.debug.log(this.logPrefix, '_popupResetValues');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupResetValues', {
+      "arguments": arguments
+    });
 
     this.popup.state.selected = [];
   },
+  /*
+    *
+    * function name: _popupSelectValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupSelectValue: function( pInput ){
-    apex.debug.log(this.logPrefix, '_popupSelectValue');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupSelectValue', {
+      "arguments": arguments,
+      "pInput": pInput
+    });
 
     var 
       newSelectionObj = {
@@ -2034,8 +3466,20 @@ $.widget('pretius.enhancedLovItem', {
 
     this._popupShowSelectedUpdate( false );
   },  
+  /*
+    *
+    * function name: _popupShowSelectedUpdate
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupShowSelectedUpdate: function( pPerformAjaxOn0Selected ){
-    apex.debug.log(this.logPrefix, '_popupShowSelectedUpdate', "perform ajax on 0 selected", pPerformAjaxOn0Selected);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupShowSelectedUpdate', {
+      "arguments": arguments,
+      "pPerformAjaxOn0Selected": pPerformAjaxOn0Selected
+    });
     
     var selectedLength = this.popup.state.selected.length;
 
@@ -2056,25 +3500,52 @@ $.widget('pretius.enhancedLovItem', {
     }
   },
 
+  /*
+    *
+    * function name: _popupClickOnCell
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupClickOnCell: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupClickOnCell', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupClickOnCell', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var 
       tr = $(pEvent.target).closest('tr'),
       input = tr.find('td:first-child :input');
 
-    if ( input.is(':checkbox') ) {
-      input.trigger('click');
+    if ( input.is(':checkbox') && input.is(':checked') ) {
+      //checkbox
+      input.prop('checked', false).trigger('change');
+    }
+    else if ( input.is(':checkbox') && !input.is(':checked') ) {
+      input.prop('checked', true).trigger('change');
     }
     else {
+      //radio
       input.prop('checked', true) ;
       input.trigger('change');
-    }
-
-    
+    }    
   },
+  /*
+    *
+    * function name: _popupFakeRadioClick
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupFakeRadioClick: function( pEvent ) {
-    apex.debug.log(this.logPrefix, '_popupFakeRadioClick');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupFakeRadioClick', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var triggeringElement = $(pEvent.currentTarget);
 
@@ -2083,19 +3554,47 @@ $.widget('pretius.enhancedLovItem', {
     triggeringElement.parent().find(':radio').trigger('click');
 
   },
+  /*
+    *
+    * function name: _popupFakeCheckboxClick
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupFakeCheckboxClick: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupFakeCheckboxClick');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupFakeCheckboxClick', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
-    var triggeringElement = $(pEvent.currentTarget);
+    var 
+      triggeringElement = $(pEvent.currentTarget),
+      checkbox          = triggeringElement.parent().find(':checkbox');
 
     pEvent.stopImmediatePropagation();
 
-    triggeringElement.parent().find(':checkbox').trigger('click');
+    checkbox.prop('checked', !checkbox.is(':checked')).trigger('change');
 
   },
 
+  /*
+    *
+    * function name: _popupSortReport
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupSortReport: function( pColumnName, pColumnIdx, pSortDirection ){
-    apex.debug.log(this.logPrefix, '_popupSortReport', 'pColumnIdx', pColumnIdx, 'pSortDirection', pSortDirection);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupSortReport', {
+      "arguments": arguments,
+      "pColumnName": pColumnName,
+      "pColumnIdx": pColumnIdx,
+      "pSortDirection": pSortDirection
+    });
 
     var 
       searchString = this.popup.state.searchString,
@@ -2114,12 +3613,21 @@ $.widget('pretius.enhancedLovItem', {
     else {
       this._popupAjaxPerform(1, pColumnIdx, pSortDirection, searchString, searchColumnIdx);  
     }
-    
-
   },
 
-  _popupGetHeadings: function( ){
-    apex.debug.log(this.logPrefix, '_popupGetHeadings');
+  /*
+    *
+    * function name: _popupGetHeadings
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _popupGetHeadings: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetHeadings', {
+      "arguments": arguments
+    });
 
     var 
       thead = $('<thead><tr></tr></thead>'),
@@ -2212,7 +3720,7 @@ $.widget('pretius.enhancedLovItem', {
 
       th = $(th);
 
-      apex.debug.log(this.logPrefix, '_popupGetHeadings filtering or sorting available, bind click callback');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetHeadings filtering or sorting available, bind click callback');
 
       th.bind('click', $.proxy(this._popupReportHeaderClickCallback, this, this.options.columns[i], sortingDirection));
 
@@ -2222,9 +3730,21 @@ $.widget('pretius.enhancedLovItem', {
     return thead;
 
   },
+  /*
+    *
+    * function name: _popupReportHeaderContainerCreate
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportHeaderContainerCreate: function( pCurrentTh, pColumnObject ){
-    apex.debug.log(this.logPrefix, '_popupReportHeaderContainerCreate', 'pCurrentTh', pCurrentTh);
-    apex.debug.log(this.logPrefix, '_popupReportHeaderContainerCreate', 'pColumnObject', pColumnObject);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderContainerCreate', {
+      "arguments": arguments,
+      "pCurrentTh": pCurrentTh,
+      "pColumnObject": pColumnObject
+    });
 
     var 
       text = pCurrentTh.text().trim(),
@@ -2249,7 +3769,6 @@ $.widget('pretius.enhancedLovItem', {
         .on('keyup', this._debounce($.proxy( this._popupSearchKeyUp, this, dbColumnName, pColumnObject.IDX), this.pluginSettings.popupSearchDebounceTime))
         .on('keyup', $.proxy( this._headerWidgetKeyUpManageIcons, this) );
 
-      //if ( this.popup.state.searchString != undefined && pColumnIdx == this.popup.state.searchColumnIdx) {
       if ( this.popup.state.searchString != undefined && pColumnObject.IDX == this.popup.state.searchColumnIdx) {
         searchItem.val( this.popup.state.searchString );
         searchItem.removeClass('empty');
@@ -2271,8 +3790,19 @@ $.widget('pretius.enhancedLovItem', {
     return container;
 
   },
+  /*
+    *
+    * function name: _popupReportHeaderWidgetHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportHeaderWidgetHide: function(){
-    apex.debug.log(this.logPrefix, '_popupReportHeaderWidgetHide');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderWidgetHide', {
+      "arguments": arguments
+    });
 
     this.popup.stickyHeaders.find('th').removeClass('is-active');
     this.popup.headerActionContainer.remove();
@@ -2280,8 +3810,21 @@ $.widget('pretius.enhancedLovItem', {
     $(document).off('click.pretius--enhancedLovItem');
   },
 
+  /*
+    *
+    * function name: _popupReportHeaderWidgetShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupReportHeaderWidgetShow: function( pTh, pWidget){
-    apex.debug.log(this.logPrefix, '_popupReportHeaderWidgetShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderWidgetShow', {
+      "arguments": arguments,
+      "pTh": pTh,
+      "pWidget": pWidget
+    });
 
     if ( this.popup.headerActionContainer != undefined  ) {
       this._popupReportHeaderWidgetHide();
@@ -2293,12 +3836,24 @@ $.widget('pretius.enhancedLovItem', {
 
     pWidget.find(':input').focus();
   },
+  /*
+    *
+    * function name: _popupReportHeaderClickCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportHeaderClickCallback: function( pColumnObject, pSortDirection, pEvent ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderClickCallback', {
+      "arguments": arguments,
+      "pColumnObject": pColumnObject,
+      "pSortDirection": pSortDirection,
+      "pEvent": pEvent
+    });
 
     pEvent.stopImmediatePropagation();
-
-    apex.debug.log(this.logPrefix, '_popupReportHeaderClickCallback', pEvent);
-    apex.debug.log(this.logPrefix, '_popupReportHeaderClickCallback column data', {"column object": pColumnObject, "sort_direction": pSortDirection});
 
     var 
       th = $(pEvent.currentTarget),
@@ -2309,22 +3864,46 @@ $.widget('pretius.enhancedLovItem', {
     
     $(document).bind('click.pretius--enhancedLovItem', $.proxy( this._popupReportHeaderClickOutsideCheck, this ));
   },
+  /*
+    *
+    * function name: _popupReportHeaderClickOutsideCheck
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportHeaderClickOutsideCheck: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupReportHeaderClickOutsideCheck', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderClickOutsideCheck', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
+
     var target = $(pEvent.target);
 
     if ( !$.contains( this.popup.headerActionContainer.get(0), target.get(0) ) ) {
       //click outside found
-      apex.debug.log(this.logPrefix, '_popupReportHeaderClickOutsideCheck', 'clicked outside header widget');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderClickOutsideCheck', 'clicked outside header widget');
       this._popupReportHeaderWidgetHide();
     }
     else {
-      apex.debug.log(this.logPrefix, '_popupReportHeaderClickOutsideCheck', 'clicked inside header widget');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportHeaderClickOutsideCheck', 'clicked inside header widget');
     }
     
   },
+  /*
+    *
+    * function name: _popupCreateStickyHeaders
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupCreateStickyHeaders: function() {
-    apex.debug.log(this.logPrefix, '_popupCreateStickyHeaders');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupCreateStickyHeaders', {
+      "arguments": arguments
+    });
 
     var
       table = $('<table></table>'),
@@ -2334,21 +3913,20 @@ $.widget('pretius.enhancedLovItem', {
 
     if ( this.popup.stickyHeaders != undefined ) {
       this.popup.stickyHeaders.remove();
-      apex.debug.log(this.logPrefix, '_popupCreateStickyHeaders', 'removing existing stickyHeaders');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupCreateStickyHeaders', 'removing existing stickyHeaders');
     }
 
     thead.find('th').each( function( pIndex, pElem ){
       $(pElem).css({
         'minWidth': ths.eq(pIndex).outerWidth(),
         'maxWidth': ths.eq(pIndex).outerWidth(),
-        'width': ths.eq(pIndex).outerWidth(),
+        'width'   : ths.eq(pIndex).outerWidth(),
       });
 
       ths.eq(pIndex).css({
         'minWidth': ths.eq(pIndex).outerWidth(),
         'maxWidth': ths.eq(pIndex).outerWidth(),
-        'width': ths.eq(pIndex).outerWidth(),
-
+        'width'   : ths.eq(pIndex).outerWidth(),
       })
     });
 
@@ -2363,32 +3941,19 @@ $.widget('pretius.enhancedLovItem', {
 
     this.popup.body.append( table );
   },
-  _popupReportRenderSearching: function(){
-    apex.debug.log(this.logPrefix, '_popupReportRenderSearching');
-
-    var 
-      searchTerm = this.popup.state.searchString,
-      searchingText = this.C_POPUP_TEXT_SEARCHING.replace('%0', searchTerm),
-      container = $('                                 '+
-        '<div class="searchingForResults">            '+
-        '  <div class="icon">                         '+
-        '    <span class="fa fa-refresh fa-anim-spin"></span> '+
-        '  </div>                                     '+
-        '  <div class="text">'+searchingText+'</div>'+
-        '</div>                                       '+
-        ''
-      );
-
-    this.popup.body.empty().append(container);
-
-    this._popupHeaderHide();
-    this._popupFooterHide();
-    this.popupInformationHide();
-    this._popupAdjustBodyHeight();
-  },
-
+  /*
+    *
+    * function name: _popupReportRenderNodataFound
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportRenderNodataFound: function(){
-    apex.debug.log(this.logPrefix, '_popupReportRenderNodataFound');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupReportRenderNodataFound', {
+      "arguments": arguments
+    });
 
     var 
       searchTerm = this.popup.state.searchString,
@@ -2417,8 +3982,20 @@ $.widget('pretius.enhancedLovItem', {
     this._popupRowsPerPageHide();
     this._popupAdjustBodyHeight();
   },
+  /*
+    *
+    * function name: _popupReportBodyGet
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportBodyGet: function( pData ){
-    apex.debug.log(this.logPrefix, '_popupReportBodyGet', pData);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupReportBodyGet', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var
       tbodyTemplate = ''+
@@ -2480,7 +4057,7 @@ $.widget('pretius.enhancedLovItem', {
         continue;
       }
 
-      if ( //
+      if ( 
            this.pluginSettings.popup.isReportBasicConf
         && this.pluginSettings.popup.isReturnColumnVisible == false
         && column_name == 'R' 
@@ -2520,8 +4097,20 @@ $.widget('pretius.enhancedLovItem', {
 
     return rendered;
   },
+  /*
+    *
+    * function name: _popupMarkAsNullValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupMarkAsNullValue: function( pRendered ){
-    apex.debug.log(this.logPrefix, '_popupMarkAsNullValue', pRendered);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupMarkAsNullValue', {
+      "arguments": arguments,
+      "pRendered": pRendered
+    });
 
     var
       tdCnt = pRendered.find('td').length;
@@ -2543,8 +4132,20 @@ $.widget('pretius.enhancedLovItem', {
     return pRendered;
 
   },
+  /*
+    *
+    * function name: _popupMarkAsExtraValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupMarkAsExtraValue: function( pRendered ){
-    apex.debug.log(this.logPrefix, '_popupMarkAsExtraValue', pRendered);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupMarkAsExtraValue', {
+      "arguments": arguments,
+      "pRendered": pRendered
+    });
 
     var 
       cellText = this.C_POPUP_TEXT_EXTRA_VALUE;
@@ -2566,8 +4167,20 @@ $.widget('pretius.enhancedLovItem', {
 
     return pRendered;
   },
+  /*
+    *
+    * function name: _popupReportRender
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupReportRender: function( pData ){
-    apex.debug.log(this.logPrefix, '_popupReportRender', pData);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupReportRender', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var 
       tableContainer = $('<div></div>'),
@@ -2577,7 +4190,7 @@ $.widget('pretius.enhancedLovItem', {
       selectedCnt = 0;
 
     if ( pData.data.length == 0 ) {
-      apex.debug.log(this.logPrefix, '_popupReportRender', 'no rows to render, display no data found');
+      apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupReportRender', 'no rows to render, display no data found');
       this.popup.body.addClass('nodatafound');
       this._popupReportRenderNodataFound();
       return void(0);
@@ -2596,6 +4209,7 @@ $.widget('pretius.enhancedLovItem', {
       .append( table );
     
     this.popup.contentTable = table;
+
 
     this.popup.body
       .removeClass('nodatafound')
@@ -2619,8 +4233,11 @@ $.widget('pretius.enhancedLovItem', {
  
     
     this._popupPaginationUpdate();
-    this._popupHeaderShow();
-    this._popupFooterShow();
+    //this._popupHeaderShow();
+    this._popupHeaderEnable();
+    //this._popupFooterShow();
+    this._popupFooterEnable();
+    
     this._popupAdjustBodyHeight();
     this._popupCreateStickyHeaders();
 
@@ -2628,11 +4245,11 @@ $.widget('pretius.enhancedLovItem', {
 
     if ( this.pluginSettings.isMultipleSelection ) {
       if ( pData.data.length == selectedCnt ) {
-        apex.debug.log(this.logPrefix, '_popupReportRender ajax data length match selected rows');
+        apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupReportRender ajax data length match selected rows');
         this.popup.selectAllCheckbox.prop('checked', true);
       }
       else {
-        apex.debug.log(this.logPrefix, '_popupReportRender ajax data length doesn\'t match selected rows', 'ajax data length = "'+pData.data.length+'"', 'selected rows = "'+selectedCnt+'"');
+        apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupReportRender ajax data length doesn\'t match selected rows', 'ajax data length = "'+pData.data.length+'"', 'selected rows = "'+selectedCnt+'"');
       }
 
     }
@@ -2640,8 +4257,19 @@ $.widget('pretius.enhancedLovItem', {
     this._triggerEvent('paeli_popup_data_rendered', this._popupGetEventData());
   },
 
+  /*
+    *
+    * function name: _popupGetRowsPerPage
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupGetRowsPerPage: function(){
-    apex.debug.log(this.logPrefix, '_popupGetRowsPerPage');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupGetRowsPerPage', {
+      "arguments": arguments
+    });
 
     var value = this.popup.rowsPerPage.val();
 
@@ -2656,8 +4284,19 @@ $.widget('pretius.enhancedLovItem', {
     }
   },
   
+  /*
+    *
+    * function name: _popupChangeRowsPerPage
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupChangeRowsPerPage: function(){
-    apex.debug.log(this.logPrefix, '_popupChangeRowsPerPage');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupChangeRowsPerPage', {
+      "arguments": arguments
+    });
 
     var
       searchString = this.popup.state.searchString,
@@ -2666,50 +4305,216 @@ $.widget('pretius.enhancedLovItem', {
     this._popupAjaxPerform(1, this.popup.state.sortedColumnIdx, this.popup.state.sortedColumnDirection, searchString, this.popup.state.searchColumnIdx);
   },
 
+  /*
+    *
+    * function name: _popupHeaderDisable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _popupHeaderDisable: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupHeaderHide', {
+      "arguments": arguments,
+      "header": this.popup.header
+    });
+
+    this.popup.header.find(':input').prop('disabled', true);
+  },
+  /*
+    *
+    * function name: _popupHeaderEnable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _popupHeaderEnable: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupHeaderEnable', {
+      "arguments": arguments,
+      "header": this.popup.header
+    });
+
+    this.popup.header.find(':input').prop('disabled', false);
+  },
+  /*
+    *
+    * function name: _popupHeaderHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupHeaderHide: function(){
-    apex.debug.log(this.logPrefix, '_popupHeaderHide', this.popup.header);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupHeaderHide', {
+      "arguments": arguments,
+      "header": this.popup.header
+    });
 
     this.popup.header.addClass('hidden');
   },
+  /*
+    *
+    * function name: _popupHeaderShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupHeaderShow: function(){
-    apex.debug.log(this.logPrefix, '_popupHeaderShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupHeaderShow', {
+      "arguments": arguments
+    });
 
     this.popup.header.removeClass('hidden');
   },
+  /*
+    *
+    * function name: _popupFooterHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupFooterHide: function(){
-    apex.debug.log(this.logPrefix, '_popupFooterHide');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupFooterHide', {
+      "arguments": arguments
+    });
 
     this.popup.footer.addClass('hidden');    
   },
+  /*
+    *
+    * function name: _popupFooterDisable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _popupFooterDisable: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupFooterDisable', {
+      "arguments": arguments
+    });
+
+    this.popup.footer.find('button').prop('disabled', true);
+  },
+  /*
+    *
+    * function name: _popupFooterEnable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _popupFooterEnable: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupFooterEnable', {
+      "arguments": arguments
+    });
+
+    this.popup.footer.find('button').prop('disabled', false);
+  },
+  /*
+    *
+    * function name: _popupFooterShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupFooterShow: function(){
-    apex.debug.log(this.logPrefix, '_popupFooterShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupFooterShow', {
+      "arguments": arguments
+    });
 
     this.popup.footer.removeClass('hidden');
   },
+  /*
+    *
+    * function name: _popupRowsPerPageHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupRowsPerPageHide: function(){
-    apex.debug.log(this.logPrefix, '_popupRowsPerPageHide');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupRowsPerPageHide', {
+      "arguments": arguments
+    });
 
     this.popup.rowsPerPageContainer.hide();
   },
+  /*
+    *
+    * function name: _popupRowsPerPageShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupRowsPerPageShow: function(){
-    apex.debug.log(this.logPrefix, '_popupRowsPerPageShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupRowsPerPageShow', {
+      "arguments": arguments
+    });
 
     this.popup.rowsPerPageContainer.show();
   },
+  /*
+    *
+    * function name: _popupPaginationHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupPaginationHide: function(){
-    apex.debug.log(this.logPrefix, '_popupPaginationHide');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupPaginationHide', {
+      "arguments": arguments
+    });
 
     this.popup.paginationContainer.hide();
 
   },
+  /*
+    *
+    * function name: _popupPaginationShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupPaginationShow: function(){
-    apex.debug.log(this.logPrefix, '_popupPaginationShow');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupPaginationShow', {
+      "arguments": arguments
+    });
 
     this.popup.paginationContainer.show();
 
   },
+  /*
+    *
+    * function name: _popupPaginationPrevPage
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupPaginationPrevPage: function(){
-    apex.debug.log(this.logPrefix, '_popupPaginationPrevPage');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupPaginationPrevPage', {
+      "arguments": arguments
+    });
 
     this._popupAjaxPerform(
       --this.popup.state.lastFetchedPage,
@@ -2721,8 +4526,19 @@ $.widget('pretius.enhancedLovItem', {
 
   },
 
+  /*
+    *
+    * function name: _popupPaginationNextPage
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupPaginationNextPage: function(){
-    apex.debug.log(this.logPrefix, '_popupPaginationNextPage');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_popupPaginationNextPage', {
+      "arguments": arguments
+    });
 
     this._popupAjaxPerform(
       ++this.popup.state.lastFetchedPage,
@@ -2732,18 +4548,30 @@ $.widget('pretius.enhancedLovItem', {
       this.popup.state.searchColumnIdx
     );
   },
+  /*
+    *
+    * function name: _popupPaginationUpdate
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupPaginationUpdate: function(){
-    apex.debug.log(this.logPrefix, '_popupPaginationUpdate');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupPaginationUpdate', {
+      "arguments": arguments
+    });
 
     var 
       start = this.popup.state.ajaxCurrentPageRownumStart,
       end   = this.popup.state.ajaxCurrentPageRownumEnd,
-      total = this.popup.state.ajaxDataTotalCount;
+      total = this.popup.state.ajaxDataTotalCount,
+      of    = this.C_POPUP_PAGINATION_OF;
 
 
     end = end > total ? total : end;
 
-    this.popup.paginationCurrent.text(start+' - '+end+' of '+total);
+    this.popup.paginationCurrent.text(start+' - '+end+' '+of+' '+total);
 
     //manage prev page link visibility
     if ( this.popup.state.lastFetchedPage == 1 ) {
@@ -2761,8 +4589,19 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
+  /*
+    *
+    * function name: _popupIsFiltered
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupIsFiltered: function(){
-    apex.debug.log(this.logPrefix, '_popupIsFiltered');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupIsFiltered', {
+      "arguments": arguments
+    });
 
     if ( this.popup.state.searchString != undefined && this.popup.state.searchString.length > 0 ) {
       return true;
@@ -2770,8 +4609,20 @@ $.widget('pretius.enhancedLovItem', {
 
     return false;
   },
+  /*
+    *
+    * function name: _popupScrollCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupScrollCallback: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_popupScrollCallback');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupScrollCallback', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var 
       percent = this._getScrollPercent( $(pEvent.currentTarget), $(pEvent.currentTarget).outerHeight() ),
@@ -2791,8 +4642,22 @@ $.widget('pretius.enhancedLovItem', {
       this.popup.headerActionContainer.css('top', scrollTop + this.popup.body.find('th').first().outerHeight());  
     }
   },
-  _popupDragPositionFixCallback: function(pEvent, pUi){
-    apex.debug.log(this.logPrefix, '_popupDragPositionFixCallback');
+  /*
+    *
+    * function name: _popupDragPositionFixCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _popupDragPositionFixCallback: function( pEvent, pUi ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupDragPositionFixCallback', {
+      "arguments": arguments,
+      "pEvent": pEvent, 
+      "pUi"   : pUi
+    });
+
     var 
       documentScrollTop = $(document).scrollTop(),
       position;
@@ -2805,8 +4670,21 @@ $.widget('pretius.enhancedLovItem', {
     }      
 
   },
+  /*
+    *
+    * function name: _popupDialogDragStartCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupDialogDragStartCallback: function( pEvent, pUi ){
-    apex.debug.log(this.logPrefix, '_popupDialogDragStartCallback');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupDialogDragStartCallback', {
+      "arguments": arguments,
+      "pEvent": pEvent, 
+      "pUi"   : pUi
+    });
 
     if ( this.popup.headerActionContainer !=undefined ) {
       this.popup.headerActionContainer.hide();  
@@ -2814,20 +4692,58 @@ $.widget('pretius.enhancedLovItem', {
 
   },
 
+  /*
+    *
+    * function name: _popupDialogDragStopCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _popupDialogDragStopCallback: function( pEvent, pUi ){
-    apex.debug.log(this.logPrefix, '_popupDialogDragStopCallback');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupDialogDragStopCallback', {
+      "arguments": arguments,
+      "pEvent": pEvent, 
+      "pUi"   : pUi
+    });
 
     if ( this.popup.headerActionContainer !=undefined ) {
       this.popup.headerActionContainer.show();  
     }
 
   },  
+  /*
+    *
+    * function name: _popupDialogResizeStopCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupDialogResizeStopCallback: function(){
-    apex.debug.log(this.logPrefix, '_popupDialogResizeStopCallback');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupDialogResizeStopCallback', {
+      "arguments": arguments     
+    });
 
     this._popupAdjustBodyHeight();
   },
+  /*
+    *
+    * function name: _popupColumnIsDefined
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupColumnIsDefined: function( pColumnName ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupColumnIsDefined', {
+      "arguments": arguments,
+      "pColumnName": pColumnName
+    });
+
     var returnValue = false;
 
     if (
@@ -2835,11 +4751,11 @@ $.widget('pretius.enhancedLovItem', {
       && this.popup.headers.columns                         != undefined
       && this.popup.headers.columns[ pColumnName ]          != undefined
     ) {
-      apex.debug.log(this.logPrefix, '_popupColumnIsDefined', 'Column "'+pColumnName+'" is defined.');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupColumnIsDefined', 'Column "'+pColumnName+'" is defined.');
       returnValue = true;
     }
     else {
-      apex.debug.log(this.logPrefix, '_popupColumnIsDefined', 'Column "'+pColumnName+'" is not defined.');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupColumnIsDefined', 'Column "'+pColumnName+'" is not defined.');
       returnValue = false;
     }
 
@@ -2847,7 +4763,22 @@ $.widget('pretius.enhancedLovItem', {
     return returnValue;
 
   },
+  /*
+    *
+    * function name: _popupColumnIsConfigurationAvailable
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupColumnIsConfigurationAvailable: function( pColumnName, pAttr ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupColumnIsConfigurationAvailable', {
+      "arguments": arguments,
+      "pColumnName" : pColumnName,
+      "pAttr"       : pAttr
+    });
+
     var returnValue;
 
     if (
@@ -2858,7 +4789,7 @@ $.widget('pretius.enhancedLovItem', {
       && this.popup.headers.columns[ pColumnName ][ pAttr ] != undefined      
     ) {
       returnValue = this.popup.headers.columns[ pColumnName ][ pAttr ];
-      apex.debug.log(this.logPrefix, '_popupColumnIsConfigurationAvailable', 'Column "'+pColumnName+'": attr "'+pAttr+'" = "'+returnValue+'"');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupColumnIsConfigurationAvailable', 'Column "'+pColumnName+'": attr "'+pAttr+'" = "'+returnValue+'"');
       return returnValue;
     }
     else {
@@ -2869,14 +4800,25 @@ $.widget('pretius.enhancedLovItem', {
         returnValue = this.popup.defaultReportSettings[ pAttr ];
       }
 
-      apex.debug.log(this.logPrefix, '_popupColumnIsConfigurationAvailable', 'Column "'+pColumnName+'": default attr "'+pAttr+'" = "'+returnValue+'"');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupColumnIsConfigurationAvailable', 'Column "'+pColumnName+'": default attr "'+pAttr+'" = "'+returnValue+'"');
       return returnValue;
     }
   },
 
   
+  /*
+    *
+    * function name: _popupOpenGetDefaultSortColumnIdx
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupOpenGetDefaultSortColumnIdx: function(){
-    apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnIdx');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnIdx', {
+      "arguments": arguments
+    });
 
     var
       returnValue = 1,
@@ -2890,20 +4832,31 @@ $.widget('pretius.enhancedLovItem', {
       && this.popup.headers.defaultSort.direction != undefined
     ) {
       column = this.popup.headers.defaultSort.column;
-      apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnIdx defaultSort by column "'+column+'"');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnIdx defaultSort by column "'+column+'"');
       returnValue = this._getColumnIdxByColumnName( column );
     }
     else {
-      apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnIdx defaultSort configuration is not defined, sort by 1st column.');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnIdx defaultSort configuration is not defined, sort by 1st column.');
       returnValue = 1;      
     }
 
-    apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnIdx return "'+returnValue+'"');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnIdx return "'+returnValue+'"');
 
     return returnValue;
   },
+  /*
+    *
+    * function name: _popupOpenGetDefaultSortColumnDirection
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupOpenGetDefaultSortColumnDirection: function(){
-    apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnDirection');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnDirection', {
+      "arguments": arguments
+    });
 
     var
       returnValue = "asc",
@@ -2917,21 +4870,32 @@ $.widget('pretius.enhancedLovItem', {
       && this.popup.headers.defaultSort.direction != undefined
     ) {
       direction = this.popup.headers.defaultSort.direction;
-      apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnDirection defaultSort direction defined as "'+direction+'".');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnDirection defaultSort direction defined as "'+direction+'".');
       returnValue = this.popup.headers.defaultSort.direction
     }
     else {
-      apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnDirection defaultSort configuration is not defined, sort direction asc.');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnDirection defaultSort configuration is not defined, sort direction asc.');
       returnValue = "asc";
     }
 
-    apex.debug.log(this.logPrefix, '_popupOpenGetDefaultSortColumnDirection return "'+returnValue+'"');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupOpenGetDefaultSortColumnDirection return "'+returnValue+'"');
 
     return returnValue;
 
   },
+  /*
+    *
+    * function name: _popupDialogOpenCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupDialogOpenCallback: function(){
-    apex.debug.log(this.logPrefix, '_popupDialogOpenCallback');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupDialogOpenCallback', {
+      "arguments": arguments
+    });
 
     this.popup.state.isVisible = true;
     this.popup.state.selected = [];
@@ -2947,7 +4911,7 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     this.popup.state.selectedHash = this._popupGetSelectedHash(); 
-    apex.debug.log(this.logPrefix, '_popupDialogOpenCallback hash "'+this.popup.state.selectedHash+'"');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_popupDialogOpenCallback hash "'+this.popup.state.selectedHash+'"');
 
     if ( this.popup.showSelectedCheckbox.is(':checked') ) {
       this._popupAjaxGetOnlySelected();
@@ -2964,19 +4928,44 @@ $.widget('pretius.enhancedLovItem', {
 
     this._popupShowSelectedUpdate( false );
 
-
     this._triggerEvent('paeli_popup_shown', this._popupGetEventData());
   },
+  /*
+    *
+    * function name: _popupDialogCloseCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _popupDialogCloseCallback: function(){
-    apex.debug.log(this.logPrefix, '_popupDialogCloseCallback');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupDialogCloseCallback', {
+      "arguments": arguments
+    });
 
     this.popup.state.isVisible = false;
     this.popup.showSelectedCheckbox.prop('checked', false);
 
     $('body').removeClass('apex-no-scroll');
+    
+    this._resetFocus();
+
   },
+  /*
+    *
+    * function name: _headerWidgetClearFiltering
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _headerWidgetClearFiltering: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_headerWidgetClearFiltering');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_headerWidgetClearFiltering', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     this.popup.state.searchColumnIdx = undefined;
 
@@ -2998,8 +4987,20 @@ $.widget('pretius.enhancedLovItem', {
 
   
   },
+  /*
+    *
+    * function name: _headerWidgetKeyUpManageIcons
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _headerWidgetKeyUpManageIcons: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_headerWidgetKeyUpManageIcons', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_headerWidgetKeyUpManageIcons', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var item = $(pEvent.currentTarget);
 
@@ -3013,18 +5014,30 @@ $.widget('pretius.enhancedLovItem', {
   /*
     PROMPT
   */
+  /*
+    *
+    * function name: _promptReposition
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptReposition: function(){
-    apex.debug.log(this.logPrefix, '_promptReposition');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptReposition', {
+      "arguments": arguments
+    });
 
     var 
       offset = this.mask.container.offset(),
+      position = this.mask.container.position(),
       windowWidth = $(window).outerWidth(),
-      top = offset.top + this.mask.container.outerHeight() -1,
+      top  = offset.top + this.mask.container.outerHeight() -1,
       left = offset.left,
       promptResultWidth = 0;
 
     if ( !this.prompt.isVisible )  {
-      apex.debug.log(this.logPrefix, '_promptReposition prompt not visible, do nth.');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptReposition prompt not visible, do nth.');
       return void(0);
     }
 
@@ -3047,20 +5060,68 @@ $.widget('pretius.enhancedLovItem', {
         "left": 0
       })
     }
-
-
   },
+  /*
+    *
+    * function name: _promptGetZIndex
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _promptGetZIndex: function( pElem ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptGetZIndex', {
+      "arguments": arguments,
+      'pElem': pElem
+    });
+
+    var zIndex ;
+
+    if ( pElem == undefined ) {
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptGetZIndex', 'pElem is undefined');
+      return NaN;
+    }
+    else if ( pElem.get(0) == $('body').get(0) ) {
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptGetZIndex', 'pElem is body, no z-index is set');
+      return NaN;
+    }
+
+    zIndex = parseInt(pElem.css('zIndex'));  
+
+    if ( isNaN(zIndex) ) {
+      return this._promptGetZIndex( pElem.parent() );
+    }
+    else {
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptGetZIndex zIndex', zIndex);
+      return zIndex;
+    }
+    
+  },
+  /*
+    *
+    * function name: _promptCreateNew
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptCreateNew: function(){
-    apex.debug.log(this.logPrefix, '_promptCreateNew');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptCreateNew', {
+      "arguments": arguments
+    });
 
     var 
+      returnObject = {},
       attributes  = this.element.get(0).attributes,
+      //advancedCustomdAttributes = this.options.item.attri,
       classes     = attributes.class != undefined ? attributes.class.value.split(' ') : [],
       fixBorder   = $('<div class="fixBorder"></div>'),
       container   = $('<div></div>'),
       header      = $('<div></div>'),
       menu        = $('<div class="menu"></div>'),
-      menuExpand      = $(''+
+      menuExpand  = $(''+
         '<a href="javascript: void(0)" class="t-Button t-Button--tiny t-Button--link t-Button--pill view" title="'+this.C_PROMPT_MENU_EXPAND_TITLE+'">'+
         '  <span aria-hidden="true" class="fa fa-compress collapsed"></span>'+
         '  <span aria-hidden="true" class="fa fa-expand expanded"></span>'+
@@ -3074,6 +5135,15 @@ $.widget('pretius.enhancedLovItem', {
         '<a href="javascript: void(0)" class="t-Button t-Button--tiny t-Button--link t-Button--pill" title="'+this.C_PROMPT_MENU_CLEAR_TITLE+'">'+
         '  <span aria-hidden="true" class="fa fa-trash-o clear"></span>'+
         '</a>'),
+      menuPaste    = $(''+
+        '<a href="javascript: void(0)" class="t-Button t-Button--tiny t-Button--link t-Button--pill" title="'+this.C_PROMPT_MENU_PASTE_TITLE+'">'+
+        '  <span aria-hidden="true" class="fa fa-paste paste"></span>'+
+        '</a>'),
+      menuPopup    = $(''+
+        '<a href="javascript: void(0)" class="t-Button t-Button--tiny t-Button--link t-Button--pill" title="'+this.C_PROMPT_MENU_POPUP_TITLE+'">'+
+        '  <span aria-hidden="true" class="fa fa-external-link-square popup"></span>'+
+        '</a>'),
+
 
       inputSearch = $('<input type="text" tabindex="0">'),
       icon        = $('<span class="fa fa-search"></span>'),
@@ -3095,23 +5165,33 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     menu
-      .append(menuExpand)
-      .append(menuSort)
-      .append(menuClear);
+      .append( menuExpand )
+      .append( menuSort )
+      .append( menuClear );
+      
+    if ( this.pluginSettings.isMultipleSelection ) {
+      menu.append( menuPaste );
+    }
+
+    if ( this.pluginSettings.isPopupReportAvailable ) {
+      menu.append( menuPopup );
+    }
 
     container
+      .attr('data-prompt', this.widgetUniqueId)
       .addClass('pretius--enhancedLovItem prompt')
       .css({
         "minWidth"   : this.mask.container.outerWidth(),
-        "borderColor": this.inputCss.borderColor,
+        //"borderColor": this.inputCss.borderColor,
         "fontSize"   : this.inputCss.fontSize,
         "lineHeight" : this.inputCss.lineHeight
       })
-      .append(fixBorder.css("borderColor", this.inputCss.borderColor))
+      .append(fixBorder/*.css("borderColor", this.inputCss.borderColor)*/)
+      .attr("tabindex", -1)
     ;
+    
 
-    apex.debug.log(this.logPrefix, '_promptCreateNew', 'offset', offset);
-
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptCreateNew', 'offset', offset);
 
     body
       .addClass('body')
@@ -3119,7 +5199,9 @@ $.widget('pretius.enhancedLovItem', {
         'maxHeight': this.pluginSettings.prompt.maxHeight
       });
 
-
+    //tbd
+    //this is not needed, because maxlength has been used to
+    //to limit pasting values
     if ( attributes.maxlength != undefined ) {
       inputSearch.attr('maxlength', attributes.maxlength.value);  
     }
@@ -3133,53 +5215,124 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     inputSearch.attr('autocomplete', 'off');
-    
 
     header
       .addClass('header')
       .append( inputSearch )
       .append( icon );
 
-
-    if ( this.pluginSettings.isMultipleSelection ) {
+    if ( this.pluginSettings.prompt.hideToolbar == false ) {
       container.append(menu);
-
     }
+
     container
       .append(header)
-      .append(body);
+      .append(body)
+      .hide();
     
-    $.extend(this.prompt, {
+
+    returnObject = {
+      "customTemplateFunction": this._promptPrepateCustomTemplateFunction(),
       "container" : container,
       "header"    : header,
       "body"      : body,
       "input"     : inputSearch,
       "icon"      : icon,
       "fixBorder" : fixBorder,
+      "isVisible" : false,
       "menu"      : {
         "container": menu,
         "expand"   : menuExpand,
         "sort"     : menuSort,
-        "clear"    : menuClear
+        "clear"    : menuClear,
+        "paste"    : menuPaste,
+        "popup"    : menuPopup
       }
-    });
-  },
-  _promptShow: function(){
-    apex.debug.log(this.logPrefix, '_promptShow');
+    };
 
-    $(document).on('click.promptcheck-'+this.element.get(0).id, $.proxy(this._promptCheckClickOutside, this));
+    returnObject.body
+      .on('click', 'li', $.proxy( this._promptLiClickHanlder, this ))
+      .on('scroll', this._debounce($.proxy(this._promptScrollCallback, this), 100) )
+      .on('mouseenter', 'li',$.proxy(this._promptUnhighlightOther, this))
+
+    returnObject.input
+      .on('blur', $.proxy(this._promptInputBlur,this))
+      .on('focus', $.proxy(this._promptInputFocus,this))
+      .on('keyup', this._debounce( $.proxy( this._maskKeyUp, this), this.pluginSettings.prompt.debounceTime ) )
+      .on('keydown', this._debounce( 
+          $.proxy( 
+            this._promptInputKeyDownHandler, this
+          ), 
+          this.pluginSettings.prompt.navigationDebounceTime
+        ) 
+      );
+
+    returnObject.menu.expand.on('click', $.proxy( this._promptMenuChangeView, this ) );
+    returnObject.menu.sort  .on('click', $.proxy( this._promptMenuSortTags, this ) );
+    returnObject.menu.clear .on('click', $.proxy( this._promptMenuClearValues, this ) );
+    returnObject.menu.paste .on('click', $.proxy( this._promptMenuPasteValuesOpenPopup, this ) );
+    returnObject.menu.popup .on('click', $.proxy( this._popupOpen, this ) );
+
+    this.prompt = returnObject;
+
+    return returnObject;
+
+  },
+  /*
+    *
+    * function name: _promptSetFocus
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _promptSetFocus: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptSetFocus', {
+      "arguments": arguments
+    });
 
     this.prompt.input.focus();
+  },
+  /*
+    *
+    * function name: _promptShow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _promptShow: function(){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptShow', {
+      "arguments": arguments,
+      "container": this.prompt.container
+    });
+
+    var 
+      promptZIndex;
+
+
+    $(document).on('mousedown.promptcheck-'+this.element.get(0).id, $.proxy(this._promptCheckClickOutside, this));
+
+    this.prompt.container.show();
+
     this.mask.container.addClass('focused');
 
     this.prompt.isVisible = true;
 
-    $('body').prepend( this.prompt.container );
 
+    //set prompt zIndex in case of being used as part of inline dialog
+    promptZIndex = this._promptGetZIndex( this.mask.itemContainer );
+
+    if ( !isNaN( promptZIndex ) ) {
+      this.prompt.container.css('zIndex', promptZIndex+1);
+    }
     
     this._maskPopupButtonHide();
-
     this._promptReposition();
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptShow z-index', promptZIndex);
 
     if ( this.mask.state.error && this.pluginStopped == false ) {
       this.mask.ajaxStateButton.button.hide();
@@ -3187,13 +5340,30 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     this._triggerEvent('paeli_prompt_shown', this._promptGetEventData());
+
   },
+  /*
+    *
+    * function name: _promptHide
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptHide: function( pFocusOnElement ){
-    apex.debug.log(this.logPrefix, '_promptHide', 'pFocusOnElement', pFocusOnElement);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptHide', {
+      "arguments": arguments,
+      "pFocusOnElement": pFocusOnElement
+    });
 
     this.mask.container.removeClass('focused');
-    this.prompt.container.remove();
-    this.prompt.container = undefined;
+    this.prompt.input.val(null);
+    this.prompt.container.hide();
+
+    //this.prompt.container.remove();
+    //this.prompt.container = undefined;
+
     this.prompt.isVisible = false;
 
     this._maskPopupButtonShow();
@@ -3207,10 +5377,48 @@ $.widget('pretius.enhancedLovItem', {
     
     this._triggerEvent('paeli_prompt_hidden', this._promptGetEventData());
 
-    $(document).off('click.promptcheck-'+this.element.get(0).id);    
+    $(document).off('mousedown.promptcheck-'+this.element.get(0).id);    
   },
+  /*
+    *
+    * function name: _ajaxGetPageItems
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _ajaxGetPageItems: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_ajaxGetPageItems', {
+      "arguments": arguments
+    });
+
+    var items = [this.options.item.lov_cascade_parent_items, this.options.item.ajax_items_to_submit]
+      .filter(function (selector) {
+        return (selector)
+      })
+      .join(',');
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_ajaxGetPageItems', {
+      "return": items
+    });
+
+    return items;
+  },
+  /*
+    *
+    * function name: _promptAjaxPerform
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptAjaxPerform: function( pPage ){
-    apex.debug.log(this.logPrefix, '_promptAjaxPerform');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptAjaxPerform', {
+      "arguments": arguments,
+      "pPage": pPage
+    });
 
     var
       requestPage = pPage == undefined ? 1 : pPage,
@@ -3218,16 +5426,17 @@ $.widget('pretius.enhancedLovItem', {
         "x01": 'AUTOCOMPLETE',                          //tryb
         "x02": this.pluginSettings.prompt.rowsPerPage,   //rows per page
         "x03": this._maskGetValue(),                    //search string
-        "x04": requestPage           //page
+        "x04": requestPage,           //page
+        "pageItems": this._ajaxGetPageItems()
       },
-
       ajaxOptions = {
         "beforeSend" : $.proxy(this._promptAjaxBeforeSend, this, requestPage),
         "success"    : $.proxy(this._promptAjaxSuccess, this),
         "error"      : $.proxy(this._promptAjaxError, this),
-        "complete"   : $.proxy(this._promptAjaxComplete, this)
+        "complete"   : $.proxy(this._promptAjaxComplete, this),
+        "target"     : this.element.get(0)
       };
-    
+
     if ( this.mask.state.ajaxRunning ) {
       this.mask.state.xhr.abort();
       this.mask.state.ajaxRunning = false;
@@ -3237,8 +5446,22 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.xhr = apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );
     
   },
+  /*
+    *
+    * function name: _promptAjaxBeforeSend
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptAjaxBeforeSend: function( pRequestedPage, pJqXHR, pSettings ) {
-    apex.debug.log(this.logPrefix, '_promptAjaxBeforeSend', pJqXHR, pSettings, pRequestedPage);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptAjaxBeforeSend', {
+      "arguments": arguments,
+      "pRequestedPage": pRequestedPage,
+      "pJqXHR": pJqXHR,
+      "pSettings": pSettings
+    });
 
     var 
       message  = this.C_PROMPT_TEXT_SEARCHING,
@@ -3250,11 +5473,6 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.ajaxRunning = true;
     this.mask.state.areResultsAvailable = false;
 
-    if ( this.prompt.container == undefined ) {
-      this._promptCreateNew();
-      this._promptAddListeners();
-      this._promptShow();
-    }
 
     if ( pRequestedPage == 1 ) {
       this.prompt.body.html( template );  
@@ -3262,8 +5480,19 @@ $.widget('pretius.enhancedLovItem', {
 
     this.prompt.icon.removeAttr('class').addClass('fa fa-anim-spin fa-refresh');
   },  
+  /*
+    *
+    * function name: _promptAfterRenderingData
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptAfterRenderingData: function(){
-    apex.debug.log(this.logPrefix, '_promptAfterRenderingData');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptAfterRenderingData', {
+      "arguments": arguments
+    });
 
     var
       resultsRendered = this.prompt.body.find('li').length,
@@ -3274,7 +5503,8 @@ $.widget('pretius.enhancedLovItem', {
       this._promptAjaxPerform( ++this.mask.state.lastFetchedPage );
     }, this));
 
-    loadMore.css('borderColor', this.inputCss.borderColor)
+    //loadMore.css('borderColor', this.inputCss.borderColor)
+    
 
     if ( 
       this.prompt.body.outerHeight() < this.pluginSettings.prompt.maxHeight 
@@ -3290,11 +5520,22 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
+  /*
+    *
+    * function name: _promptAjaxSuccess
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptAjaxSuccess: function(pData, pTextStatus, pJqXHR){
-    apex.debug.log(this.logPrefix, '_ajaxSuccess', 'pData', pData);
-    apex.debug.log(this.logPrefix, '_ajaxSuccess', 'pTextStatus', pTextStatus);
-    apex.debug.log(this.logPrefix, '_ajaxSuccess', 'pJqXHR', pJqXHR);
-
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptAjaxSuccess', {
+      "arguments": arguments,
+      "pData": pData,
+      "pTextStatus": pTextStatus,
+      "pJqXHR": pJqXHR      
+    });
 
     this.mask.state.totalCount      = pData.dataVolume[0].CNT;
     this.mask.state.lastFetchedPage = pData.requestedPage;
@@ -3303,45 +5544,62 @@ $.widget('pretius.enhancedLovItem', {
     
     this.prompt.icon.removeAttr('class').addClass('fa fa-search');
 
+    //add null value if defined and first page to display
+    if ( 
+      this.mask.state.lastFetchedPage == 1 
+      && this._maskGetValue().length == 0 
+      && this.options.item.lov_display_null 
+    ) {
+      pData.data.unshift({
+        "R": this.options.item.lov_null_value == undefined ? "undefined" : this.options.item.lov_null_value,
+        "D": this.options.item.lov_null_text  == undefined ? "undefined" : this.options.item.lov_null_text,
+        "isAPEXNullValue": true
+      });
+    }
+
     pData = this._dataExtendSelectedFromArrayOfObjects( pData, this.mask.state.selected );
 
-    if ( this.mask.state.lastFetchedPage > 1 ) {
-      this._promptAppendData( pData );
+    if ( this.mask.state.lastFetchedPage == 1 ) {
+      this._promptRenderData( pData );
     }
     else {
-
-      if ( 
-        this._maskGetValue().length == 0 
-        && (
-          this.options.item.lov_null_text != undefined
-          || this.options.item.lov_null_value != undefined
-        )
-      ) {
-        pData.data.unshift({
-          "R": this.options.item.lov_null_value,
-          "D": this.options.item.lov_null_text,
-          "isAPEXNullValue": true
-        });
-      }
-
-      this._promptRenderData( pData );
+      this._promptAppendData( pData );      
     }
 
     this._promptAfterRenderingData();
 
     if ( pData.query != undefined ) {
       this._writeQueryToConsole( pData.query );
-    }
-    
+    }   
 
   },
+  /*
+    *
+    * function name: _promptAjaxError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptAjaxError: function(pJqXHR, pTextStatus, pErrorThrown){
-    apex.debug.log(this.logPrefix, '_promptAjaxError', 'pJqXHR', pJqXHR, 'pTextStatus', pTextStatus, 'pErrorThrown', pErrorThrown);
-
+    apex.debug.message(this.C_LOG_ERROR, this.logPrefix, '_promptAjaxError', {
+      "arguments": arguments,
+      "pJqXHR": pJqXHR,      
+      "pTextStatus": pTextStatus,
+      "pErrorThrown": pErrorThrown
+    });
 
     if ( pJqXHR.statusText == 'abort' ) {
-      apex.debug.log(this.logPrefix, '_promptAjaxError', 'AJAX call aborted!');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptAjaxError', 'AJAX call aborted!');
       return void(0);
+    }
+    else {
+      apex.debug.message(this.C_LOG_ERROR, this.logPrefix, '_promptAjaxError', {
+        'pJqXHR'      : pJqXHR,
+        'pTextStatus' : pTextStatus,
+        'pErrorThrown': pErrorThrown
+      });
     }
 
     var array;
@@ -3361,14 +5619,26 @@ $.widget('pretius.enhancedLovItem', {
     this._throwErrorText( pErrorThrown );
 
   },
+  /*
+    *
+    * function name: _promptGetEventData
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptGetEventData: function(){
-    return {
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptGetEventData', {
+      "arguments": arguments
+    });
+
+    var returnObject = {
       "prompt": {
         "container": this.prompt.container,
         "header"   : this.prompt.header,
         "body"     : this.prompt.body,
         "input"    : this.prompt.input
-
       },
       "mask": {
         "selected"     : this.mask.state.selected,
@@ -3376,24 +5646,46 @@ $.widget('pretius.enhancedLovItem', {
       }
 
     };
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptGetEventData', 'returns', returnObject);
+
+    return returnObject;
   },
+  /*
+    *
+    * function name: _promptAjaxComplete
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptAjaxComplete: function(){
-    apex.debug.log(this.logPrefix, '_promptAjaxComplete');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptAjaxComplete', {
+      "arguments": arguments      
+    });
 
     this.mask.state.ajaxRunning = false;
-
     this._promptCheckWidthDifference();
   },
+  /*
+    *
+    * function name: _promptCheckWidthDifference
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
   _promptCheckWidthDifference: function(){
-    apex.debug.log(this.logPrefix, '_promptCheckWidthDifference');
-    //apex.debug.log(this.logPrefix, '_promptCheckWidthDifference', 'container width', this.mask.container.outerWidth());
-    //apex.debug.log(this.logPrefix, '_promptCheckWidthDifference', 'prompt width', this.prompt.container.outerWidth());
-    //apex.debug.log(this.logPrefix, '_promptCheckWidthDifference', 'prompt container', this.prompt.container.get(0));
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptCheckWidthDifference', {
+      "arguments": arguments
+    });
 
     var difference;
 
     if ( !this.prompt.isVisible ) {
-      apex.debug.log(this.logPrefix, '_promptCheckWidthDifference prompt not visible, do nth');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptCheckWidthDifference prompt not visible, do nth');
       return void(0);
     }
 
@@ -3408,39 +5700,506 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
-  _promptAjaxAbort: function(){
-    apex.debug.log(this.logPrefix, '_promptAjaxAbort');
 
-    this.mask.state.xhr.abort();
-    this.mask.state.ajaxRunning = false;
+  /*
+    *
+    * function name: _promptMenuPasteValuesOpenPopup
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _promptMenuPasteValuesOpenPopup: function(){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptMenuPasteValuesOpenPopup', {
+      "arguments": arguments
+    });
+
+    this._promptHide();
+
+    //var newPastePopup = this._pastePopupCreateNew();
+    if ( this.paste.popup.container == undefined ) {
+      this.paste.popup = this._pastePopupCreateNew();  
+    }    
+
+    this.paste.popup.container.dialog('open');
+    this._pastePopupPasteForm();
   },
-  _promptAddListeners: function(){
-    apex.debug.log(this.logPrefix, '_promptAddListeners');
+  /*
+    *
+    * function name: _pastePopupPasteForm
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _pastePopupPasteForm: function(){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_pastePopupPasteForm', {
+      "arguments": arguments
+    });
 
-    this.prompt.body
-      .on('click', 'li', $.proxy( this._promptLiClickHanlder, this ))
-      .on('scroll', this._debounce($.proxy(this._promptScrollCallback, this), 100) )
-      .on('mouseenter', 'li',$.proxy(this._promptUnhighlightOther, this))
+    this.paste.popup.body
+      .empty()
+      .removeAttr('class')
+      .addClass(this.paste.classes.body)
+      .addClass('form')
 
-    this.prompt.input
-      .on('blur', $.proxy(this._promptInputBlur,this))
-      .on('focus', $.proxy(this._promptInputFocus,this))
-      .on('keyup', this._debounce( $.proxy( this._maskKeyUp, this), this.pluginSettings.prompt.debounceTime ) )
-      .on('keydown', this._debounce( 
-          $.proxy( 
-            this._promptInputKeyDownHandler, this
-          ), 
-          this.pluginSettings.prompt.navigationDebounceTime
-        ) 
+    this.paste.popup.textarea.val(null).appendTo( this.paste.popup.body ).focus();
+    this.paste.popup.buttons.parse.show();
+    this.paste.popup.buttons.back.hide();
+    this.paste.popup.buttons.clear.hide();
+    this.paste.popup.buttons.apply.hide();
+
+  },
+  /*
+    *
+    * function name: _pastePopupOpenCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _pastePopupOpenCallback: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_pastePopupOpenCallback', {
+      "arguments": arguments     
+    });
+  },
+  /*
+    *
+    * function name: _pastePopupCloseCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _pastePopupCloseCallback: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_pastePopupCloseCallback', {
+      "arguments": arguments     
+    });
+  },
+  /*
+    *
+    * function name: _pastePopupBeforeCloseCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _pastePopupBeforeCloseCallback: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_pastePopupBeforeCloseCallback', {
+      "arguments": arguments     
+    });
+  },
+  /*
+    *
+    * function name: _pastePopupActionParse
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */    
+  _pastePopupActionParse: function(){
+    apex.debug.message(this.C_LOG_DEBUG,  this.logPrefix, '_pastePopupActionParse', {
+      "arguments": arguments     
+    });
+
+    var 
+      value         = this.paste.popup.textarea.val().trim(),
+      valuesArray   = value.split("\n"),
+      limit         = this.pluginSettings.maxlength ? this.pluginSettings.maxlength : 0,
+      valueLength   = 0,
+      totalLength   = 0,
+      parsedArray   = [],
+      outOfLimitArray = []
+    ;
+
+    //store information about pasted values
+    this.paste.state.pasted = $.extend([], valuesArray);
+
+    for ( var i = 0; i < valuesArray.length; i++ ) {
+
+      if ( limit > 0 ) {
+        valueLength = valuesArray[i].length;
+
+        if ( valueLength > limit ) {
+          //value length is greater then total limit
+          outOfLimitArray = valuesArray.slice(i, valuesArray.length);
+          break;
+        }
+        else {
+
+          if ( 
+               ( i == 0 && valueLength <= limit )
+            || ( i > 0 && totalLength + valueLength+1 <= limit )
+          ) {
+            //store value
+            parsedArray.push( valuesArray[i] );
+            totalLength = parsedArray.toString().length;          
+          }
+          else {
+            //i > 0 and next indexes won't match limit
+            outOfLimitArray = valuesArray.slice(i, valuesArray.length);
+            break;
+          }
+        }
+      }
+      else {
+        //there is no limitation
+        parsedArray.push( valuesArray[i] );
+      }
+    }
+
+    this.paste.state.parsed = $.extend([], parsedArray);
+    this.paste.state.outOfLimit = $.extend([], outOfLimitArray);
+
+    this._pastePopupShowParseResult();
+  },
+  /*
+    *
+    * function name: _pastePopupShowValuesToBeApplied
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _pastePopupShowValuesToBeApplied: function(){
+    apex.debug.message(this.C_LOG_DEBUG,  this.logPrefix, '_pastePopupShowValuesToBeApplied', {
+      "arguments": arguments     
+    });
+
+    var 
+      tableContainer = $('<div></div>').addClass('t-Report t-Report--stretch t-Report--staticRowColors t-Report--rowHighlightOff t-Report--inline'),
+      table = $('<table></table>').addClass('t-Report-report'),
+      tr = $('<tr></tr>'),
+      th = $('<th></th>').addClass('t-Report-colHead').attr('align', 'left'),
+      template = '{{#array}}<tr><td class="t-Report-cell">{{.}}</td></tr>{{/array}}',
+      rendered;
+
+    this.paste.popup.textarea.detach();
+    this.paste.popup.body
+      .empty()
+      .removeAttr('class')
+      .addClass(this.paste.classes.body)
+      .addClass('valuesIn');
+
+    this.paste.popup.buttons.parse.hide();
+    this.paste.popup.buttons.back.show();
+    this.paste.popup.buttons.clear.show();
+    this.paste.popup.buttons.apply.show();
+
+    rendered = $(Mustache.render( template, {"array": this.paste.state.parsed}));
+
+    table
+      .append( tr.clone()
+        .append( th.clone().html( this.C_POPUP_PASTE_SUMMARY_TH_VALUES_IN ) ) 
+      )
+      .append( rendered )
+      .appendTo( tableContainer )
+    ;
+
+    this.paste.popup.body.append( tableContainer )
+
+    this.paste.popup.buttons.back.off('click').on('click', $.proxy( this._pastePopupShowParseResult, this ) );
+  },
+  /*
+    *
+    * function name: _pastePopupShowValuesExceeding
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _pastePopupShowValuesExceeding: function(){
+    apex.debug.message(this.C_LOG_DEBUG,  this.logPrefix, '_pastePopupShowValuesExceeding', {
+      "arguments": arguments
+    });
+
+    var 
+      tableContainer = $('<div></div>').addClass('t-Report t-Report--stretch t-Report--staticRowColors t-Report--rowHighlightOff t-Report--inline'),
+      table = $('<table></table>').addClass('t-Report-report'),
+      tr = $('<tr></tr>'),
+      th = $('<th></th>').addClass('t-Report-colHead').attr('align', 'left'),
+      template = '{{#array}}<tr><td class="t-Report-cell">{{.}}</td></tr>{{/array}}',
+      rendered;
+
+    this.paste.popup.textarea.detach();
+    
+    this.paste.popup.buttons.parse.hide();
+    this.paste.popup.buttons.back.show();
+    this.paste.popup.buttons.clear.show();
+    this.paste.popup.buttons.apply.show();
+
+    this.paste.popup.body
+      .empty()
+      .removeAttr('class')
+      .addClass(this.paste.classes.body)
+      .addClass('valuesOut');
+
+
+    rendered = $(Mustache.render( template, {"array": this.paste.state.outOfLimit}));
+
+    table
+      .append( tr.clone()
+        .append( th.clone().html( this.C_POPUP_PASTE_SUMMARY_TH_VALUES_OUT ) ) 
+      )
+      .append( rendered )
+      .appendTo( tableContainer )
+    ;
+
+    this.paste.popup.body.append( tableContainer )
+
+    this.paste.popup.buttons.back.off('click').on('click', $.proxy( this._pastePopupShowParseResult, this ) );    
+  },
+  /*
+    *
+    * function name: _pastePopupShowParseResult
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _pastePopupShowParseResult: function(){
+    apex.debug.message(this.C_LOG_DEBUG,  this.logPrefix, '_pastePopupShowParseResult', {
+      "arguments": arguments
+    });
+
+    var 
+      showValuesTobeApplied = '<a href="javascript: void(0)" class="showToBeApplied">'+this.C_POPUP_PASTE_SUMMARY_SHOW_LIST_ANCHOR+'</a>',
+      showValuesExceeding   = '<a href="javascript: void(0)" class="showExceeding">'+this.C_POPUP_PASTE_SUMMARY_SHOW_LIST_ANCHOR+'</a>',
+      tableContainer = $('<div></div>').addClass('t-Report t-Report--stretch t-Report--staticRowColors t-Report--rowHighlightOff t-Report--inline'),
+      table = $('<table></table>').addClass('t-Report-report'),
+      tr = $('<tr></tr>'),
+      th = $('<th></th>').addClass('t-Report-colHead').attr('align', 'left'),
+      td = $('<td></td>').addClass('t-Report-cell').attr('align', 'left'),
+      textPastedValues,
+      textOutOfLimitValues,
+      maxLength = this.pluginSettings.maxlength == undefined ? this.C_POPUP_PASTE_SUMMARY_MAXLENGTH_NOTSET : this.pluginSettings.maxlength;
+
+    this.paste.popup.body
+      .empty()
+      .removeAttr('class')
+      .addClass(this.paste.classes.body)
+      .addClass('summary');
+
+
+    this.paste.popup.buttons.parse.hide();
+    this.paste.popup.buttons.back.hide();
+    this.paste.popup.buttons.clear.show();
+    this.paste.popup.buttons.apply.show();
+
+    if ( this.paste.state.parsed.length > 0 ) {
+      textPastedValues = this.C_POPUP_PASTE_SUMMARY_VALUES_TO_BE_APPLIED.replace('%0', showValuesTobeApplied);
+    }
+    else {
+      textPastedValues = this.C_POPUP_PASTE_SUMMARY_VALUES_TO_BE_APPLIED.replace('%0', '');
+    }
+
+    if ( this.paste.state.outOfLimit.length > 0 ) {
+      textOutOfLimitValues = this.C_POPUP_PASTE_SUMMARY_VALUES_EXCEEDING_LIMIT.replace('%0', showValuesExceeding);
+    }
+    else {
+      textOutOfLimitValues = this.C_POPUP_PASTE_SUMMARY_VALUES_EXCEEDING_LIMIT.replace('%0', '');
+    }
+
+    table
+      .append( tr.clone() 
+        .append( th.clone().text( this.C_POPUP_PASTE_SUMMARY_TH_SUMMARY ).attr('colspan', 2) )
+      )
+      .append( tr.clone()
+        .append( td.clone().html( this.C_POPUP_PASTE_SUMMARY_PASTED_COUNT ) ) 
+        .append( td.clone().html( this.paste.state.pasted.length ) )
+      )
+      .append( tr.clone()
+        .append( td.clone().html( this.C_POPUP_PASTE_SUMMARY_PASTED_LENGHT ) ) 
+        .append( td.clone().html( this.paste.state.pasted.join(this.C_VALUE_SEPARATOR).length ) ) 
+      )
+      .append( tr.clone()
+        .append( td.clone().html( this.C_POPUP_PASTE_SUMMARY_MAX_LENGTH ) ) 
+        .append( td.clone().html( maxLength ) ) 
+      )
+      .append( tr.clone()
+        .append( td.clone().html( textPastedValues ) ) 
+        .append( td.clone().html( this.paste.state.parsed.length ) ) 
+      )
+      .append( tr.clone()
+        .append( td.clone().html( textOutOfLimitValues ) ) 
+        .append( td.clone().html( this.paste.state.outOfLimit.length ) ) 
+      )
+    ;
+
+    table.find('.showToBeApplied').on('click', $.proxy( this._pastePopupShowValuesToBeApplied, this ));
+    table.find('.showExceeding').on('click', $.proxy( this._pastePopupShowValuesExceeding, this ));
+
+    tableContainer.append( table );
+    this.paste.popup.body.append( tableContainer );
+  },
+  /*
+    *
+    * function name: _pastePopupActionClear
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _pastePopupActionClear: function(){
+    apex.debug.message(this.C_LOG_DEBUG,  this.logPrefix, '_pastePopupActionClear', {
+      "arguments": arguments
+    });
+
+    this._pastePopupPasteForm();
+  },
+  /*
+    *
+    * function name: _pastePopupActionApply
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _pastePopupActionApply: function(){
+    apex.debug.message(this.C_LOG_DEBUG,  this.logPrefix, '_pastePopupActionApply', {
+      "arguments": arguments
+    });
+
+    //this._elementSetValue( this.paste.state.parsed.join( this.C_VALUE_SEPARATOR ) );
+
+    this._promptEmptyMaskState();
+    this._promptEmptyTags();
+
+    for (var i=0; i < this.paste.state.parsed.length; i++) {
+      this._maskStateSelectedAdd( 
+        {
+          "display"         : this.paste.state.parsed[i],
+          "value"           : this.paste.state.parsed[i]
+        },    //object
+        true, //is extra value
+        false //is null value
       );
+    }    
 
-    this.prompt.menu.expand.on('click', $.proxy( this._promptMenuChangeView, this ) );
-    this.prompt.menu.sort  .on('click', $.proxy( this._promptMenuSortTags, this ) );
-    this.prompt.menu.clear .on('click', $.proxy( this._promptMenuClearValues, this ) );
+    this._promptApplyValues( true );
+    this._promptRenderTags();
 
+    this._getOnLoadLov( this._elementGetValue() );
+    
+    this.paste.popup.container.dialog('close');
   },
+  /*
+    *
+    * function name: _pastePopupCreateNew
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _pastePopupCreateNew: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_pastePopupCreateNew', {
+      "arguments": arguments
+    });
+
+    var 
+      body         = $('<div class="body"></div>'),
+      textarea     = $('<textarea placeholder="'+this.C_POPUP_PASTE_TEXTAREA_PLACEHOLDER+'"></textarea'),
+      footer       = $('<div class="footer"></div>'),
+      footerLeft   = $('<div class="left"></div>'),
+      footerRight  = $('<div class="right"></div>'),
+      tabs         = $('<ul><li>Pasted</li></ul>'),
+      buttonParse  = $('<button class="t-Button t-Button--hot parse">'+this.C_POPUP_PASTE_BTN_PARSE_TEXT+'</button>'),
+      buttonApply  = $('<button class="t-Button t-Button--hot apply">'+this.C_POPUP_PASTE_BTN_SELECT_TEXT+'</button>'),
+      buttonDebug  = $('<button class="t-Button debug"><span class="fa fa-info"></span></button>'),
+      buttonBack   = $('<button class="t-Button back">'+this.C_POPUP_PASTE_BTN_BACK_TEXT+'</button>'),
+      buttonClear  = $('<button class="t-Button clear">'+this.C_POPUP_PASTE_BTN_CLEAR_TEXT+'</button>'),
+
+      container    = $('<div class="container" data-apex-item="'+this.element.get(0).id+'"></div>'),
+      options      = {
+        "dialogClass"   : "pretius--enhancedLovItem paste",
+        "autoOpen"      : false,
+        "appendTo"      : 'body',
+        "modal"         : true,
+        "title"         : this.pluginSettings.popup.title,
+        "width"         : 500,
+        "minWidth"      : 500,
+        "height"        : "auto",
+        "minHeight"     : "auto",
+        "resizable"     : false,
+        "draggable"     : false,
+        "closeOnEscape" : this.pluginSettings.popup.closeOnEscape,
+        "open"          : $.proxy( this._pastePopupOpenCallback, this ),
+        "close"         : $.proxy( this._pastePopupCloseCallback, this ),
+        "beforeClose"   : $.proxy( this._pastePopupBeforeCloseCallback, this )
+      },
+      returnObject;
+
+    container.dialog( options );
+    container.attr({
+      'tabindex': 0,
+      'data-paste': this.widgetUniqueId
+    });
+
+
+    body.append( textarea );
+
+    buttonParse.on('click', $.proxy( this._pastePopupActionParse, this ));
+    buttonClear.on('click', $.proxy( this._pastePopupActionClear, this ));
+    buttonApply.on('click', $.proxy( this._pastePopupActionApply, this ));
+
+    footerLeft
+      .append( buttonBack );
+
+    footerRight
+      .append( buttonClear )
+      .append( buttonParse )
+      .append( buttonApply );
+
+    footer
+      .append(footerLeft)
+      .append(footerRight);
+    
+    container
+      .append( body )
+      .append( footer );
+
+    returnObject = {
+      "container": container,
+      "body"     : body,
+      "footer"   : footer,
+      "buttons": {
+        "parse": buttonParse,
+        "clear": buttonClear,
+        "apply": buttonApply,
+        "back": buttonBack
+      },
+      "textarea" : textarea
+    };
+
+    return returnObject
+  },
+
+  /*
+    *
+    * function name: _promptMenuSortTags
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _promptMenuSortTags: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_promptMenuSortTags', pEvent);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptMenuSortTags', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var 
       target = $(pEvent.target),
@@ -3449,6 +6208,7 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.selected.sort( this._sortJson( "display", direction ) );
 
     this._promptRenderTags();
+    this._promptApplyValues(true);
 
     //set state of mask
     this.mask.state.sorted = direction;
@@ -3458,12 +6218,23 @@ $.widget('pretius.enhancedLovItem', {
       this.prompt.menu.sort.removeClass('asc desc').addClass( direction );
     }
 
-    this.prompt.input.focus();
+    this._promptSetFocus();
   },
+  /*
+    *
+    * function name: _promptMenuClearValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptMenuClearValues: function(){
-    apex.debug.log(this.logPrefix, '_promptMenuClearValues');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptMenuClearValues', {
+      "arguments": arguments
+    });
 
-    this._promptEmptyMask();
+    this._promptEmptyMaskState();
     this._promptEmptyTags();
     //this._promptHiglightRemoveCurrentLi();
     this._promptLiRemoveSelection();
@@ -3471,10 +6242,21 @@ $.widget('pretius.enhancedLovItem', {
     this._promptSelectFirstRow();
     this._promptApplyValues( true );
 
-    this.prompt.input.focus();
+    this._promptSetFocus();
   },
+  /*
+    *
+    * function name: _promptRenderTags
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptRenderTags: function(){
-    apex.debug.log(this.logPrefix, '_promptRenderTags');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptRenderTags', {
+      "arguments": arguments
+    });
 
     var rendered = 0;
     var limitTags = this.pluginSettings.prompt.tagsNo;
@@ -3496,7 +6278,7 @@ $.widget('pretius.enhancedLovItem', {
         rendered++;
       }
       else if ( !this.pluginSettings.displayExtra && this.mask.state.selected[i].isExtraValue ) {
-        apex.debug.log(this.logPrefix, '_promptRenderTags', 'value "'+this.mask.state.selected[i].value+'" is not in value from sql query.');
+        apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptRenderTags', 'value "'+this.mask.state.selected[i].value+'" is not in value from sql query.');
       }
       else {
         this._promptTagsAddNew( this.mask.state.selected[i].display, this.mask.state.selected[i].value, this.mask.state.selected[i].isExtraValue );
@@ -3511,10 +6293,20 @@ $.widget('pretius.enhancedLovItem', {
     else {
       this._promptPlaceHolderHide();
     }
-
   },
+  /*
+    *
+    * function name: _promptMenuChangeView
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptMenuChangeView: function(){
-    apex.debug.log(this.logPrefix, '_promptMenuChangeView');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptMenuChangeView', {
+      "arguments": arguments
+    });
 
     if ( this.mask.container.is('.expanded') ) {
       this.mask.container.removeClass('expanded');
@@ -3528,56 +6320,151 @@ $.widget('pretius.enhancedLovItem', {
 
     this._promptReposition();
 
-    this.prompt.input.focus();
-
-
+    this._promptSetFocus();
   },
+  /*
+    *
+    * function name: _promptUnhighlightOther
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptUnhighlightOther: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_promptUnhighlightOther');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptUnhighlightOther', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     this.prompt.body.find('li').not( pEvent.target ).removeAttr('aria-highlighted');
-
   },
+  /*
+    *
+    * function name: _promptScrollCallback
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptScrollCallback: function( pEvent) {
-    apex.debug.log(this.logPrefix, '_promptScrollCallback', 'pEvent', pEvent, 'scrollTop', this.prompt.body.scrollTop());
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptScrollCallback', {
+      "arguments": arguments,
+      "pEvent": pEvent, 
+      "scrollTop": this.prompt.body.scrollTop()
+    });
 
     var 
       percent = this._getScrollPercent( this.prompt.body, this.pluginSettings.prompt.maxHeight );
-      
 
     if ( percent > 90 && this.mask.state.ajaxRunning == false ) {
-      apex.debug.log(this.logPrefix, '_promptScrollCallback', 'Reached over 90% of container scroll. Perform AJAX');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptScrollCallback', 'Reached over 90% of container scroll. Perform AJAX');
       this._promptAjaxPerform( ++this.mask.state.lastFetchedPage );
     }
     else if ( percent > 90 && this.mask.state.ajaxRunning == true ) {
-      apex.debug.log(this.logPrefix, '_promptScrollCallback', 'There is AJAX awaiting for results. AJAX not performed');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptScrollCallback', 'There is AJAX awaiting for results. AJAX not performed');
     }
     else {
-      apex.debug.log(this.logPrefix, '_promptScrollCallback', 'Just scroll. do nothing'); 
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptScrollCallback', 'Just scroll. do nothing'); 
     }
 
   },
+  /*
+    *
+    * function name: _promptInputBlur
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptInputBlur: function(){
-    apex.debug.log(this.logPrefix, '_promptInputBlur');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptInputBlur', {
+      "arguments": arguments
+    });
   },
+  /*
+    *
+    * function name: _promptInputFocus
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptInputFocus: function(){
-    apex.debug.log(this.logPrefix, '_promptInputFocus');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptInputFocus', {
+      "arguments": arguments
+    });
   },
+  /*
+    *
+    * function name: _promptDisplayError
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptDisplayError: function( pText ){
-    apex.debug.log(this.logPrefix, '_promptDisplayError', "pText", pText, this.prompt);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptDisplayError', {
+      "arguments": arguments,
+      "pText": pText, 
+      "prompt": this.prompt
+    });
 
     this.prompt.body.html( '<div class="promptError"><span class="fa fa-exclamation-triangle"></span> '+pText+'</div>' );
+    apex.debug.message(this.C_LOG_ERROR, this.logPrefix, '_promptDisplayError', pText);
   },
+  /*
+    *
+    * function name: _promptLiRemoveSelection
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptLiRemoveSelection: function(){
-    apex.debug.log(this.logPrefix, '_promptHiglightRemoveAll');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptHiglightRemoveAll', {
+      "arguments": arguments
+    });
 
     this.prompt.body.find('[aria-selected=true]').removeAttr('aria-selected');
   },
+  /*
+    *
+    * function name: _promptHiglightRemoveCurrentLi
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptHiglightRemoveCurrentLi: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptHiglightRemoveCurrentLi', {
+      "arguments": arguments
+    });
+
     this.mask.state.currentSelection.removeAttr('aria-highlighted');
     this.mask.state.currentSelection = undefined;
   },
+  /*
+    *
+    * function name: _promptHighlightLi
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptHighlightLi: function( pLiElement ){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptHighlightLi', {
+      "arguments": arguments,
+      "pLiElement": pLiElement
+    });
+
     //remove selection in all set of data
     if ( this.mask.state.currentSelection != undefined ) {
       this._promptHiglightRemoveCurrentLi();  
@@ -3587,16 +6474,39 @@ $.widget('pretius.enhancedLovItem', {
 
     pLiElement.attr('aria-highlighted', true);
   },
+  /*
+    *
+    * function name: _promptSelectFirstRow
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptSelectFirstRow: function(){
-    apex.debug.log(this.logPrefix, '_promptSelectFirstRow');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptSelectFirstRow', {
+      "arguments": arguments
+    });
 
     var firstLine = this.prompt.body.find('li').first();
 
     this._promptHighlightLi( firstLine );
   },
+  /*
+    *
+    * function name: _dataExtendSelectedFromArrayOfObjects
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _dataExtendSelectedFromArrayOfObjects: function( pData, pSelected ){
-    //apex.debug.log(this.logPrefix, '_dataExtendSelectedFromArrayOfObjects', "pData", pData);
-    //apex.debug.log(this.logPrefix, '_dataExtendSelectedFromArrayOfObjects', "pSelected", pSelected);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_dataExtendSelectedFromArrayOfObjects', {
+      "arguments": arguments,
+      "pData": pData,
+      "pSelected": pSelected
+    });
 
     for ( var i in pData.data ) {
       for ( var y=0; y < pSelected.length; y++ ) {
@@ -3608,13 +6518,20 @@ $.widget('pretius.enhancedLovItem', {
       }
     }
 
-    apex.debug.log(this.logPrefix, '_dataExtendSelectedFromArrayOfObjects', "returned pData", pData);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_dataExtendSelectedFromArrayOfObjects', "returned pData", pData);
 
     return pData;
   },
+  /*
+    *
+    * function name: _promptTemplateDefault
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptTemplateDefault: function(){
-    apex.debug.log(this.logPrefix, '_promptTemplateDefault');
-
     var
       template = ''+
         '{{#data}}'+
@@ -3630,10 +6547,27 @@ $.widget('pretius.enhancedLovItem', {
         '</li>'+
         '{{/data}}';
 
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptTemplateDefault', {
+      "arguments": arguments,
+      "returns": template
+    });
+
     return template;
   },
+  /*
+    *
+    * function name: _promptRenderDataInCustomTemplate
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptRenderDataInCustomTemplate: function( pData ){
-    apex.debug.log(this.logPrefix, '_promptRenderDataInCustomTemplate', "pData", pData);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptRenderDataInCustomTemplate', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var 
       rendered = '',
@@ -3658,8 +6592,20 @@ $.widget('pretius.enhancedLovItem', {
     return rendered;
 
   },
+  /*
+    *
+    * function name: _promptAppendData
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptAppendData: function( pData ){
-    apex.debug.log(this.logPrefix, '_promptAppendData', "pData", pData);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptAppendData', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var 
       rendered,
@@ -3670,7 +6616,7 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     if ( this.pluginSettings.prompt.isCustomTemplate == false ) {
-      apex.debug.log(this.logPrefix, '_promptAppendData', "render data in default template");
+      apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptAppendData', "render data in default template");
 
       try {
         rendered = $(Mustache.render( template, pData));
@@ -3679,7 +6625,7 @@ $.widget('pretius.enhancedLovItem', {
       }
     }
     else {
-      apex.debug.log(this.logPrefix, '_promptAppendData', "render data in custom template");
+      apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptAppendData', "render data in custom template");
 
       rendered = this._promptRenderDataInCustomTemplate( pData );
     }
@@ -3689,8 +6635,20 @@ $.widget('pretius.enhancedLovItem', {
 
     this._triggerEvent('paeli_prompt_data_appended', this._promptGetEventData());
   },
+  /*
+    *
+    * function name: _promptDrawMinimalInputLength
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptDrawMinimalInputLength: function( pMessage ){
-    apex.debug.log(this.logPrefix, '_promptDrawMinimalInputLength');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptDrawMinimalInputLength', {
+      "arguments": arguments,
+      "pMessage": pMessage
+    });
 
     var 
       message = pMessage.replace('%0', this.pluginSettings.prompt.minimalInputLength),
@@ -3703,8 +6661,19 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.areResultsAvailable = false;
 
   },
+  /*
+    *
+    * function name: _promptDrawNodataFound
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptDrawNodataFound: function(){
-    apex.debug.log(this.logPrefix, '_promptDrawNodataFound');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptDrawNodataFound', {
+      "arguments": arguments
+    });
     //
     var 
       message = this.C_PROMPT_TEXT_NO_DATA_FOUND,
@@ -3717,8 +6686,20 @@ $.widget('pretius.enhancedLovItem', {
     this.prompt.body.html( template );
     this.mask.state.areResultsAvailable = false;
   },
+  /*
+    *
+    * function name: _promptRenderData
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptRenderData: function( pData ){
-    apex.debug.log(this.logPrefix, '_promptRenderData', "pData", pData);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptRenderData', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var 
       rendered,
@@ -3735,7 +6716,7 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     if ( this.pluginSettings.prompt.isCustomTemplate == false ) {
-      apex.debug.log(this.logPrefix, '_promptRenderData', "render data in default template");
+      apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptRenderData', "render data in default template");
 
       defaultTemplate = '<ul>'+defaultTemplate+'</ul>';  
 
@@ -3747,7 +6728,7 @@ $.widget('pretius.enhancedLovItem', {
 
     }
     else {
-      apex.debug.log(this.logPrefix, '_promptRenderData', "render data in custom template");
+      apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptRenderData', "render data in custom template");
 
       rendered = this._promptRenderDataInCustomTemplate( pData );
       rendered = '<ul>'+rendered+'</ul>';
@@ -3760,12 +6741,72 @@ $.widget('pretius.enhancedLovItem', {
 
     this._triggerEvent('paeli_prompt_data_rendered', this._promptGetEventData());
   },
+  /*
+    *
+    * function name: _resetFocus
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _resetFocus: function(){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_resetFocus', {
+      "arguments": arguments
+    });
 
-  _promptGetHiglighted: function(){
-    return this.prompt.body.find('[aria-highlighted="true"]');
+
+    if ( this.ig.isEmbededInGrid ) {
+      var 
+        widget = this,
+        recordId = this.ig.grid.model.getRecordId(this.ig.grid.view$.grid('getSelectedRecords')[0]),
+        column = this.ig.region.interactiveGrid('option').config.columns.filter(function (pColumn) {
+          
+          return pColumn.staticId === widget.options.item.name
+        })[0];
+        
+      this.ig.grid.view$.grid('gotoCell', recordId, column.name)
+      //this.ig.grid.focus();
+      this.ig.region.interactiveGrid('focus');
+    }
+    else {
+      this.element.focus();
+    }
+
   },
+  /*
+    *
+    * function name: _promptGetHiglighted
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _promptGetHiglighted: function(){
+    var returnValue = this.prompt.body.find('[aria-highlighted="true"]');
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptGetHiglighted', {
+      "arguments": arguments,
+      "returns": returnValue
+    });
+
+    return returnValue;
+  },
+  /*
+    *
+    * function name: _maskPopupButtonKeyDown
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskPopupButtonKeyDown: function( pEvent ) {
-    apex.debug.log(this.logPrefix, '_maskPopupButtonKeyDown', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskPopupButtonKeyDown', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var
       keyCode = pEvent.keyCode;
@@ -3775,22 +6816,43 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
-  _maskStateSelectedRemove: function( pIndex, pTriggerChangeEvent ) {
-    apex.debug.log(this.logPrefix, '_maskStateSelectedRemove', 'pIndex', pIndex);
+  /*
+    *
+    * function name: _maskStateSelectedRemove
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _maskStateSelectedRemove: function( pIndex ) {
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskStateSelectedRemove', {
+      "arguments": arguments,
+      "pIndex": pIndex
+    });
 
     var removed;
 
     removed = this.mask.state.selected.splice( pIndex, 1 );
 
-    apex.debug.log(this.logPrefix, '_maskStateSelectedRemove', 'removed object', removed);
-
-    if ( pTriggerChangeEvent ) {
-      this._promptApplyValues( pTriggerChangeEvent );
-    }
-
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskStateSelectedRemove', 'removed object', removed);
   },
-  _maskStateSelectedAdd: function( pObject, pTriggerChangeEvent, pIsExtraValue, pIsNullValue ){
-    apex.debug.log(this.logPrefix, '_maskStateSelectedAdd', 'pObject', pObject, 'pTriggerChangeEvent', pTriggerChangeEvent, pIsExtraValue);
+  /*
+    *
+    * function name: _maskStateSelectedAdd
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _maskStateSelectedAdd: function( pObject, pIsExtraValue, pIsNullValue ){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskStateSelectedAdd', {
+      "arguments": arguments,
+      "pObject"             : pObject,
+      "pIsExtraValue"       : pIsExtraValue,
+      "pIsNullValue"        : pIsNullValue
+    });
 
     if ( pIsExtraValue ) {
       pObject.isExtraValue = true;      
@@ -3801,82 +6863,139 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     this.mask.state.selected.push( pObject );
-
-    if ( pTriggerChangeEvent ) {
-      this._promptApplyValues( pTriggerChangeEvent );
-    }
-    
   },
 
+  /*
+    *
+    * function name: _maskStateSelectedGetIndex
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _maskStateSelectedGetIndex: function( pValue ){
-    apex.debug.log(this.logPrefix, '_maskStateSelectedGetIndex', pValue);
-
     for ( var i=0; i < this.mask.state.selected.length; i++ ) {
       if ( this.mask.state.selected[i].value == pValue ) {
+        apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskStateSelectedGetIndex', {
+          "arguments": arguments,
+          "pValue": pValue,
+          "return": i
+        });        
+
         return i;
       }
     }
 
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskStateSelectedGetIndex', {
+      "arguments": arguments,
+      "pValue": pValue,
+      "return": -1
+    });        
+
     return -1;
   },
+  /*
+    *
+    * function name: _promptIsValueSelected
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptIsValueSelected: function( pValue ){
-    apex.debug.log(this.logPrefix, '_promptIsValueSelected', pValue);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptIsValueSelected', {
+      "arguments": arguments,
+      "pValue": pValue
+    });
 
-    return this.mask.state.selected.indexOf( pValue ) > -1;
+    var returnValue = this.mask.state.selected.indexOf( pValue ) > -1;
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptIsValueSelected', "returns", {
+      "returnValue": returnValue
+    });
+
+    return returnValue;
   },
+  /*
+    *
+    * function name: _promptRemoveHighlightedfromAllLi
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptRemoveHighlightedfromAllLi: function(){
-    apex.debug.log(this.logPrefix, '_promptRemoveHighlightedfromAllLi' );
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptRemoveHighlightedfromAllLi', {
+      "arguments": arguments
+    });
 
     this.prompt.body.find( 'li[aria-highlighted]' ).removeAttr('aria-highlighted');
   },
+  /*
+    *
+    * function name: _promptRemoveHighlightedFromLi
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptRemoveHighlightedFromLi: function( pLi ){
-    apex.debug.log(this.logPrefix, '_promptRemoveHighlightedFromLi', 'pLi', pLi);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptRemoveHighlightedFromLi', {
+      "arguments": arguments,
+      'pLi': pLi
+    });
 
     pLi.removeAttr('aria-highlighted');
   },
-  _promptUnselectValue: function( pValue, pLi ){
-    apex.debug.log(this.logPrefix, '_promptUnselectValue', 'pValue', pValue);
-    apex.debug.log(this.logPrefix, '_promptUnselectValue', 'pLi', pLi);
 
-    var 
-      value = pValue,
-      indexOf = this._maskStateSelectedGetIndex( value ),
-      removed = null;
-
-    if ( indexOf < 0 ) {
-      this._throwErrorText(' Value "'+pValue+'" is not selected!');
-    }
-
-    this._maskStateSelectedRemove( indexOf, true );    
-
-    if ( pLi != undefined ) {
-      pLi.removeAttr('aria-selected')
-    }
-
-    this._maskTagRemove( value );
-
-    if ( this.prompt.isVisible ) {
-      this._promptReposition();  
-    }
-  },
+  /*
+    *
+    * function name: _promptGetLiSelected
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptGetLiSelected: function(){
-    apex.debug.log(this.logPrefix, '_promptGetLiSelected');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptGetLiSelected', {
+      "arguments": arguments
+    });
 
     return this.prompt.body.find('li').filter( function( pIndex, pElem ){
       return $(pElem).is('[aria-selected=true]');
     } );
   },
+  /*
+    *
+    * function name: _promptSelectValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptSelectValue: function( pLi ){
-    apex.debug.log(this.logPrefix, '_promptSelectValue', pLi.get(0));
-
     var
       valueReturn  = pLi.attr('aria-return-value'),
       valueDisplay = pLi.attr('aria-display-value'),
       isAPEXNullValue = pLi.attr('aria-null-value'),
       current = this._promptGetLiSelected().first();
 
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptSelectValue', {
+      "arguments": arguments,
+      "pLi"    : pLi,
+      "value"  : valueReturn,
+      "display": valueDisplay,
+      "null"   : isAPEXNullValue
+    });
+
     if ( this.mask.state.areResultsAvailable == false) {
-      apex.debug.log(this.logPrefix, '_promptLiClickHanlder no results to be selected!');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSelectValue no results to be selected!');
       return void(0);
     }
 
@@ -3884,13 +7003,13 @@ $.widget('pretius.enhancedLovItem', {
       this.pluginSettings.isMultipleSelection == false
       && this.mask.state.selected.length == 1
     ) {
-      apex.debug.log(this.logPrefix, '_promptLiClickHanlder deselect and select new');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSelectValue deselect and select new');
 
       try {
         this._promptUnselectValue( current.attr('aria-return-value'), current );
       } catch( error ) {
         this._promptEmptyTags();
-        this._promptEmptyMask();
+        this._promptEmptyMaskState();
       }
       
     }
@@ -3900,19 +7019,20 @@ $.widget('pretius.enhancedLovItem', {
     ) {
       this._promptRemoveHighlightedfromAllLi();
       this._promptEmptyTags();
-      this._promptEmptyMask();
-
+      this._promptEmptyMaskState();
     }
 
     this._maskStateSelectedAdd(
       {
         "display": valueDisplay,
         "value"  : valueReturn
-      }, 
-      true,  //trigger change event
-      false, //is not extra value,
-      (isAPEXNullValue == "true")
+      },                          // object
+      false,                      // is extra value,
+      (isAPEXNullValue == "true") // is null value
     );
+
+    this._promptApplyValues( true );
+    this._promptRenderTags();
 
     pLi.attr('aria-selected', true);
 
@@ -3922,9 +7042,8 @@ $.widget('pretius.enhancedLovItem', {
 
     if ( this.prompt.isVisible ) {
       this._promptReposition();
-      this.prompt.input.focus();
+      this._promptSetFocus();
     }
-
 
     if ( this.pluginSettings.isMultipleSelection ) {
       //multiple selection
@@ -3939,6 +7058,8 @@ $.widget('pretius.enhancedLovItem', {
       }
       else {
         //length of mask input is 0, do not force new autocomplete result
+        apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSelectValue', 'length of mask input is 0, do not force new autocomplete result.');
+        return void(0);
       }
     }
     else {
@@ -3958,129 +7079,255 @@ $.widget('pretius.enhancedLovItem', {
       }
     }
   },
+  /*
+    *
+    * function name: _promptUnselectValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _promptUnselectValue: function( pValue, pLi ){
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptUnselectValue', {
+      "arguments": arguments,
+      "pValue": pValue,
+      "pLi": pLi
+    });
+
+    var 
+      value = pValue,
+      indexOf = this._maskStateSelectedGetIndex( value ),
+      removed = null;
+
+    if ( indexOf < 0 ) {
+      this._throwErrorText(' Value "'+pValue+'" is not selected!');
+    }
+
+    if ( pLi != undefined ) {
+      pLi.removeAttr('aria-selected')
+    }
+
+    
+    this._maskStateSelectedRemove( indexOf );
+
+    this._promptApplyValues( true );
+    this._tagRemoveToBeDeleted( value );
+
+
+    if ( this.prompt.isVisible ) {
+      this._promptReposition();  
+    }
+  },  
+  /*
+    *
+    * function name: _promptApplyValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptApplyValues: function( pTriggerChange ){
-    apex.debug.log(this.logPrefix, '_promptApplyValues', 'pTriggerChange', pTriggerChange);
-    apex.debug.log(this.logPrefix, '_promptApplyValues', 'values', this.mask.state.selected.length);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptApplyValues', {
+      "arguments": arguments,
+      "pTriggerChange": pTriggerChange,
+      "values length" : this.mask.state.selected.length,
+      "values"        : $.extend([], this.mask.state.selected)
+    });
 
     var arrayOfValues = [];
-
+    
     if ( this.mask.state.selected.length > 0 ) {
 
       for ( var i=0; i< this.mask.state.selected.length; i++ ) {
         arrayOfValues.push( this.mask.state.selected[i].value );
       }
 
-      this.element.val( arrayOfValues.join(this.C_VALUE_SEPARATOR) );
-
-      this.mask.state.selected.sort( this._sortJson( "display", this.mask.state.sorted ) );
-
-      this._promptRenderTags();
-
+      this._elementSetValue( arrayOfValues.join( this.C_VALUE_SEPARATOR ) );
+      
+      //this.mask.state.selected.sort( this._sortJson( "display", this.mask.state.sorted ) );
     }
     else {
-      this.element.val(null);
-      this._promptEmptyTags();
+      this._elementSetValue( null );
+
       this._promptPlaceHolderShow();
     }
 
     if ( pTriggerChange ) {
-      apex.event.trigger( this.element.get(0), 'change', this );  
+      apex.event.trigger( this.element.get(0), 'change' );
     }
-    
   },
+  /*
+    *
+    * function name: _promptTagsGetObject
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptTagsGetObject: function( pReturn ){
-    apex.debug.log(this.logPrefix, '_promptTagsGetObject', pReturn);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptTagsGetObject', {
+      "arguments": arguments,
+      "pReturn": pReturn
+    });
 
     for ( var i=0; i < this.mask.state.tags.length; i++ ) {
       if ( this.mask.state.tags[i].value == pReturn ) {
-        apex.debug.log(this.logPrefix, '_promptTagsGetObject', 'pReturn has index '+i);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptTagsGetObject', 'pReturn has index '+i);
         return this.mask.state.tags[i];
       }
     }
 
-    apex.debug.log(this.logPrefix, '_promptTagsGetObject', 'pReturn is not in tags list');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptTagsGetObject', 'pReturn is not in tags list');
 
     return undefined;
 
   },
+  /*
+    *
+    * function name: _promptTagsGetIndex
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptTagsGetIndex: function( pReturn ){
-    apex.debug.log(this.logPrefix, '_promptTagsGetIndex', pReturn, 'in', this.mask.state.tags);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptTagsGetIndex', {
+      "arguments": arguments,
+      "pReturn": pReturn, 
+      "tags"   : this.mask.state.tags
+    });
 
     for ( var i=0; i < this.mask.state.tags.length; i++ ) {
       if ( this.mask.state.tags[i].value == pReturn ) {
-        apex.debug.log(this.logPrefix, '_promptTagsGetIndex', 'pReturn has index '+i);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptTagsGetIndex', 'pReturn has index '+i);
         return i;
       }
     }
 
-    apex.debug.log(this.logPrefix, '_promptTagsGetIndex', 'pReturn is not in tags list');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptTagsGetIndex', 'pReturn is not in tags list');
 
     return -1;
   },
+  /*
+    *
+    * function name: _promptGetLiByReturnValue
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptGetLiByReturnValue: function( pValue ){
-    apex.debug.log(this.logPrefix, '_promptGetLiByReturnValue', pValue);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptGetLiByReturnValue', {
+      "arguments": arguments,
+      "pValue": pValue
+    });
 
     var li = this.prompt.body.find('li').filter( function( pIndex, pElem ){
       return $(pElem).attr('aria-return-value').toString() == pValue.toString();
     } );
 
     if ( li.length > 0 ) {
-      apex.debug.log(this.logPrefix, '_promptGetLiByReturnValue', 'found li element', li);
+      apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptGetLiByReturnValue', 'found li element', li);
     }
     else {
-      apex.debug.log(this.logPrefix, '_promptGetLiByReturnValue', 'there is no li element with return value', pValue); 
+      apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptGetLiByReturnValue', 'there is no li element with return value', pValue); 
     }
     return li;
   },
-  _maskRemoveTagFromDOM: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_maskRemoveTagFromDOM', pEvent);
-
+  /*
+    *
+    * function name: _tagRemoveFromMask
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _tagRemoveFromMask: function( pEvent ){
     var 
       value = $(pEvent.target).closest('div').attr('aria-return-value');
 
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_tagRemoveFromMask', {
+      "arguments": arguments,
+      "pEvent": pEvent,
+      "value": value      
+    });
+
+    pEvent.stopImmediatePropagation();
+
     if ( this.mask.state.disabled ) {
-      apex.debug.log(this.logPrefix, '_maskRemoveTagFromDOM', 'APEX item is disabled, do nothing.');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_tagRemoveFromMask', 'APEX item is disabled, do nothing.');
       pEvent.preventDefault();
       pEvent.stopImmediatePropagation();
       return void(0);
     }
 
+    this._maskStateSelectedRemove( this._maskStateSelectedGetIndex( value ) );
+    this._tagRemoveToBeDeleted( value );
+    this._promptApplyValues( true );
 
     if ( this.prompt.isVisible ) {
       this._promptReposition();
       this._promptGetLiByReturnValue( value ).removeAttr('aria-selected')
+      this._promptSetFocus();
     }
-
-    this._maskStateSelectedRemove( this._maskStateSelectedGetIndex( value ) );
-
-    pEvent.stopImmediatePropagation();
-
-    this._promptApplyValues( true );
   },
-  _maskTagRemove: function( pReturn ){
-    apex.debug.log(this.logPrefix, '_maskTagRemove', pReturn);
+
+  /*
+    *
+    * function name: _tagRemoveToBeDeleted
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _tagRemoveToBeDeleted: function( pReturn ){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_tagRemoveToBeDeleted', {
+      "arguments": arguments,
+      "pReturn": pReturn
+    });
 
     var 
       indexOf = this._promptTagsGetIndex( pReturn ),
       tag = undefined;
 
     if ( indexOf < 0 ) {
-      apex.debug.log(this.logPrefix, '_maskTagRemove', 'Tag not found');      
+      apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_tagRemoveToBeDeleted', 'Tag not found');      
       return void(0);
     }
 
     tag = this.mask.state.tags[indexOf];
 
     //remove tag from dom
-    apex.debug.log(this.logPrefix, '_maskTagRemove', 'tag to be removed from DOM', tag);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_tagRemoveToBeDeleted', 'tag to be removed from DOM', tag);
     tag.container.remove();
 
     //remove tag from list of tags
     this.mask.state.tags.splice( indexOf, 1 );
-
   },
+
+  /*
+    *
+    * function name: _promptTagsAddNew
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _promptTagsAddNew: function( pDisplay, pReturn, pIsExtraValue ){
-    apex.debug.log(this.logPrefix, '_promptTagsAddNew', pDisplay, pReturn, pIsExtraValue);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptTagsAddNew', {
+      "arguments": arguments,
+      "pDisplay"      : pDisplay,
+      "pReturn"       : pReturn,
+      "pIsExtraValue" : pIsExtraValue
+    });
 
     var 
       extraValueClass = pIsExtraValue ? ' extra' : '',
@@ -4100,11 +7347,22 @@ $.widget('pretius.enhancedLovItem', {
     this.mask.state.tags.push( newTagObject );
     this.mask.tagsContainer.append( newTag );
   },
+  /*
+    *
+    * function name: _promptTagsSummaryOpenSelected
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptTagsSummaryOpenSelected: function(){
-    apex.debug.log(this.logPrefix, '_promptTagsSummaryOpenSelected');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptTagsSummaryOpenSelected', {
+      "arguments": arguments,
+    });
 
     if ( this.pluginSettings.isPopupReportAvailable ) {
-      apex.debug.log(this.logPrefix, '_promptTagsSummaryOpenSelected, popup not available, do nth');
+      apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptTagsSummaryOpenSelected, popup not available, do nth');
 
       this.popup.showSelectedCheckbox.prop('checked', true);
       this._popupOpen();
@@ -4112,8 +7370,20 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
+  /*
+    *
+    * function name: _promptTagsSummary
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptTagsSummary: function( pNotRenderedCnt ){
-    apex.debug.log(this.logPrefix, '_promptTagsSummary', pNotRenderedCnt);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptTagsSummary', {
+      "arguments": arguments,
+      "pNotRenderedCnt": pNotRenderedCnt
+    });
 
     var 
       text;
@@ -4135,8 +7405,22 @@ $.widget('pretius.enhancedLovItem', {
 
     this.mask.tagsContainer.append( summaryTag );
   },
+  /*
+    *
+    * function name: _promptCheckClickOutside
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptCheckClickOutside: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_promptCheckClickOutside', pEvent.currentTarget, pEvent.target);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptCheckClickOutside', {
+      "arguments": arguments,
+      "pEvent"               : pEvent,
+      "pEvent.currentTarget" : pEvent.currentTarget,
+      "pEvent.target"        : pEvent.target
+    });
 
     if ( 
       $.contains( this.prompt.container.get(0), pEvent.target ) 
@@ -4153,10 +7437,18 @@ $.widget('pretius.enhancedLovItem', {
 
   },  
   /*
-    AUTOCOMPLETE to be remapped as _prompt*
-  */
+    *
+    * function name: _getNextFocusAble
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _getNextFocusAble: function(){
-    apex.debug.log(this.logPrefix, '_getNextFocusAble');
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_getNextFocusAble', {
+      "arguments": arguments
+    });
 
     var tabbableArr, indexOf, next;
 
@@ -4172,8 +7464,20 @@ $.widget('pretius.enhancedLovItem', {
 
   },
 
+  /*
+    *
+    * function name: _promptNavigateArrows
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _promptNavigateArrows: function( pDirection ){
-    //apex.debug.log(this.logPrefix, '_promptNavigateArrows', pDirection);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptNavigateArrows', {
+      "arguments": arguments,
+      "pDirection": pDirection
+    });
 
     var 
       resultsRendered = this.prompt.body.find('li').length,
@@ -4225,18 +7529,29 @@ $.widget('pretius.enhancedLovItem', {
     }
     
   },
+  /*
+    *
+    * function name: _promptLiClickHanlder
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptLiClickHanlder: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_promptLiClickHanlder', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptLiClickHanlder', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var 
       target = $(pEvent.target).is('li') ? $(pEvent.target) : $(pEvent.target).closest('li');
-      
 
     if ( target.is('[aria-selected="true"]') ) {
       this._promptUnselectValue( target.attr('aria-return-value'), target );  
     }
     else {
-      apex.debug.log(this.logPrefix, '_promptLiClickHanlder currently selected items: ', this.mask.state.selected.length, this.mask.state.selected);
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptLiClickHanlder currently selected items: ', this.mask.state.selected.length, this.mask.state.selected);
 
       this._promptSelectValue( target );
     }
@@ -4244,40 +7559,81 @@ $.widget('pretius.enhancedLovItem', {
 
   },
 
+  /*
+    *
+    * function name: _maskHandleFocus
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _maskHandleFocus: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_maskHandleFocus', pEvent);
-//    this.mask.itemContainerBody.attr('contenteditable', true)
-  },
-  _maskHandleBlur: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_maskHandleBlur', pEvent);
-//    this.mask.itemContainerBody.attr('contenteditable', false)
-  },
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskHandleFocus', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
+  },
+  /*
+    *
+    * function name: _maskHandleBlur
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _maskHandleBlur: function( pEvent ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskHandleBlur', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
+
+  },
+  /*
+    *
+    * function name: _maskHandleKeyDown
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskHandleKeyDown: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_maskHandleKeyDown', pEvent);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_maskHandleKeyDown', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
+
     var
       keyCode = pEvent.keyCode,
       isNavigationDirection = this._isNavigationKey( keyCode );
 
     if ( isNavigationDirection == 'DOWN' ) {
-      /*
-
-      this._promptCreateNew();
-      this._promptAddListeners();
-
-      this._promptShow();
-
-      this.prompt.input.focus();
-      */
       this._promptSearchInputFocusHandler();
     }
 
   },
+  /*
+    *
+    * function name: _maskHandleKeyPress
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskHandleKeyPress: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_maskHandleKeyPress', pEvent);
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_maskHandleKeyPress', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
-    this._promptCreateNew();
-    this._promptAddListeners();
+    if ( !this.pluginSettings.isAutocompleteAvailable ) {
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_maskHandleKeyPress', 'Autocomplete is not available');
+      return void(0);
+    }
 
     if ( pEvent.keyCode != 13 ) {
       this.prompt.input.val( pEvent.key )
@@ -4287,81 +7643,37 @@ $.widget('pretius.enhancedLovItem', {
 
     this._promptShow();
 
+    //tbd timeout
     setTimeout( $.proxy( function(){
-      this.prompt.input.focus();              
-    }, this ), 100 )
-
-
-
+      this._promptSetFocus();
+    }, this ), 100 );
   },
-  _promptFakeCursorHandler: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_promptFakeCursorHandler', pEvent);
-
-    var 
-      fakeInput= $('<input type="text" class="fakeCursorHandler">');
-
-      this.mask.itemContainerBody.append( fakeInput );
-      
-      setTimeout( $.proxy(function( pInput ){
-        pInput
-          .on('blur', function( pEvent ){
-            $(pEvent.target).remove();
-          })
-          .on('keypress', $.proxy( function( pEvent ){
-            var 
-              self = $(pEvent.target),
-              value = self.val();
-
-            pEvent.stopImmediatePropagation();
-            pEvent.preventDefault();
-
-            this._promptCreateNew();
-            this._promptAddListeners();
-
-            
-            
-
-            
-            this.prompt.input.val( value ).trigger('keyup');
-
-            setTimeout( $.proxy( function(){
-              this.prompt.input.focus();              
-            }, this ), 100 )
-
-            this.prompt.input.focus();
-
-            self.remove();
-            this._promptShow();
-
-          }, this ));
-
-        fakeInput.focus()
-
-      }, this, fakeInput), 100 );
-      //
-
-  
-      
-    return false;
-  },
+  /*
+    *
+    * function name: _promptSearchInputFocusHandler
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptSearchInputFocusHandler: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_promptSearchInputFocusHandler');
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptSearchInputFocusHandler', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     if ( this.mask.state.disabled ) {
-      apex.debug.log(this.logPrefix, '_promptSearchInputFocusHandler', 'APEX item is disabled, do nothing.');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSearchInputFocusHandler', 'APEX item is disabled, do nothing.');
       return void(0);
     }
 
     if ( !this.pluginSettings.isAutocompleteAvailable ) {
-      apex.debug.log(this.logPrefix, '_promptSearchInputFocusHandler', 'Autocomplete is not available');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSearchInputFocusHandler', 'Autocomplete is not available');
       return void(0);
     }
 
-    if ( this.prompt.container == undefined ) {
-
-      this._promptCreateNew();
-      this._promptAddListeners();
-
+    if ( !this.prompt.isVisible ) {
       this._promptShow();
 
       if (
@@ -4379,23 +7691,47 @@ $.widget('pretius.enhancedLovItem', {
       else {
         this._promptAjaxPerform();
       }
-
-      this.prompt.input.focus();
-    }    
+    }
+    else {
+      this._promptReposition();
+    }
+  
+    this._promptSetFocus();
   },
-
-
   /*
-    OTHER
-  */
+    *
+    * function name: _promptIsMinimalInputLengthMatched
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptIsMinimalInputLengthMatched: function(){
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptIsMinimalInputLengthMatched', {
+      "arguments": arguments
+    });
+
     var returnValue = this.pluginSettings.prompt.minimalInputLength > this.prompt.input.val().length;
 
-    apex.debug.log(this.logPrefix, '_promptIsMinimalInputLengthMatched returns', returnValue);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_promptIsMinimalInputLengthMatched returns', returnValue);
     return returnValue;
   },
+  /*
+    *
+    * function name: _sortJson
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _sortJson: function( pProperty, pDirection ){
-    apex.debug.log(this.logPrefix, '_sortJson', pProperty, pDirection);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_sortJson', {
+      "arguments": arguments,
+      "pProperty": pProperty,
+      "pDirection": pDirection
+    });
 
     var sortOrder;
 
@@ -4412,8 +7748,21 @@ $.widget('pretius.enhancedLovItem', {
     }
 
   },
+  /*
+    *
+    * function name: _highlightWord
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _highlightWord: function( pText, pSearchString ){
-    apex.debug.log(this.logPrefix, '_highlightWord', pText, pSearchString);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_highlightWord', {
+      "arguments" : arguments,
+      "pText"         : pText,
+      "pSearchString" : pSearchString
+    });
 
     var 
       text = pText,
@@ -4435,20 +7784,40 @@ $.widget('pretius.enhancedLovItem', {
       return pText;
     }
   },
+  /*
+    *
+    * function name: _getItemContainer
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _getItemContainer: function(){
-    return this.mask.container.find('.itemContainer');
+    var returnObject = this.mask.container.find('.itemContainer');
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getItemContainer', {
+      "arguments": arguments,
+      "return": returnObject
+    });
+
+    return returnObject
   },
-  _getItemContainerBody: function(){
-    return this.mask.container.find('.itemContainerBody');
-  },
-  _getTagsContainer: function(){
-    return this.mask.container.find('.tags');
-  },
-  _getMaskInput: function(){
-    return this.mask.container.find('.fakeInput');
-  },
+
+  /*
+    *
+    * function name: _isNavigationKey
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _isNavigationKey: function( pKeyCode ) {
-    //apex.debug.log(this.logPrefix, '_isNavigationKey', pKeyCode);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_isNavigationKey', {
+      "arguments": arguments,
+      "pKeyCode": pKeyCode
+    });
 
     var returnValue = false;
 
@@ -4468,16 +7837,42 @@ $.widget('pretius.enhancedLovItem', {
     else {
       returnValue = false;
     }
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_isNavigationKey', "returns", returnValue);
 
     return returnValue;
   },
+  /*
+    *
+    * function name: _maskGetValue
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskGetValue: function(){
-    apex.debug.log(this.logPrefix, '_maskGetValue');
+    var returnValue = this.prompt.input.val();
 
-    return this.prompt.input.val();
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskGetValue', {
+      "arguments": arguments,
+      "return": returnValue
+    });
+
+    return returnValue;
   },
+  /*
+    *
+    * function name: _maskKeyUpManageIcons
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskKeyUpManageIcons: function(){
-    apex.debug.log(this.logPrefix, '_maskKeyUpManageIcons');
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskKeyUpManageIcons', {
+      "arguments": arguments
+    });
 
     if ( this.popup.search.val().length == 0 ) {
       this.popup.search.addClass('empty');
@@ -4486,23 +7881,36 @@ $.widget('pretius.enhancedLovItem', {
       this.popup.search.removeClass('empty');
     }
   },
+  /*
+    *
+    * function name: _promptInputKeyDownHandler
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _promptInputKeyDownHandler: function( pEvent ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptInputKeyDownHandler', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
+
     var 
       keyCode = pEvent.keyCode,
       isNavigationDirection = this._isNavigationKey( keyCode );
-
 
     if ( pEvent.shiftKey ) {
       return false;
     }
 
     if ( keyCode == 9 ) {
-      apex.debug.log(this.logPrefix, '_promptInputKeyDownHandler', 'TAB key pressed.');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptInputKeyDownHandler', 'TAB key pressed.');
       this._promptHide( this.mask.popupButton );
     }      
     else if ( keyCode == 27) {
       //when escape or tab pressed
-      apex.debug.log(this.logPrefix, '_promptInputKeyDownHandler', 'ESCAPE key pressed.');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptInputKeyDownHandler', 'ESCAPE key pressed.');
       this._promptHide( this.mask.itemContainer );
       
       return false;
@@ -4516,12 +7924,24 @@ $.widget('pretius.enhancedLovItem', {
         this._promptNavigateArrows( isNavigationDirection );  
       }
       else {
-        apex.debug.log(this.logPrefix, '_promptInputKeyDownHandler', 'no results available');        
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptInputKeyDownHandler', 'no results available');        
       }
     }
   },  
+  /*
+    *
+    * function name: _maskKeyUp
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskKeyUp: function( pEvent ){
-    apex.debug.log(this.logPrefix, '_maskKeyUp', pEvent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskKeyUp', {
+      "arguments": arguments,
+      "pEvent": pEvent
+    });
 
     var 
       keyCode = pEvent.keyCode,
@@ -4529,12 +7949,12 @@ $.widget('pretius.enhancedLovItem', {
       highlighted = this._promptGetHiglighted();
 
     if ( keyCode == 9 ) {
-      apex.debug.log(this.logPrefix, '_maskKeyUp', 'TAB key released. Do not perform autocomplete because it was already');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskKeyUp', 'TAB key released. Do not perform autocomplete because it was already');
       return false; 
     }
 
     if ( keyCode == 16 ) {
-      apex.debug.log(this.logPrefix, '_maskKeyUp', 'SHIFT key released. Do not perform autocomplete');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskKeyUp', 'SHIFT key released. Do not perform autocomplete');
       return false; 
     }
 
@@ -4542,10 +7962,10 @@ $.widget('pretius.enhancedLovItem', {
       return false;
     }
     else if ( keyCode == 13 ) {
-      apex.debug.log(this.logPrefix, '_maskKeyUp', 'enter pressed');
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskKeyUp', 'enter pressed');
 
       if ( this.mask.state.areResultsAvailable == false ) {
-        apex.debug.log(this.logPrefix, '_maskKeyUp', 'results are not yet available');        
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskKeyUp', 'results are not yet available');        
         return false;
       }
 
@@ -4578,8 +7998,20 @@ $.widget('pretius.enhancedLovItem', {
     
     
   },
+  /*
+    *
+    * function name: _checkIfDataContainsDisplayColumn
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _checkIfDataContainsDisplayColumn: function( pData ) {
-    apex.debug.log(this.logPrefix, '_checkIfDataContainsDisplayColumn', "pData", pData);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_checkIfDataContainsDisplayColumn', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var exists = false;
 
@@ -4592,8 +8024,20 @@ $.widget('pretius.enhancedLovItem', {
 
     return exists;
   },
+  /*
+    *
+    * function name: _checkIfDataContainsReturnColumn
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _checkIfDataContainsReturnColumn: function( pData ) {
-    apex.debug.log(this.logPrefix, '_checkIfDataContainsReturnColumn', "pData", pData);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_checkIfDataContainsReturnColumn', {
+      "arguments": arguments,
+      "pData": pData
+    });
 
     var exists = false;
 
@@ -4606,7 +8050,22 @@ $.widget('pretius.enhancedLovItem', {
 
     return exists;
   },
+  /*
+    *
+    * function name: _getScrollPercent
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _getScrollPercent: function( pElement, pMaxHeight ){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getScrollPercent', {
+      "arguments": arguments,
+      "pElement"  : pElement,
+      "pMaxHeight": pMaxHeight
+    });
+
     var 
       scrolled = pElement.scrollTop(),
       realHeight = pElement.children().outerHeight() - pMaxHeight,
@@ -4615,17 +8074,31 @@ $.widget('pretius.enhancedLovItem', {
     percent = scrolled * 100 / realHeight;
     percent = percent > 100 ? 100 : percent;
 
-    apex.debug.log(this.logPrefix, '_getScrollPercent', 'result', percent);
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getScrollPercent', {
+      'result': percent
+    });
 
     return percent;
   },
 
-  _createItemPopupButton: function(  ){
-    apex.debug.log(this.logPrefix, '_createItemPopupButton');
+  /*
+    *
+    * function name: _createItemPopupButton
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _createItemPopupButton: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_createItemPopupButton', {
+      "arguments": arguments
+    });
 
     //
-    var button = $('<button></button>');
-    var icon = $('<span></span>');
+    var 
+      button = $('<button></button>'),
+      icon = $('<span></span>');
 
     icon.addClass( 'fa '+this.options.item.icon );
 
@@ -4636,8 +8109,19 @@ $.widget('pretius.enhancedLovItem', {
 
     return button;
   },
-  _createItemAjaxButton: function(  ){
-    apex.debug.log(this.logPrefix, '_createItemAjaxButton');
+  /*
+    *
+    * function name: _createItemAjaxButton
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _createItemAjaxButton: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_createItemAjaxButton', {
+      "arguments": arguments
+    });
     
     var 
       button = $('<button></button>'),
@@ -4652,21 +8136,35 @@ $.widget('pretius.enhancedLovItem', {
 
     return button;
   },  
+  /*
+    *
+    * function name: _maskCreateNew
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _maskCreateNew: function(){
-    apex.debug.log(this.logPrefix, '_maskCreateNew', 'element', this.element.get(0));
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskCreateNew', {
+      "arguments": arguments,
+      'element': this.element.get(0)
+    });
     
     var 
       classes     = this.element.get(0).attributes.class != undefined ? this.element.get(0).attributes.class.value.split(' ') : [],
       maskLayer   = $('<div class="masking"></div>'),
       popupButton = this._createItemPopupButton(),
       ajaxStateButton = this._createItemAjaxButton(),
-      placeholder = $('<div class="placeholder">'+this.element.attr('placeholder')+'</div>'),
+      palceholderText = this.element.attr('placeholder') == undefined ? "" : this.element.attr('placeholder'),
+      placeholder = $('<div class="placeholder">'+palceholderText+'</div>'),
       container = $('<div></div>'),
       itemContainer = $('<div></div>'),
       itemContainerBody = $('<div></div>'),
-      tagsConteiner = $('<div></div>');
+      tagsConteiner = $('<div></div>'),
+      returnObject;
 
-    apex.debug.log(this.logPrefix, '_maskCreateNew', 'classes', classes);
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_maskCreateNew', 'classes', classes);
 
     container
       .addClass('pretius--enhancedLovItem mask');
@@ -4677,15 +8175,16 @@ $.widget('pretius.enhancedLovItem', {
       
     itemContainer
       .addClass('itemContainer')
-      .css('borderColor', this.inputCss.borderColor);
+      //.css('borderColor', this.inputCss.borderColor);
 
-    //if ( this.pluginSettings.isPopupReportAvailable == false ) {
-    if ( this.pluginSettings.isAutocompleteAvailable == true ) {
+    //if ( this.pluginSettings.isAutocompleteAvailable == true ) {
       //in case of popup report is not available, make mask focusable
       //so the end-user can navigate to field using tab key
-      itemContainer.attr('tabindex', 0);
-    }
-
+      itemContainer.attr({
+        'tabindex': 0,
+        'data-mask': this.widgetUniqueId
+      });
+    //}
 
     itemContainerBody
       .addClass('itemContainerBody')
@@ -4704,6 +8203,7 @@ $.widget('pretius.enhancedLovItem', {
   
     itemContainer.after( ajaxStateButton.hide() );
 
+    
     //transfer result width of APEX item after rendering the element
     if ( this.element.closest('.col').outerWidth() >= this.element.outerWidth() ) {
       container.css('minWidth', this.element.outerWidth());
@@ -4711,7 +8211,7 @@ $.widget('pretius.enhancedLovItem', {
     
     container.css('minHeight', this.element.outerHeight() );
 
-    return {
+    returnObject = {
       "container"         : container,
       "itemContainer"     : itemContainer,
       "itemContainerBody" : itemContainerBody,
@@ -4722,30 +8222,100 @@ $.widget('pretius.enhancedLovItem', {
         "button": ajaxStateButton,
         "errorMessage": undefined,
         "isError": false
+      },
+      //
+      "fieldContainer"        : $('#'+this.options.item.name+'_CONTAINER'),
+      "label"                 : $('[for='+this.options.item.name+']'),
+      "labelWidth"            : $('[for='+this.options.item.name+']').outerWidth(),
+      "state": {
+        "xhr"                 : undefined,
+        "isVisible"           : false,
+        "currentSearchText"   : '',
+        "lastFetchedPage"     : null,
+        "totalCount"          : 0,
+        "ajaxRunning"         : false,
+        "currentSelection"    : undefined,
+        "areResultsAvailable" : false,
+        "selected"            : [],
+        "tags"                : [],
+        "sorted"              : undefined,
+        "disabled"            : false,
+        "extraValues"         : [],
+        "error"               : false
       }
+    };
+
+    if ( returnObject.fieldContainer.is('.t-Form-fieldContainer--floatingLabel') ) {
+      returnObject.fieldContainer.addClass('is-active');
     }
 
+    returnObject.itemContainer
+      .on('click',    $.proxy( this._promptSearchInputFocusHandler, this ) )
+      .on('focus',    $.proxy( this._maskHandleFocus, this ) )
+      .on('blur',     $.proxy( this._maskHandleBlur, this ) )
+      .on('keypress', $.proxy( this._maskHandleKeyPress, this ) )
+      .on('keydown',  $.proxy( this._maskHandleKeyDown, this ) );
+
+    //listen to event click on "x" icon in tag
+    returnObject.tagsContainer.on('click', '.remove', $.proxy( this._tagRemoveFromMask, this ) );
+
+    returnObject.popupButton.on('keydown', $.proxy( this._maskPopupButtonKeyDown, this ) );
+
+    return returnObject;
   },
-//
+  /*
+    *
+    * function name: _writeQueryToConsole
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */
   _writeQueryToConsole: function( pQuery ) {
-    apex.debug.log(this.logPrefix, '_writeQueryToConsole', 'start'); 
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_writeQueryToConsole', {
+      "arguments": arguments
+    }); 
+
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_writeQueryToConsole', 'start'); 
 
     var array = pQuery.split("\n");
 
     for ( var i=0; i < array.length; i++ ) {
-      apex.debug.log('#', array[i]);       
+      apex.debug.message(this.C_LOG_LEVEL6, '# ', array[i]);       
     }
 
-    apex.debug.log(this.logPrefix, '_writeQueryToConsole', 'end'); 
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_writeQueryToConsole', 'end'); 
   },
+  /*
+    *
+    * function name: _throwErrorText
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _throwErrorText: function( pText ){
-    apex.debug.log(this.logPrefix, '_throwErrorText', 'pText', pText); 
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_throwErrorText', {
+      "arguments": arguments,
+      "pText": pText      
+    }); 
     throw pText;
 
   },
 
+  /*
+    *
+    * function name: _debounce
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */
   _debounce: function(func, wait, immediate) {
-    //apex.debug.log('debounce', 'func', func, 'wait', wait, 'immediate', immediate);
+    //apex.debug.message(this.C_LOG_LEVEL9, 'debounce', 'func', func, 'wait', wait, 'immediate', immediate);
 
     var timeout;
     return function() {
@@ -4760,8 +8330,21 @@ $.widget('pretius.enhancedLovItem', {
       if (callNow) func.apply(context, args);
     };
   },
+  /*
+    *
+    * function name: _throwError
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
   _throwError: function( pErrorThrown ) {
-    apex.debug.log(this.logPrefix, '_throwError', 'pErrorThrown', pErrorThrown); 
+    apex.debug.message(this.C_LOG_ERROR, this.logPrefix, '_throwError', {
+      "arguments": arguments,
+      "pErrorThrown": pErrorThrown
+    }); 
+
     throw pErrorThrown;
   }
 
