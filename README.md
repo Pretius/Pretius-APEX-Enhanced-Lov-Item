@@ -306,7 +306,7 @@ Initial Release
 ## About Author
 Author | Github | Twitter | E-mail
 -------|--------|---------|-------
-Bartosz Ostrowski | [@bostrowski](https://github.com/bostrowski) | [@bostrowsk1](https://twitter.com/bostrowsk1) | bostrowski@pretius.com
+Bartosz Ostrowski | [@bostrowski](https://github.com/bostrowski) | [@bostrowsk1](https://twitter.com/bostrowsk1) | bostrowski@pretius.com, ostrowski.bartosz@gmail.com
 
 ## About Pretius
 Pretius Sp. z o.o. Sp. K.
