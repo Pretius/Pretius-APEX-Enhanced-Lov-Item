@@ -34,7 +34,7 @@ $.widget('pretius.enhancedLovItem', {
   C_PROMPT_TEXT_SEARCHING                       : 'Searching...',
   C_PROMPT_TEXT_RAPID_SELECTION                 : 'Start typing to select more...',
   C_PROMPT_TEXT_LOAD_MORE                       : 'Load more...',
-  C_ERROR_DEBUG_OFF                             : 'Please contact application administrator for more information.'+"\n"+'Detailed information available in debug mode.',
+  C_ERROR_DEBUG_OFF                             : "Please contact application administrator for more information.\nDetailed information available in debug mode.",  
   C_TAGS_LIMITED_OTHERS                         : 'and %0 more...',
   C_TAGS_LIMITED_0                              : '%0 selected',
   C_POPUP_PAGINATION_PREV                       : 'Previous',
@@ -67,6 +67,8 @@ $.widget('pretius.enhancedLovItem', {
 
     this.logPrefix = '# '+this.options.plugin.name+':';
     //this.logPrefix = '# ('+this.element.get(0).id+') '+this.options.plugin.name+':';
+
+    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'Debug level = "'+apex.debug.getLevel()+'"');
 
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'options', {
       "options": this.options, 
@@ -135,11 +137,8 @@ $.widget('pretius.enhancedLovItem', {
     
     this.widgetUniqueId  = $('<div></div>').uniqueId().attr('id');
     
-    this.popup = this._popupCreateObject();
-    
-    //nalezy rozdzielic analogicznie do this.popup
-
     this.mask = this._maskCreateNew();
+    this.popup = this._popupCreateObject();
 
     this.prompt = this._promptCreateNew();
 
@@ -163,7 +162,7 @@ $.widget('pretius.enhancedLovItem', {
   
     };
 
-    if ( apex.debug.getLevel() == this.C_LOG_LEVEL6 ) {
+    if ( apex.debug.getLevel() >= this.C_LOG_LEVEL6 ) {
       this._createMaskDebugButton();  
     }
 
@@ -183,12 +182,6 @@ $.widget('pretius.enhancedLovItem', {
 
     apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'pluginSettings', this.pluginSettings);    
 
-    if ( this._elementGetValueLenght() > 0 && !this.pluginStopped ) {
-      this._getOnLoadLov( this._elementGetValue() );
-    }
-    else {
-      this._promptPlaceHolderShow();
-    }
 
 
     this.element.after( this.mask.container );
@@ -202,7 +195,13 @@ $.widget('pretius.enhancedLovItem', {
 
     this._integrateWithApexApi();
 
-    apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'Debug level = "'+apex.debug.getLevel()+'"');
+    if ( this._elementGetValueLenght() > 0 && !this.pluginStopped ) {
+      this._getOnLoadLov( this._elementGetValue() );
+    }
+    else {
+      this._promptPlaceHolderShow();
+    }
+    
   },
 // jQuery widget native methods
 //
@@ -642,7 +641,17 @@ $.widget('pretius.enhancedLovItem', {
             this.ig.region = this.element.closest('.a-IG');
             this.ig.grid = this.ig.region.interactiveGrid('getViews').grid;
           }
-  
+
+          //reset autocomplete search string
+          this.prompt.input.val(null);
+
+          //reset popup report state
+          this.popup.state.searchString          = undefined;
+          this.popup.state.lastFetchedPage       = null;
+          this.popup.state.sortedColumnIdx       = null;
+          this.popup.state.sortedColumnDirection = 'asc';
+          this.popup.state.searchColumnIdx       = undefined;
+ 
           this._promptEmptyTags();
           this._promptEmptyMaskState();
 
@@ -984,24 +993,34 @@ $.widget('pretius.enhancedLovItem', {
       "pDataReturned length": pDataReturned.length
     });
 
-    var extraValues = $.extend([], pValuesSent).filter(function (element) {
+    var 
+      dataToCheck = $.extend([], pDataReturned),
+      extraValues = $.extend([], pValuesSent).filter(function (element) {
       return element != null && element.length > 0;
     });
 
-    for ( var i=0; i < pDataReturned.length; i++ ) {
+    //add null value so it won't be treated as extra value
+    if ( this.options.item.lov_display_null ) {
+      dataToCheck.push( {
+        "D": this.options.item.lov_null_text,
+        "R": this.options.item.lov_null_value
+      } );
+    }
+  
+    for ( var i=0; i < dataToCheck.length; i++ ) {
 
-      indexOf = extraValues.indexOf( pDataReturned[i].R.toString() );
+      indexOf = extraValues.indexOf( dataToCheck[i].R.toString() );
 
       if ( indexOf > -1 ) {
         extraValues.splice( indexOf, 1 );
-        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'removing '+pDataReturned[i].R.toString()+' from ', extraValues);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'removing '+dataToCheck[i].R.toString()+' from ', extraValues);
       }
       else {
-        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'looking for '+pDataReturned[i].R.toString()+' in ', extraValues);
+        apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'looking for '+dataToCheck[i].R.toString()+' in ', extraValues);
       }
     }
 
-    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'extraValues', extraValues);    
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', 'extraValues', extraValues);
 
     return extraValues;
   },
@@ -1260,10 +1279,13 @@ $.widget('pretius.enhancedLovItem', {
     //this.mask.state.sorted = "asc";
 
     if ( pData.nullValueSelected ) {
+
       objectTemp = {
         "value"  : this.options.item.lov_null_value,
         "display": this.options.item.lov_null_text
       };
+
+      apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', 'success', 'NULL value selected', objectTemp);
 
       this._maskStateSelectedAdd( 
         objectTemp,   // object
@@ -1274,7 +1296,7 @@ $.widget('pretius.enhancedLovItem', {
 
     //add values on which tags will be rendered
     for ( var i=0; i < pData.data.length; i++ ) {
-      
+
       objectTemp = {
         "value"  : pData.data[i].R.toString(),
         "display": pData.data[i].D
@@ -2534,6 +2556,10 @@ $.widget('pretius.enhancedLovItem', {
       .on('keyup', $.proxy( this._maskKeyUpManageIcons, this) )
       .on('focus', $.proxy( this._popupSearchFocus, this ) );    
 
+    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_popupCreateObject', {
+      "arguments": arguments,
+      "returns": object
+    });
 
     return object;
   }, 
@@ -5332,8 +5358,9 @@ $.widget('pretius.enhancedLovItem', {
     });
 
     this.mask.container.removeClass('focused');
-
+    this.prompt.input.val(null);
     this.prompt.container.hide();
+
     //this.prompt.container.remove();
     //this.prompt.container = undefined;
 
