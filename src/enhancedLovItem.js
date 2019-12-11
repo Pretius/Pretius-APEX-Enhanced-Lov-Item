@@ -236,7 +236,7 @@ $.widget('pretius.enhancedLovItem', {
       "arguments": arguments
     });
 
-    var returnValue = 'Undefined';
+    var returnValue = 'undefined';
 
     if ( 
       this.options.attributes.popupSettings != null 
@@ -482,40 +482,6 @@ $.widget('pretius.enhancedLovItem', {
   },
   /*
     *
-    * function name: _itemNullValue
-    * description  : 
-    * params:
-    *   -
-    *   -
-    *
-  */
-  _itemNullValue: function(){
-    var returnValue = undefined;
-
-    if ( this.options.item.lov_display_null ) {
-      if ( this.options.item.lov_null_value == null ) {
-        returnValue = "";
-      }
-      else {
-        returnValue = this.options.item.lov_null_value;
-      }
-    }
-    else {
-      returnValue = "";
-    }
-
-    apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_itemNullValue', {
-      "arguments": arguments,
-      "domElement": this.element.get(0),
-      "return": returnValue,
-      "lov_display_null": this.options.item.lov_display_null,
-      "lov_null_value": this.options.item.lov_null_value
-    });
-
-    return returnValue;
-  },
-  /*
-    *
     * function name: _integrateWithApexApi
     * description  : https://docs.oracle.com/en/database/oracle/application-express/19.1/aexjs/item.html
     * params:
@@ -615,8 +581,7 @@ $.widget('pretius.enhancedLovItem', {
           * nullValue
           *
         */
-        "nullValue": this._itemNullValue(),
-        //"nullValue":  this.options.item.lov_display_null ? this.options.item.lov_null_value : "",
+        "nullValue": this._getItemLOVNullValue(),
         /*
           *
           * reinit
@@ -985,6 +950,68 @@ $.widget('pretius.enhancedLovItem', {
     *   -
     *
   */
+  _getItemLOVNullText: function(){
+    var returnValue;
+
+    if ( this.options.item.lov_null_text == null ) {
+      returnValue = "undefined";
+    }
+    else if ( this.options.item.lov_null_text == undefined ) {
+      returnValue = "undefined";
+    }
+    else {
+      returnValue = this.options.item.lov_null_text; 
+    }
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getItemLOVNullText', {
+      "arguments": arguments,
+      "lov_null_text": this.options.item.lov_null_text,
+      "return": returnValue
+    });
+
+    return returnValue;
+
+  },  
+  /*
+    *
+    * function name: _getExtraValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
+  _getItemLOVNullValue: function(){
+    var returnValue;
+
+    if ( this.options.item.lov_null_value == null ) {
+      returnValue = "";
+    }
+    else if ( this.options.item.lov_null_value == undefined ) {
+      returnValue = "undefined";
+    }
+    else {
+      returnValue = this.options.item.lov_null_value; 
+    }
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getItemLOVNullValue', {
+      "arguments": arguments,
+      "lov_null_value": this.options.item.lov_null_value,
+      "return": returnValue
+    });
+
+    return returnValue;
+
+  },
+  /*
+    *
+    * function name: _getExtraValues
+    * description  : 
+    * params:
+    *   -
+    *   -
+    *
+  */
   _getExtraValues: function( pValuesSent, pDataReturned ){
     apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_getExtraValues', {
       "arguments": arguments,
@@ -1002,8 +1029,8 @@ $.widget('pretius.enhancedLovItem', {
     //add null value so it won't be treated as extra value
     if ( this.options.item.lov_display_null ) {
       dataToCheck.push( {
-        "D": this.options.item.lov_null_text,
-        "R": this.options.item.lov_null_value
+        "D": this._getItemLOVNullText(),
+        "R": this._getItemLOVNullValue()
       } );
     }
   
@@ -1281,8 +1308,8 @@ $.widget('pretius.enhancedLovItem', {
     if ( pData.nullValueSelected ) {
 
       objectTemp = {
-        "value"  : this.options.item.lov_null_value,
-        "display": this.options.item.lov_null_text
+        "value"  : this._getItemLOVNullValue(),
+        "display": this._getItemLOVNullText()
       };
 
       apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', 'success', 'NULL value selected', objectTemp);
@@ -1648,8 +1675,8 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     pData.data.unshift({
-      "R": this.options.item.lov_null_value == undefined ? "undefined" : this.options.item.lov_null_value,
-      "D": this.options.item.lov_null_text  == undefined ? "undefined" : this.options.item.lov_null_text,
+      "R": this._getItemLOVNullValue(),
+      "D": this._getItemLOVNullText(),
       "isAPEXNullValue": true,
       "selected": isSelected
     });
@@ -1688,7 +1715,7 @@ $.widget('pretius.enhancedLovItem', {
           "extra": true
         };
 
-        if ( newRowObject.R == this.options.item.lov_null_value ) {
+        if ( newRowObject.R == this._getItemLOVNullValue() ) {
           //null value
           newRowObject.extra = false;
           newRowObject.isAPEXNullValue = true;
@@ -5551,8 +5578,8 @@ $.widget('pretius.enhancedLovItem', {
       && this.options.item.lov_display_null 
     ) {
       pData.data.unshift({
-        "R": this.options.item.lov_null_value == undefined ? "undefined" : this.options.item.lov_null_value,
-        "D": this.options.item.lov_null_text  == undefined ? "undefined" : this.options.item.lov_null_text,
+        "R": this._getItemLOVNullValue(),
+        "D": this._getItemLOVNullText(),
         "isAPEXNullValue": true
       });
     }
