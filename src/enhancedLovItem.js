@@ -137,6 +137,7 @@ $.widget('pretius.enhancedLovItem', {
     
     this.widgetUniqueId  = $('<div></div>').uniqueId().attr('id');
     
+
     this.mask = this._maskCreateNew();
     this.popup = this._popupCreateObject();
 
@@ -8165,6 +8166,44 @@ $.widget('pretius.enhancedLovItem', {
   },  
   /*
     *
+    * function name: _maskGetMinWidth
+    * description
+    * params:
+    *   -
+    *   -
+    *
+  */  
+  _maskGetMinWidth: function(){
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskGetMinWidth', {
+      "arguments": arguments,
+      'element': this.element.get(0)
+    });
+
+    var 
+      returnValue,
+      cloned = this.element.clone(false);
+
+    if ( this.element.is(':visible') ) {
+      returnValue = this.element.outerWidth();
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskGetMinWidth', 'item is visible, min-width set based on outer width of visible item.');
+    }
+    else {
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_maskGetMinWidth', 'on page load item is hidden. Determine its min-width based on cloned element appended to body.');
+      $('body').append(cloned);
+      returnValue = cloned.outerWidth();
+      cloned.remove();
+    }
+
+    apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_maskGetMinWidth', {
+      "arguments": arguments,
+      'element': this.element.get(0),
+      "returnValue": returnValue
+    });
+
+    return returnValue;
+  },
+  /*
+    *
     * function name: _maskCreateNew
     * description
     * params:
@@ -8179,6 +8218,8 @@ $.widget('pretius.enhancedLovItem', {
     });
     
     var 
+      minWidth    = 0,
+      cloned,
       classes     = this.element.get(0).attributes.class != undefined ? this.element.get(0).attributes.class.value.split(' ') : [],
       maskLayer   = $('<div class="masking"></div>'),
       popupButton = this._createItemPopupButton(),
@@ -8230,13 +8271,11 @@ $.widget('pretius.enhancedLovItem', {
   
     itemContainer.after( ajaxStateButton.hide() );
 
-    
     //transfer result width of APEX item after rendering the element
-    if ( this.element.closest('.col').outerWidth() >= this.element.outerWidth() ) {
-      container.css('minWidth', this.element.outerWidth());
-    }
-    
-    container.css('minHeight', this.element.outerHeight() );
+    container.css({
+      "minWidth" : this._maskGetMinWidth(),
+      "minHeight": this.element.outerHeight()
+    });      
 
     returnObject = {
       "container"         : container,
