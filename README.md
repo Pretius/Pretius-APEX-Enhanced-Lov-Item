@@ -304,9 +304,9 @@ Initial Release
 * [Inline dialog bug](https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues/7) fixed v1.1.0
 
 ## About Author
-Author | Github | Twitter | E-mail
--------|--------|---------|-------
-Bartosz Ostrowski | [@bostrowski](https://github.com/bostrowski) | [@bostrowsk1](https://twitter.com/bostrowsk1) | bostrowski@pretius.com, ostrowski.bartosz@gmail.com
+Author            | Website                                 | Github                                       | Twitter                                       | E-mail
+------------------|-----------------------------------------|----------------------------------------------|-----------------------------------------------|----------------------------------------------------
+Bartosz Ostrowski | [http://ostrowskibartosz.pl](https://www.ostrowskibartosz.pl) | [@bostrowski](https://github.com/bostrowski) | [@bostrowsk1](https://twitter.com/bostrowsk1) | bostrowski@pretius.com, ostrowski.bartosz@gmail.com
 
 ## About Pretius
 Pretius Sp. z o.o. Sp. K.
