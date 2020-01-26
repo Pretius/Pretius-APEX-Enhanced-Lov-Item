@@ -7012,7 +7012,8 @@ $.widget('pretius.enhancedLovItem', {
       valueReturn  = pLi.attr('aria-return-value'),
       valueDisplay = pLi.attr('aria-display-value'),
       isAPEXNullValue = pLi.attr('aria-null-value'),
-      current = this._promptGetLiSelected().first();
+      current = this._promptGetLiSelected().first(),
+      changeEvent = true;
 
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptSelectValue', {
       "arguments": arguments,
@@ -7031,7 +7032,9 @@ $.widget('pretius.enhancedLovItem', {
       this.pluginSettings.isMultipleSelection == false
       && this.mask.state.selected.length == 1
     ) {
-      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSelectValue deselect and select new');
+      apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSelectValue deselect and select new (terminate change event)');
+
+      changeEvent = false;
 
       try {
         this._promptUnselectValue( current.attr('aria-return-value'), current );
@@ -7059,7 +7062,7 @@ $.widget('pretius.enhancedLovItem', {
       (isAPEXNullValue == "true") // is null value
     );
 
-    this._promptApplyValues( true );
+    this._promptApplyValues( changeEvent );
     this._promptRenderTags();
 
     pLi.attr('aria-selected', true);

@@ -960,7 +960,6 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
 
     v_null_value_selected boolean := false;
   begin
-
     begin
       APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
       APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
@@ -968,6 +967,8 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       when others then
         null;  
     end;
+
+    APEX_UTIL.PAUSE(1);
 
     APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION( v_collection_name );
     
@@ -1066,6 +1067,10 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_apex_version                 APEX_RELEASE.VERSION_NO%TYPE;    
   begin
 
+    if p_param.value_set_by_controller and p_param.is_readonly then
+      return;
+    end if;
+
     g_item := p_item;
     g_plugin := p_plugin;
 
@@ -1087,8 +1092,10 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       p_is_readonly         => p_param.is_readonly,
       p_is_printer_friendly => p_param.is_printer_friendly
     );
-    
+
     if p_param.is_printer_friendly or p_param.is_readonly then
+      apex_debug.info(g_logprefix||' -> Render item as readonly');
+      
       apex_plugin_util.print_display_only (
         p_item_name        => p_item.name,
         p_display_value    => f_getDisplayValues(v_item_value),
@@ -1096,7 +1103,12 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
         p_escape           => p_item.escape_output,
         p_attributes       => p_item.element_attributes
       );
+
+      htp.p('<span id="test123">123</span>');
+
     else 
+      apex_debug.info(g_logprefix||' -> Render item as not readonly');
+
       htp.prn(''                                      ||
         '<input'                                      ||
         ' type="text"'                                ||
