@@ -9,7 +9,7 @@
 
 /* item mask */
 .pretius--enhancedLovItem.mask {
-  max-width: 100%;
+  min-width: 100% !important;
   display: flex;
   background-color: #f9f9f9;
   order: 3;
