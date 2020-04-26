@@ -242,6 +242,11 @@ PAELI_POPUP_PASTE_SUMMARY_TH_VALUES_IN           | Values ready to be applied   
 PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                                                                                                                                                     | v1.1.0
 ## Changelog
 
+### 1.1.1
+* fix for [#36](/../../issues/36) - added debounce to listener on parent cascading lov items
+* fix for [#40](/../../issues/40) - the plugin in interactive grid with readonly mode
+* fix for [#42](/../../issues/42) - change event in autocomplete is not doubled
+
 ### 1.1.0
 #### General
 * component name changed from `APEX Enhanced LOV Item` to `Pretius APEX Enhanced LOV Item`
