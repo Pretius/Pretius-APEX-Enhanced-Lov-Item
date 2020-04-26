@@ -132,23 +132,17 @@ $.widget('pretius.enhancedLovItem', {
     };
 
     if ( this.options.item.lov_cascade_parent_items != undefined ) {
-      $(this.options.item.lov_cascade_parent_items).on('change', $.proxy(this._cascadingLovItem, this));
+      $(this.options.item.lov_cascade_parent_items).on('change', this._debounce($.proxy(this._cascadingLovItem, this), 250))
     }    
     
     this.widgetUniqueId  = $('<div></div>').uniqueId().attr('id');
-    
 
     this.mask = this._maskCreateNew();
-    this.popup = this._popupCreateObject();
-
+    this.element.after( this.mask.container );
+    //prompt width is dependent on this.mask.container
     this.prompt = this._promptCreateNew();
 
-    if ( this.element.closest('.t-DialogRegion').length > 0 ) {
-      this.element.closest('.t-DialogRegion-body').append( this.prompt.container );
-    }
-    else {
-      $('body').append( this.prompt.container );  
-    }
+    this.popup = this._popupCreateObject();
 
     this.paste = {
       "popup": this._pastePopupCreateNew(),
@@ -167,25 +161,20 @@ $.widget('pretius.enhancedLovItem', {
       this._createMaskDebugButton();  
     }
 
-    $( window ).resize($.proxy( function(){
-      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'window resized, reposition prompt');
-
-      if ( this.prompt.isVisible ) {
-        
-        this._promptReposition();
-      }
-    }, this));
-
-
     this.element.on('apexrefresh', $.proxy(this._manualRefreshCallback, this));
 
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_create', 'Plugin instance created. Unique id = "#'+this.widgetUniqueId+'"');
 
     apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'pluginSettings', this.pluginSettings);    
+    
 
-
-
-    this.element.after( this.mask.container );
+    if ( this.element.closest('.t-DialogRegion').length > 0 ) {
+      this.element.closest('.t-DialogRegion-body').append( this.prompt.container );
+    }
+    else {
+      $('body').append( this.prompt.container );  
+    }
+    
     this.element.hide();
 
     this.ig = {
@@ -202,7 +191,15 @@ $.widget('pretius.enhancedLovItem', {
     else {
       this._promptPlaceHolderShow();
     }
-    
+
+    $( window ).resize($.proxy( function(){
+      apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, 'window resized, reposition prompt');
+
+      if ( this.prompt.isVisible ) {
+        
+        this._promptReposition();
+      }
+    }, this));
   },
 // jQuery widget native methods
 //
@@ -290,9 +287,12 @@ $.widget('pretius.enhancedLovItem', {
     * params       : none
     *
   */  
-  _cascadingLovItem: function(){
+  _cascadingLovItem: function( pEvent ){
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_cascadingLovItem', {
-      "arguments": arguments
+      "arguments": arguments,
+      "triggeringElement": pEvent.target,
+      "triggeringElement2": pEvent.target.id,
+      "value": pEvent.target.value
     });
 
     var
@@ -548,7 +548,8 @@ $.widget('pretius.enhancedLovItem', {
           else {
             apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_integrateWithApexApi', 'setValue', 'Change event is triggered (Suppress Change Event is set to "No").');
 
-            apex.event.trigger( this.element.get(0), 'change' );
+            this._triggerEvent('change', this._promptGetEventData());
+            //apex.event.trigger( this.element.get(0), 'change' );
           }
 
           if ( pValue == null ) {
@@ -1419,12 +1420,14 @@ $.widget('pretius.enhancedLovItem', {
       ajaxOptions = {
         "target"     : this.element.get(0),
         "beforeSend" : $.proxy(function( pJqXHR, pSettings ){
+
           apex.debug.message(this.C_LOG_LEVEL6, this.logPrefix, '_getOnLoadLov', 'before send', {
             "pJqXHR": pJqXHR,
             "pSettings": pSettings
           });
 
-          this._maskAjaxStateButtonRunning();
+          //this.mask.state.ajaxRunning = true;
+          //this._maskAjaxStateButtonRunning();
 
         }, this),
         "success"    : $.proxy( this._getOnLoadLov_SuccessCallback, this, mode, pValue ),
@@ -1452,13 +1455,15 @@ $.widget('pretius.enhancedLovItem', {
 
         }, this),
         "complete"   : $.proxy(function(){
+          //this.mask.state.ajaxRunning = false;
           //          
         }, this)
       };    
 
+
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_getOnLoadLov', 'values sent to retrieve display values', values, ajaxOptions);
       
-    apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );
+    this.mask.state.xhr = apex.server.plugin ( this.options.plugin.ajaxIdentifier, ajaxData, ajaxOptions );  
   },
   /*
     *
@@ -7012,8 +7017,8 @@ $.widget('pretius.enhancedLovItem', {
       valueReturn  = pLi.attr('aria-return-value'),
       valueDisplay = pLi.attr('aria-display-value'),
       isAPEXNullValue = pLi.attr('aria-null-value'),
-      current = this._promptGetLiSelected().first(),
-      changeEvent = true;
+      current = this._promptGetLiSelected().first();
+      //changeEvent = true;
 
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptSelectValue', {
       "arguments": arguments,
@@ -7034,10 +7039,8 @@ $.widget('pretius.enhancedLovItem', {
     ) {
       apex.debug.message(this.C_LOG_WARNING, this.logPrefix, '_promptSelectValue deselect and select new (terminate change event)');
 
-      changeEvent = false;
-
       try {
-        this._promptUnselectValue( current.attr('aria-return-value'), current );
+        this._promptUnselectValue( current.attr('aria-return-value'), current, false );
       } catch( error ) {
         this._promptEmptyTags();
         this._promptEmptyMaskState();
@@ -7062,7 +7065,8 @@ $.widget('pretius.enhancedLovItem', {
       (isAPEXNullValue == "true") // is null value
     );
 
-    this._promptApplyValues( changeEvent );
+    //this._promptApplyValues( changeEvent );
+    this._promptApplyValues( true );
     this._promptRenderTags();
 
     pLi.attr('aria-selected', true);
@@ -7119,7 +7123,7 @@ $.widget('pretius.enhancedLovItem', {
     *   -
     *
   */  
-  _promptUnselectValue: function( pValue, pLi ){
+  _promptUnselectValue: function( pValue, pLi, pTriggerChangeEvent ){
     apex.debug.message(this.C_LOG_DEBUG, this.logPrefix, '_promptUnselectValue', {
       "arguments": arguments,
       "pValue": pValue,
@@ -7138,11 +7142,10 @@ $.widget('pretius.enhancedLovItem', {
     if ( pLi != undefined ) {
       pLi.removeAttr('aria-selected')
     }
-
     
     this._maskStateSelectedRemove( indexOf );
 
-    this._promptApplyValues( true );
+    this._promptApplyValues( pTriggerChangeEvent );
     this._tagRemoveToBeDeleted( value );
 
 
@@ -7186,7 +7189,8 @@ $.widget('pretius.enhancedLovItem', {
     }
 
     if ( pTriggerChange ) {
-      apex.event.trigger( this.element.get(0), 'change' );
+      this._triggerEvent('change', this._promptGetEventData());
+      //apex.event.trigger( this.element.get(0), 'change' );
     }
   },
   /*
@@ -7579,7 +7583,7 @@ $.widget('pretius.enhancedLovItem', {
       target = $(pEvent.target).is('li') ? $(pEvent.target) : $(pEvent.target).closest('li');
 
     if ( target.is('[aria-selected="true"]') ) {
-      this._promptUnselectValue( target.attr('aria-return-value'), target );  
+      this._promptUnselectValue( target.attr('aria-return-value'), target, true );
     }
     else {
       apex.debug.message(this.C_LOG_LEVEL9, this.logPrefix, '_promptLiClickHanlder currently selected items: ', this.mask.state.selected.length, this.mask.state.selected);
@@ -8001,7 +8005,7 @@ $.widget('pretius.enhancedLovItem', {
       }
 
       if ( highlighted.is('[aria-selected="true"]') ) {
-        this._promptUnselectValue( highlighted.attr('aria-return-value'), highlighted );
+        this._promptUnselectValue( highlighted.attr('aria-return-value'), highlighted, true );
       }
       else {
         this._promptSelectValue( highlighted );

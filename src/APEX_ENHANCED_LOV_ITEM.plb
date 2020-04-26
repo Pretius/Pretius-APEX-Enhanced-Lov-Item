@@ -959,6 +959,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     v_query_not_matched varchar2(32000);
 
     v_null_value_selected boolean := false;
+
   begin
     begin
       APEX_COLLECTION.DELETE_COLLECTION( v_collection_name );
@@ -967,8 +968,6 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       when others then
         null;  
     end;
-
-    APEX_UTIL.PAUSE(1);
 
     APEX_COLLECTION.CREATE_OR_TRUNCATE_COLLECTION( v_collection_name );
     
@@ -1285,4 +1284,4 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
     apex_debug.info('Pretius Enhanced LOV Item -> AJAX call end.');
 
   end ajax;  
-end;
+end APEX_ENHANCED_LOV_ITEM;
