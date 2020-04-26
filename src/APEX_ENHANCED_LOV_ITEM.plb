@@ -1067,9 +1067,10 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
   begin
 
     if p_param.value_set_by_controller and p_param.is_readonly then
+      apex_debug.info(g_logprefix||' -> Item rendering aborted due to readonly and controller.');
       return;
     end if;
-
+    
     g_item := p_item;
     g_plugin := p_plugin;
 
