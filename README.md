@@ -243,9 +243,9 @@ PAELI_POPUP_PASTE_SUMMARY_TH_SUMMARY             | Summary                      
 ## Changelog
 
 ### 1.1.1
-* fix for #36 - added debounce to listener on parent cascading lov items
-* fix for #40 - the plugin in interactive grid with readonly mode
-* fix for #42 - change event in autocomplete is not doubled
+* fix for [#36](/../../issues/36) - added debounce to listener on parent cascading lov items
+* fix for [#40](/../../issues/40) - the plugin in interactive grid with readonly mode
+* fix for [#42](/../../issues/42) - change event in autocomplete is not doubled
 
 ### 1.1.0
 #### General
