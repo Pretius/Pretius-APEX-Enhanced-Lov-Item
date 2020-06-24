@@ -67,7 +67,7 @@ MIT
 
 ### Install procedure
 To successfully install the plugin follow those steps:
-1. Install package `APEX_ENHANCED_LOV_ITEM` in Oracle APEX Schema
+1. Install package `APEX_ENHANCED_LOV_ITEM` in the parsing schema of your application
 1. Install the plugin file `item_type_plugin_pl_ostrowskibartosz_apex_enhancedlovitem.sql`
 
 ## Usage Guide
