@@ -1,7 +1,7 @@
 {
-  "name": "Pretius APEX Enhanced LOV item",
+  "name": "Pretius Enhanced LOV Item",
   "version": "1.1.1",
-  "description": "APEX Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes.",
+  "description": "Pretius Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes.",
   "keywords": [
     "oracle",
     "apex",
@@ -12,9 +12,9 @@
     "select",
     "report"
   ],
-  "homepage": "https://github.com/bostrowski/Pretius-APEX-Enhanced-Lov-Item",
+  "homepage": "https://github.com/Pretius/Pretius-APEX-Enhanced-Lov-Item",
   "bugs": {
-    "url": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues",
+    "url": "https://github.com/Pretius/Pretius-APEX-Enhanced-Lov-Item/issues",
     "email" : "apex-plugins@pretius.com"
   },
   "license": "MIT",
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item.git"
+    "url": "https://github.com/Pretius/Pretius-APEX-Enhanced-Lov-Item.git"
   },
   "oracle": {
     "versions": [
@@ -49,7 +49,7 @@
         "internalName": "PL.OSTROWSKIBARTOSZ.APEX.ENHANCEDLOVITEM",
         "type": "item",
         "demo": "https://apex.oracle.com/pls/apex/f?p=111865:1:106207407722798:::::",
-        "previewImage": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item/blob/master/images/preview_demo.gif?raw=true"
+        "previewImage": "https://raw.githubusercontent.com/Pretius/Pretius-APEX-Enhanced-Lov-Item/master/images/preview_demo.gif"
       }
     }
   }
