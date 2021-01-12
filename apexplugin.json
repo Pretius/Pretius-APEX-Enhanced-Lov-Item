@@ -15,13 +15,16 @@
   "homepage": "https://github.com/bostrowski/Pretius-APEX-Enhanced-Lov-Item",
   "bugs": {
     "url": "https://github.com/bostrowski/APEX-Enhanced-Lov-Item/issues",
-    "email": "ostrowski.bartosz@gmail.com"
+    "email" : "apex-plugins@pretius.com"
   },
   "license": "MIT",
-  "author": {
-    "name": "Bartosz Ostrowski",
-    "email": "ostrowski.bartosz@gmail.com",
-    "twitter": "bostrowsk1"
+  "commercial" : "No",
+  "commercially_supported":"Yes",  
+  "author" : {
+    "name" : "Pretius",
+    "email" : "apex-plugins@pretius.com",
+    "url" : "http://www.pretius.com",
+    "twitter": "PretiusSoftware"
   },
   "repository": {
     "type": "git",
@@ -31,14 +34,16 @@
     "versions": [
       "11.2.0.1",
       "12.1.0.1",
-      "12.2.0.1"
+      "12.2.0.1",
+      "18.0.0.0"
     ],
-    "apex": {
+    "apex": { 
       "versions": [
-        "5.1.0",
         "18.1.0",
         "18.2.0",
-        "19.1.0"
+        "19.1.0",
+        "19.2.0",
+        "20.1.0"
       ],
       "plugin": {
         "internalName": "PL.OSTROWSKIBARTOSZ.APEX.ENHANCEDLOVITEM",
