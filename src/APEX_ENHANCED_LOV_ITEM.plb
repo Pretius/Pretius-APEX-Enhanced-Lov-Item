@@ -411,7 +411,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
         '||prepareSqlQuery||'
       ) 
       where
-        r in ('||''''||replace(pi_value, ':', ''',''')||''''||')
+        r in ('||'q''^'||replace(pi_value, ':', '^'',q''^')||'^'''||')
     ';
 
     v_cursor := getBindedRefCursor( v_query );
@@ -1218,6 +1218,7 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
 
     v_return := APEX_ESCAPE.HTML( p_value );
     v_return := replace(v_return, '''', '''''');
+    v_return := utl_i18n.unescape_reference( v_return );
 
     return v_return;
   end;
