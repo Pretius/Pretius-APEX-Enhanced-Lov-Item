@@ -1,6 +1,6 @@
 {
   "name": "Pretius Enhanced LOV Item",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "description": "Pretius Enhanced LOV item is powerful combobox to select singular / multiple values in two modes: autocomplete and popup report. The plugin provides high customization possibilities through its attributes.",
   "keywords": [
     "oracle",
@@ -43,7 +43,10 @@
         "18.2.0",
         "19.1.0",
         "19.2.0",
-        "20.1.0"
+        "20.1.0",
+        "20.2.0",
+        "21.1.0",
+        "21.2.0"          
       ],
       "plugin": {
         "internalName": "PL.OSTROWSKIBARTOSZ.APEX.ENHANCEDLOVITEM",

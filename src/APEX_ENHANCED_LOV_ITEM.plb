@@ -1082,6 +1082,20 @@ create or replace package body APEX_ENHANCED_LOV_ITEM as
       APEX_RELEASE
     ;
 
+    -- APEXPLUGIN-141
+    -- add css file based on apex version
+    if v_apex_version like '21.2%' then
+      apex_css.add_file (
+        p_name => 'enhancedLovItem_21_2',
+        p_directory => p_plugin.file_prefix
+      ); 
+    else
+      apex_css.add_file (
+        p_name => 'enhancedLovItem_18_1',
+        p_directory => p_plugin.file_prefix
+      ); 
+    end if;
+
     v_item_name_attr := apex_plugin.get_input_name_for_page_item(
       p_is_multi_value => instr(':'||p_item.attribute_05||':', ':MS:') > 0
     );

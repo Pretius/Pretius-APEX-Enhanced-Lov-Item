@@ -195,36 +195,36 @@
 
 /* */
 .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
-  font-size: 1rem;
-  padding-left: 0.2rem;
+  font-size: 0.625rem;
+  padding-left: 0.125rem;
 }
 
 /* Sizes / default / Container */
 .pretius--enhancedLovItem.mask > div.itemContainer {
-  padding: 0 0.2rem 0.2rem 0.2rem;
+  padding: 0 0.125rem 0.125rem 0.125rem;
 }
 
 /* Sizes / default / tag margin*/
 .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag:not(:last-child) {
-  margin-right: 0.2rem;
+  margin-right: 0.125rem;
 }
 
 /* Sizes / default / tag */
 .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag {
-  padding: 0 0.5rem 0 0.5rem;
-  margin-top: 0.2rem;
+  padding: 0 0.3125rem 0 0.3125rem;
+  margin-top: 0.125rem;
 }
 
 /* Sizes / default / tag / value, placeholder */
 .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder,
 .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value {
-  font-size: 1.2rem;
+  font-size: 0.75rem;
 }
 
 /* Sizes / default / tag / value, remove */
 .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value,
 .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
-  line-height: 1.6rem;
+  line-height: 1rem;
 }
 
 
@@ -235,62 +235,62 @@
 
 /* Sizes / large / Container */
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer {
-  padding: 0 0.2rem 0.2rem 0.2rem;
+  padding: 0 0.125rem 0.125rem 0.125rem;
 }
 
 /* Sizes / large / tag */
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag {
-  padding: 0 0.5rem 0 0.5rem;
-  margin-top: 0.2rem;
+  padding: 0 0.3125rem 0 0.3125rem;
+  margin-top: 0.125rem;
 }
 
 /* Sizes / large / tag / value, placeholder */
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder {
-  padding: 0.6rem 0 0 0.4rem;
+  padding: 0.375rem 0 0 0.25rem;
 }
 
 /* Sizes / large / tag / value, placeholder */
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder,
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value {
-  font-size: 1.4rem;
+  font-size: 0.875rem;
 }
 
 /* Sizes / large / tag / value, remove */
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value,
 .t-Form-fieldContainer--large .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
-  line-height: 2.4rem;
+  line-height: 1.5rem;
 }
 
 /* Sizes / large / tag margin*/
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask .itemContainer > .itemContainerBody > div.tags > div.tag:not(:last-child) {
-  margin-right: 0.4rem;
+  margin-right: 0.25rem;
 }
 
 /* Sizes / xlarge / Container */
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer {
-  padding: 0 0.4rem 0.4rem 0.4rem;
+  padding: 0 0.25rem 0.25rem 0.25rem;
 }
 
 /* Sizes / xlarge / tag */
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag {
-  padding: 0 0.5rem 0 0.5rem;
-  margin-top: 0.4rem;
+  padding: 0 0.3125rem 0 0.3125rem;
+  margin-top: 0.25rem;
 }
 
 /* Sizes / xlarge / tag / value, placeholder */
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder {
-  padding: 0.8rem 0 0 0.6rem;
+  padding: 0.5rem 0 0 0.375rem;
 }
 
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.placeholder,
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value {
-  font-size: 1.6rem;
+  font-size: 1rem;
 }
 
 /* Sizes / xlarge / tag / value, remove */
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.value,
 .t-Form-fieldContainer--xlarge .pretius--enhancedLovItem.mask > div.itemContainer > div.itemContainerBody > div.tags > div.tag > span.remove {
-  line-height: 2.7rem;
+  line-height: 1.6875rem;
 }
 
 
@@ -325,7 +325,7 @@
 
 .pretius--enhancedLovItem.prompt > .header,
 .pretius--enhancedLovItem.prompt > .menu {
-  padding: 0.4rem;
+  padding: 0.25rem;
 }
 
 .pretius--enhancedLovItem.prompt > .menu,
@@ -343,7 +343,7 @@
 
 .pretius--enhancedLovItem.prompt > .header > .fa {
   align-self: center;
-  font-size: 1.3rem;
+  font-size: 0.8125rem;
   flex-shrink: 0;
   flex-grow: 0;
 }
@@ -351,7 +351,7 @@
 .pretius--enhancedLovItem.prompt > .header > input {
   border: none;
   outline: none;
-  margin-right: 0.4rem;
+  margin-right: 0.25rem;
   flex-grow: 1;
   flex-shrink: 0;
 }
@@ -397,7 +397,7 @@
 }
 
 .pretius--enhancedLovItem.prompt ul li.default {
-  padding: 0.3rem;
+  padding: 0.1875rem;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -439,9 +439,6 @@
   background: #f2f2f2;
 }
 
-.pretius--enhancedLovItem.prompt .menu {
-
-}
 
 .pretius--enhancedLovItem.prompt .menu .view .collapsed {
   display: none;
